@@ -1,0 +1,91 @@
+.cardsHeaderContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+  }
+  
+  .cardsHeaderContainer > button {
+    font-size: var(--medium-custom-text);
+  }
+  
+  .cardsHeaderContainer:hover > .cardsButton {
+    color: black;
+  }
+  
+  .cardsHeaderContainer:hover:before {
+    transition: width 250ms ease;
+    width: 100%;
+  }
+  
+  .cardsHeaderContainer:before {
+    transition: width 250ms ease;
+    background: linear-gradient(to right, transparent, var(--golden) var(--color-percent), rgb(240, 240, 240));
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    z-index: -1;
+  }
+  
+  .cardsButton {
+    animation: background-pan 2s linear infinite;
+    background: linear-gradient(to right, var(--black-900), var(--golden), var(--black-900));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+
+  .cardsContainer {
+    margin-top: 1rem;
+    padding: 0 3rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+
+  .normalCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+    aspect-ratio: 5/7;
+    border-radius: 1vmin;
+    font-size: var(--small-custom-text);
+    color: var(--black-900);
+    text-align: center;
+  }
+  
+  .commonCard {
+    border: 5px solid var(--green);
+    background: var(--green);
+  }
+  
+  .uncommonCard {
+    border: 5px solid var(--primary-400);
+    background: var(--primary-400);
+  }
+  
+  .epicCard {
+    border: 5px solid var(--fucsia);
+    background: linear-gradient(to bottom, var(--fucsia), var(--black-900), var(--fucsia));
+    color: var(--fucsia);
+  }
+  
+  .legendaryCard {
+    animation: background-pan 2s linear infinite;
+    border: 5px solid var(--golden);
+    background: linear-gradient(to bottom, var(--golden), var(--black-900), var(--golden));
+    color: rgb(240, 240, 240);
+  }
+  
+  .cardBonus {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: var(--small-custom-text);
+  }
+  

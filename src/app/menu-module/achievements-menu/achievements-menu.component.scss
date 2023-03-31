@@ -1,0 +1,21 @@
+.achievementContainer {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    font-size: var(--small-custom-text);
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .achievement {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .achievement.unlocked {
+    background: linear-gradient(45deg, rgb(40, 40, 40), var(--black-900), var(--golden));
+    box-shadow: 0 0 0.3rem white;
+  }

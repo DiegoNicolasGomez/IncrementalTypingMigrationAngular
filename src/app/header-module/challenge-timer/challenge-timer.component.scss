@@ -1,0 +1,23 @@
+.challengeTimer {
+    margin: 1rem 0 0 0;
+    font-size: var(--medium-custom-text);
+    transition: transform 250ms ease-out;
+    display: none;
+  }
+  
+  .challengeTimer.show {
+    display: block;
+  }
+  
+  .challengeTimer.expand {
+    transform: scale(1.3);
+  }
+  
+  .challengeTimer.success {
+    background: linear-gradient(to right, var(--green), var(--black-900), var(--green));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: background-pan 2s linear infinite;
+  }

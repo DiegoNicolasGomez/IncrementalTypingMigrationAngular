@@ -1,0 +1,33 @@
+@import '../../../shared/shared.scss';
+
+.challengesContainerWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .challengesContainerWrapper > button {
+    font-size: var(--small-custom-text);
+  }
+  
+  .challengeReward {
+    background: linear-gradient(to right, var(--green), var(--primary-400), var(--golden), var(--fucsia), var(--green));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: background-pan 2s linear infinite;
+  }
+  
+  .exitChallengeButton {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: var(--medium-custom-text);
+    transition: transform 200ms ease;
+  }
+  
+  .exitChallengeButton:hover {
+    transform: scale(1.25);
+  }
+  

@@ -1,0 +1,46 @@
+.multiUpgradesButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: var(--medium-custom-text);
+    text-align: center;
+  }
+  
+  .multiUpgrade {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-block: 2rem;
+    width: clamp(10rem, 20vw, 50rem);
+    aspect-ratio: 5 / 6;
+    font-family: var(--secondary-font);
+    font-size: var(--medium-custom-text);
+    border-radius: 3rem;
+    background: var(--primary-900);
+    overflow: hidden;
+  }
+  
+  .multiUpgrade > p {
+    z-index: 1;
+  }
+  
+  .multiUpgrade::after {
+    content: '';
+    position: absolute;
+    transition: background-position 250ms ease, transform 250ms ease;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, var(--primary-700), var(--primary-200));
+    background-position: 0%;
+    background-size: 200%;
+    inset: -50%;
+  }
+  
+  .multiUpgrade:hover::after {
+    background-position: 100%;
+    transform: rotate(180deg);
+  }
+  

@@ -1,0 +1,50 @@
+.upgradesTable {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    gap: 1rem;
+  }
+  
+  .upgradesTable > Button {
+    font-size: var(--small-custom-text);
+  }
+  
+  .upgradeText {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  
+  .upgradesTitle,
+  .upgradeDesc {
+    margin: 0;
+  }
+  
+  .upgradesTitle {
+    font-size: var(--small-custom-text);
+  }
+  
+  .upgradesDesc {
+    font-size: var(--xsmall-custom-text);
+  }
+  
+  .upgradeWrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4rem;
+  }
+  
+  .upgradeTypeWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .upgradeTypeWrapper > h2 {
+    font-size: var(--small-custom-text);
+  }
+  
+  .upgradeTypeWrapper > .upgradesDesc {
+    font-size: var(--xsmall-custom-text);
+    text-align: center;
+  }

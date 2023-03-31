@@ -1,0 +1,15 @@
+.hoverEffectContainer:hover > .hoverEffectChild {
+    opacity: 0.3;
+    cursor: default;
+  }
+  
+  .hoverEffectContainer:hover > .hoverEffectChild:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  .hoverEffectChild {
+    transition: opacity 400ms ease;
+    transition: transform 50ms ease-in;
+  }
+  
