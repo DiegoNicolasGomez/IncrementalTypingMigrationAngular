@@ -3,118 +3,49 @@
         <div id="BasicUpgradesWrapper" class="upgradeTypeWrapper">
             <h2 id="basicUpgradeHeading">Basic Upgrades</h2>
             <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
-                <button class="upgradeSquare hoverEffectChild" id="upgrade1">
-                    <span>A</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade2">
-                    <span>B</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade3">
-                    <span>C</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade4">
-                    <span>D</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade5">
-                    <span>E</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade6">
-                    <span>F</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade7">
-                    <span>G</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade8">
-                    <span>H</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade9">
-                    <span>I</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade10">
-                    <span>J</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade11">
-                    <span>K</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="upgrade12">
-                    <span>L</span>
+                <button *ngFor="let upgrade of basicUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="GetUpgrade(upgrade.id)" (mouseenter)="ChangeBasicUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
+                    <span>{{ getNumberToChar(i) }}</span>
                 </button>
             </div>
             <div class="upgradeText">
                 <p id="basicUpgradesTitle" class="upgradesTitle">
-                    Hover and upgrade to see its description!
+                    {{currentBasicUpgradeName}}
                 </p>
-                <p id="basicUpgradesDesc" class="upgradesDesc"></p>
+                <p id="basicUpgradesDesc" class="upgradesDesc">
+                    {{currentBasicUpgradeDesc}}
+                </p>
             </div>
         </div>
         <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" style="display: none">
             <h2 id="passiveUpgradeHeading">Passive Upgrades</h2>
             <div id="passiveUpgradesTable" class="upgradesTable hoverEffectContainer">
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade1">
-                    <span>A</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade2">
-                    <span>B</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade3">
-                    <span>C</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade4">
-                    <span>D</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade5">
-                    <span>E</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade6">
-                    <span>F</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade7">
-                    <span>G</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade8">
-                    <span>H</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade9">
-                    <span>I</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade10">
-                    <span>J</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade11">
-                    <span>K</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="passiveUpgrade12">
-                    <span>L</span>
+                <button *ngFor="let upgrade of passiveUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="GetPassiveUpgrade(upgrade.id)" (mouseenter)="ChangePassiveUpgradesText(upgrade.id)" [style.color]="isPassiveUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
+                    <span>{{ getNumberToChar(i) }}</span>
                 </button>
             </div>
             <div class="upgradeText">
                 <p id="passiveUpgradesTitle" class="upgradesTitle">
-                    Hover and upgrade to see its description!
+                    {{ currentPassiveUpgradeName }}
                 </p>
-                <p id="passiveUpgradesDesc" class="upgradesDesc"></p>
+                <p id="passiveUpgradesDesc" class="upgradesDesc">
+                    {{ currentPassiveUpgradeDesc }}
+                </p>
             </div>
         </div>
         <div id="PrestigeUpgradesWrapper" class="upgradeTypeWrapper" style="display: none">
             <h2 id="prestigeUpgradeHeading">Prestige Upgrades</h2>
             <div id="prestigeUpgradesTable" class="upgradesTable hoverEffectContainer">
-                <button class="upgradeSquare hoverEffectChild" id="prestigeUpgrade1">
-                    <span>A</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="prestigeUpgrade2">
-                    <span>B</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="prestigeUpgrade3">
-                    <span>C</span>
-                </button>
-                <button class="upgradeSquare hoverEffectChild" id="prestigeUpgrade4">
-                    <span>D</span>
+                <button *ngFor="let upgrade of prestigeUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="GetPrestigeUpgrade(upgrade.id)" (mouseenter)="ChangePrestigeUpgradesText(upgrade.id)" [style.color]="isPrestigeUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
+                    <span>{{ getNumberToChar(i) }}</span>
                 </button>
             </div>
             <div class="upgradeText">
                 <p id="prestigeUpgradesTitle" class="upgradesTitle">
-                    Hover and upgrade to see its description!
+                    {{ currentPrestigeUpgradeName }}
                 </p>
-                <p id="prestigeUpgradesDesc" class="upgradesDesc"></p>
+                <p id="prestigeUpgradesDesc" class="upgradesDesc">
+                    {{ currentPrestigeUpgradeDesc }}
+                </p>
             </div>
         </div>
     </div>

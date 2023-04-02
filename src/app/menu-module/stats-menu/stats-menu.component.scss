@@ -1,0 +1,12 @@
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--small-custom-text);
+  }
+  
+  .statsContainer > p {
+    margin: 1rem 0;
+  }
+  

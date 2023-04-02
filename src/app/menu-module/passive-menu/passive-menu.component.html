@@ -6,28 +6,10 @@
         </div>
 
         <div id="PassivePointsRight" class="passivePointsRight">
-            <p id="PassivePointsGenerator0" class="passivePointsGenerator">
-                Generate Passive Points! | Generators:
-            </p>
-            <p id="PassivePointsGenerator1" class="passivePointsGenerator" style="display: none">
-                Generate the First Generator | Generators:
-            </p>
-            <p id="PassivePointsGenerator2" class="passivePointsGenerator" style="display: none">
-                Generate the Second Generator | Generators:
-            </p>
-            <p id="PassivePointsGenerator3" class="passivePointsGenerator" style="display: none">
-                Generate the Third Generator | Generators:
-            </p>
-            <p id="PassivePointsGenerator4" class="passivePointsGenerator" style="display: none">
-                Generate the Fourth Generator | Generators:
-            </p>
-            <p id="PassivePointsGenerator5" class="passivePointsGenerator" style="display: none">
-                Generate the Fifth Generator | Generators:
-            </p>
-            <p id="PassivePointsGenerator6" class="passivePointsGenerator" style="display: none">
-                Generate the Sixth Generator | Generators:
-            </p>
-            <button id="GeneratorButton" class="generatorButton">
+            <div *ngFor="let generator of gameObjects.game.passiveGenerators" class="passivePointsGenerator" (click)="BuyGenerator(generator.id)">
+                <p>{{generator.name}} | Generators: {{generator.amountGained | number:'1.1-1'}} (Bought: {{generator.amountBought}}) | Cost: {{generator.cost | number:'1.1-1'}}</p>
+            </div>
+            <button id="GeneratorButton" class="generatorButton" (click)="BuyGeneratorTier()">
                 Buy the next Tier of Generators! | Cost
             </button>
         </div>
