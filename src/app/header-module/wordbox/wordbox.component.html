@@ -1,5 +1,5 @@
 <div id="WordWrapper" class="wordWrapper">
-    <input type="text" id="WordBox" class="wordBox" name="WordBox" />
+    <input type="text" id="WordBox" class="wordBox" name="WordBox" [(ngModel)]="inputValue" (keyup)="checkWord()"/>
     <div id="gameButtonWrapper" class="gameButtonWrapper hoverEffectContainer">
         <button id="saveButton" class="gameButton hoverEffectChild">
             Save

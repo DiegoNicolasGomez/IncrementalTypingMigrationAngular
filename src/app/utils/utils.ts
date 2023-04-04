@@ -1,21 +1,37 @@
-import { gameObjects } from "../classes/game";
+import { GameService } from 'src/app/services/game.service';
 
-export var IsPurchasedUpgrade = (upgradeNumber: number) => gameObjects.game.upgrades.find(x => x.id == upgradeNumber);
+export class GameUtils {
 
-export var IsPurchasedPassiveUpgrade = (upgradeNumber: number) => gameObjects.game.passiveUpgrades.find(x => x.id == upgradeNumber);
+    constructor(private gameService: GameService) {}
 
-export var IsPurchasedPrestigeUpgrade = (upgradeNumber: number) => gameObjects.game.prestigeUpgrades.find(x => x.id == upgradeNumber);
-
-export var HasCard = (cardNumber: number) => gameObjects.game.cards.find(x => x.id == cardNumber);
-
-export var Copy = (object: object) => JSON.parse(JSON.stringify(object));
-
-export var IsInChallenge = (challengeNumber: number) => {
-    const challenge = gameObjects.game.challenges.find(x => x.id == challengeNumber);
-    if(!challenge) return false;
-    return challenge.onChallenge;
-} 
-
-export var IsUnlockedAchievement = (achievementName: string) => gameObjects.game.achievements.find(x => x.name == achievementName);
-
-export var formatNumber = (num: number) => num.toString().length <= 6 ? num.toString() : num.toExponential(2).toString();
+    
+    IsPurchasedUpgrade(upgradeNumber: number): boolean {
+        return this.gameService.game.upgrades.some(x => x.id == upgradeNumber);
+    }
+    
+    IsPurchasedPassiveUpgrade(upgradeNumber: number): boolean {
+        return this.gameService.game.passiveUpgrades.some(x => x.id == upgradeNumber);
+    }
+    
+    IsPurchasedPrestigeUpgrade(upgradeNumber: number): boolean {
+        return this.gameService.game.prestigeUpgrades.some(x => x.id == upgradeNumber);
+    }
+    
+    HasCard (cardNumber: number): boolean {
+        return this.gameService.game.cards.some(x => x.id == cardNumber);
+    }
+    
+    Copy(object: object) {
+        return JSON.parse(JSON.stringify(object));
+    }
+    
+    IsInChallenge(challengeNumber: number): boolean {
+        const challenge = this.gameService.game.challenges.find(x => x.id == challengeNumber);
+        if(!challenge) return false;
+        return challenge.onChallenge;
+    } 
+    
+    IsUnlockedAchievement(achievementName: string): boolean {
+        return this.gameService.game.achievements.some(x => x.name == achievementName);
+    }
+}

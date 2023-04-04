@@ -5,6 +5,8 @@ import { LettersPerSecondComponent } from './letters-per-second/letters-per-seco
 import { WordboxComponent } from './wordbox/wordbox.component';
 import { WordsToGuessComponent } from './words-to-guess/words-to-guess.component';
 import { PointsCounterComponent } from './points-counter/points-counter.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,7 @@ import { PointsCounterComponent } from './points-counter/points-counter.componen
     WordsToGuessComponent,
     PointsCounterComponent
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   exports: [
     ChallengeTimerComponent,
     LettersPerSecondComponent,

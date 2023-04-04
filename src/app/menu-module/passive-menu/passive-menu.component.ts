@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { IsPurchasedPassiveUpgrade, HasCard, IsPurchasedUpgrade } from '../../utils/utils';
+import { GameUtils } from '../../utils/utils';
 import { ActiveService } from 'src/app/services/active.service';
 import { PassiveService } from 'src/app/services/passive.service';
 import { GameService } from 'src/app/services/game.service';
@@ -20,6 +20,8 @@ export class PassiveMenuComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private gameService: GameService) {}
 
+  gameUtils = new GameUtils(this.gameService);
+
   ngOnInit() {
     this.generators = this.passiveService.getGenerators();
   }
@@ -39,7 +41,7 @@ export class PassiveMenuComponent implements OnInit {
     if (passivePointsWord) passivePointsWord.textContent = passiveWord;
     var points = this.GetPassivePoints(passiveWord);
     points *= portableGenerator.amountGained;
-    if (IsPurchasedUpgrade(4))
+    if (this.gameUtils.IsPurchasedUpgrade(4))
       this.gameService.game.passivePoints += points;
   }
 
@@ -48,56 +50,56 @@ export class PassiveMenuComponent implements OnInit {
   GetPassivePoints(passiveWord: string) {
     var totalPoints = 0;
     totalPoints += passiveWord.length;
-    if (IsPurchasedPassiveUpgrade(4))
+    if (this.gameUtils.IsPurchasedPassiveUpgrade(4))
       totalPoints += this.activeService.GetPointsLetters(passiveWord);
-    if (HasCard(4))
+    if (this.gameUtils.HasCard(4))
       totalPoints +=
         2 *
         this.gameService.game.cards.filter((x) => x.name === '+2 Passive Points (C)')
           .length;
-    if (HasCard(8))
+    if (this.gameUtils.HasCard(8))
       totalPoints +=
         5 *
         this.gameService.game.cards.filter(
           (x) => x.name === '+5 Passive Points (UC)'
         ).length;
-    if (HasCard(15))
+    if (this.gameUtils.HasCard(15))
       totalPoints +=
         10 *
         this.gameService.game.cards.filter(
           (x) => x.name === '+10 Passive Points (E)'
         ).length;
-    if (HasCard(21))
+    if (this.gameUtils.HasCard(21))
       totalPoints +=
         25 *
         this.gameService.game.cards.filter(
           (x) => x.name === '+25 Passive Points (L)'
         ).length;
-    if (IsPurchasedPassiveUpgrade(2)) totalPoints += 5;
-    if (IsPurchasedPassiveUpgrade(1)) totalPoints *= 1.25;
-    if (IsPurchasedPassiveUpgrade(3)) totalPoints *= 1.5;
-    if (HasCard(3))
+    if (this.gameUtils.IsPurchasedPassiveUpgrade(2)) totalPoints += 5;
+    if (this.gameUtils.IsPurchasedPassiveUpgrade(1)) totalPoints *= 1.25;
+    if (this.gameUtils.IsPurchasedPassiveUpgrade(3)) totalPoints *= 1.5;
+    if (this.gameUtils.HasCard(3))
       totalPoints *=
         1 +
         0.1 *
           this.gameService.game.cards.filter(
             (x) => x.name === '10% Passive Points (C)'
           ).length;
-    if (HasCard(7))
+    if (this.gameUtils.HasCard(7))
       totalPoints *=
         1 +
         0.25 *
           this.gameService.game.cards.filter(
             (x) => x.name === '25% Passive Points (UC)'
           ).length;
-    if (HasCard(14))
+    if (this.gameUtils.HasCard(14))
       totalPoints *=
         1 +
         0.5 *
           this.gameService.game.cards.filter(
             (x) => x.name === '50% Passive Points (E)'
           ).length;
-    if (HasCard(20))
+    if (this.gameUtils.HasCard(20))
       totalPoints *=
         1 +
         1 *
@@ -198,7 +200,7 @@ export class PassiveMenuComponent implements OnInit {
       index <= this.gameService.game.passiveGenerators.length;
       index++
     ) {
-      if (IsPurchasedPassiveUpgrade(6)) {
+      if (this.gameUtils.IsPurchasedPassiveUpgrade(6)) {
         this.gameService.game.passiveGenerators.find(
           (x) => x.id == index - 1
         )!.amountGained +=

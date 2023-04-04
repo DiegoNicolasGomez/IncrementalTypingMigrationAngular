@@ -6,7 +6,7 @@
         </div>
 
         <div id="PassivePointsRight" class="passivePointsRight">
-            <div *ngFor="let generator of gameObjects.game.passiveGenerators" class="passivePointsGenerator" (click)="BuyGenerator(generator.id)">
+            <div *ngFor="let generator of generators" class="passivePointsGenerator" (click)="BuyGenerator(generator.id)">
                 <p>{{generator.name}} | Generators: {{generator.amountGained | number:'1.1-1'}} (Bought: {{generator.amountBought}}) | Cost: {{generator.cost | number:'1.1-1'}}</p>
             </div>
             <button id="GeneratorButton" class="generatorButton" (click)="BuyGeneratorTier()">
