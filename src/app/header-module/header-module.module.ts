@@ -7,6 +7,7 @@ import { WordsToGuessComponent } from './words-to-guess/words-to-guess.component
 import { PointsCounterComponent } from './points-counter/points-counter.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     WordsToGuessComponent,
     PointsCounterComponent
   ],
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, SharedModule],
   exports: [
     ChallengeTimerComponent,
     LettersPerSecondComponent,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Upgrade } from '../classes/upgrade';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UpgradeService {
   private basicUpgrades: Upgrade[] = [];
@@ -10,7 +10,7 @@ export class UpgradeService {
   private prestigeUpgrades: Upgrade[] = [];
   private multiUpgrades: Upgrade[] = [];
 
-  constructor() { 
+  constructor() {
     this.createBasicUpgrade(
       new Upgrade('First Upgrade of them all', 'x1.3 Points', 50, 1)
     );
@@ -63,9 +63,7 @@ export class UpgradeService {
     this.createBasicUpgrade(
       new Upgrade('Gacha. Yes, gacha', 'Unlocks Cards!', 100000, 9)
     );
-    this.createBasicUpgrade(
-      new Upgrade('3rd time', 'x2 points', 200000, 10)
-    );
+    this.createBasicUpgrade(new Upgrade('3rd time', 'x2 points', 200000, 10));
     this.createBasicUpgrade(
       new Upgrade(
         'You can challenge yourself to be better next time',
@@ -144,18 +142,36 @@ export class UpgradeService {
         4
       )
     );
+    this.createMultiUpgrade(
+      new Upgrade('You have to start somewhere', '+1 Point per Word', 50, 1)
+    );
+    this.createMultiUpgrade(
+      new Upgrade(
+        "I'm sure you can handle longer words, am i right?",
+        '+1 letter per word',
+        100,
+        2
+      )
+    );
+    this.createMultiUpgrade(
+      new Upgrade('Simple is better', 'x1.25 Points', 500, 3)
+    );
   }
 
   createBasicUpgrade(upgrade: Upgrade) {
-    this.basicUpgrades.push(upgrade)
+    this.basicUpgrades.push(upgrade);
   }
 
   createPassiveUpgrade(upgrade: Upgrade) {
-    this.passiveUpgrades.push(upgrade)
+    this.passiveUpgrades.push(upgrade);
   }
 
   createPrestigeUpgrade(upgrade: Upgrade) {
-    this.prestigeUpgrades.push(upgrade)
+    this.prestigeUpgrades.push(upgrade);
+  }
+
+  createMultiUpgrade(upgrade: Upgrade) {
+    this.multiUpgrades.push(upgrade);
   }
 
   getBasicUpgrades(): Upgrade[] {
@@ -168,5 +184,9 @@ export class UpgradeService {
 
   getPrestigeUpgrades(): Upgrade[] {
     return this.prestigeUpgrades;
+  }
+
+  getMultiUpgrades(): Upgrade[] {
+    return this.multiUpgrades;
   }
 }

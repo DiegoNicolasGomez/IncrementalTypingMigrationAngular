@@ -15,6 +15,8 @@ export class WordboxComponent {
   checkWord() {
     if(this.wordService.checkWordMatch(this.inputValue)) {
       this.wordService.wordShifted.next();
+      this.wordService.guessedWord(this.inputValue);
+      this.inputValue = '';
     }
   }
 }

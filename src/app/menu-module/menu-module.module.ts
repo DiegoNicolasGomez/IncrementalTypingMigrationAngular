@@ -10,7 +10,7 @@ import { PassiveMenuComponent } from './passive-menu/passive-menu.component';
 import { PrestigeMenuComponent } from './prestige-menu/prestige-menu.component';
 import { UpgradesMenuComponent } from './upgrades-menu/upgrades-menu.component';
 import { StatsMenuComponent } from './stats-menu/stats-menu.component';
-import { ExponentialNumberPipe } from '../pipes/exponential-number.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 export const routes: Routes = [
   { path: '', component: ActiveMenuComponent },
@@ -35,10 +35,9 @@ export const routes: Routes = [
     PassiveMenuComponent,
     PrestigeMenuComponent,
     UpgradesMenuComponent,
-    StatsMenuComponent,
-    ExponentialNumberPipe
+    StatsMenuComponent
   ],
-  imports: [CommonModule], 
+  imports: [CommonModule, SharedModule], 
   exports: [ AchievementsMenuComponent,
     ActiveMenuComponent,
     CardsMenuComponent,
@@ -47,7 +46,6 @@ export const routes: Routes = [
     PassiveMenuComponent,
     PrestigeMenuComponent,
     UpgradesMenuComponent,
-    StatsMenuComponent,
-    ExponentialNumberPipe]
+    StatsMenuComponent]
 })
 export class MenuModuleModule {}

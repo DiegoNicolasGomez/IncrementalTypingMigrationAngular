@@ -27,22 +27,22 @@ export class PassiveMenuComponent implements OnInit {
   }
 
   onGeneratorsChange(): void {
-    this.generators = this.gameService.game.passiveGenerators;
+    this.generators = this.gameService.game.value.passiveGenerators;
     this.cd.detectChanges(); // detect changes and update the view
   }
 
   createWord() {
     const passivePointsWord = document.querySelector('#passivePointsWord');
-    const portableGenerator = this.gameService.game.passiveGenerators.find(
+    const portableGenerator = this.gameService.game.value.passiveGenerators.find(
       (x) => x.name == 'Portable Generator'
     );
     if (!portableGenerator) return;
-    var passiveWord = this.GetRandomString(this.gameService.game.passiveLength);
+    var passiveWord = this.GetRandomString(this.gameService.game.value.passiveLength);
     if (passivePointsWord) passivePointsWord.textContent = passiveWord;
     var points = this.GetPassivePoints(passiveWord);
     points *= portableGenerator.amountGained;
     if (this.gameUtils.IsPurchasedUpgrade(4))
-      this.gameService.game.passivePoints += points;
+      this.gameService.updatePassivePoints(points);
   }
 
   // setInterval(this.createWord, this.gameService.game.passiveRate);
@@ -55,24 +55,24 @@ export class PassiveMenuComponent implements OnInit {
     if (this.gameUtils.HasCard(4))
       totalPoints +=
         2 *
-        this.gameService.game.cards.filter((x) => x.name === '+2 Passive Points (C)')
+        this.gameService.game.value.cards.filter((x) => x.name === '+2 Passive Points (C)')
           .length;
     if (this.gameUtils.HasCard(8))
       totalPoints +=
         5 *
-        this.gameService.game.cards.filter(
+        this.gameService.game.value.cards.filter(
           (x) => x.name === '+5 Passive Points (UC)'
         ).length;
     if (this.gameUtils.HasCard(15))
       totalPoints +=
         10 *
-        this.gameService.game.cards.filter(
+        this.gameService.game.value.cards.filter(
           (x) => x.name === '+10 Passive Points (E)'
         ).length;
     if (this.gameUtils.HasCard(21))
       totalPoints +=
         25 *
-        this.gameService.game.cards.filter(
+        this.gameService.game.value.cards.filter(
           (x) => x.name === '+25 Passive Points (L)'
         ).length;
     if (this.gameUtils.IsPurchasedPassiveUpgrade(2)) totalPoints += 5;
@@ -82,28 +82,28 @@ export class PassiveMenuComponent implements OnInit {
       totalPoints *=
         1 +
         0.1 *
-          this.gameService.game.cards.filter(
+          this.gameService.game.value.cards.filter(
             (x) => x.name === '10% Passive Points (C)'
           ).length;
     if (this.gameUtils.HasCard(7))
       totalPoints *=
         1 +
         0.25 *
-          this.gameService.game.cards.filter(
+          this.gameService.game.value.cards.filter(
             (x) => x.name === '25% Passive Points (UC)'
           ).length;
     if (this.gameUtils.HasCard(14))
       totalPoints *=
         1 +
         0.5 *
-          this.gameService.game.cards.filter(
+          this.gameService.game.value.cards.filter(
             (x) => x.name === '50% Passive Points (E)'
           ).length;
     if (this.gameUtils.HasCard(20))
       totalPoints *=
         1 +
         1 *
-          this.gameService.game.cards.filter(
+          this.gameService.game.value.cards.filter(
             (x) => x.name === 'x2 Passive Points (L)'
           ).length;
     return totalPoints;
@@ -131,35 +131,23 @@ export class PassiveMenuComponent implements OnInit {
   // }
 
   BuyGenerator(generatorNumber: number) {
-    const yourGenerator = this.gameService.game.passiveGenerators.find(
+    const yourGenerator = this.gameService.game.value.passiveGenerators.find(
       (x) => x.id == generatorNumber
     );
     if (!yourGenerator) return;
     if (generatorNumber == 1) {
-      if (this.gameService.game.passivePoints >= yourGenerator.cost) {
-        this.gameService.game.passivePoints -= yourGenerator.cost;
-        yourGenerator.amountBought++;
-        yourGenerator.amountGained++;
-        yourGenerator.cost =
-          yourGenerator.cost *
-          (yourGenerator.amountBought + 1) **
-            Math.log10(yourGenerator.amountBought + 1);
+      if (this.gameService.game.value.passivePoints >= yourGenerator.cost) {
+        this.gameService.updatePassivePoints(-yourGenerator.cost);
+        this.gameService.buyGenerator(yourGenerator.id)
       }
     } else {
       if (
-        this.gameService.game.passiveGenerators.find(
+        this.gameService.game.value.passiveGenerators.find(
           (x) => x.id == generatorNumber - 1
         )!.amountGained >= yourGenerator.cost
       ) {
-        this.gameService.game.passiveGenerators.find(
-          (x) => x.id == generatorNumber - 1
-        )!.amountGained -= yourGenerator.cost;
-        yourGenerator.amountBought++;
-        yourGenerator.amountGained++;
-        yourGenerator.cost =
-          yourGenerator.cost *
-          (yourGenerator.amountBought + 1) **
-            Math.log10(yourGenerator.amountBought + 1);
+        this.gameService.removeGenerators(generatorNumber - 1, yourGenerator.cost)
+        this.gameService.buyGenerator(yourGenerator.id)
       }
     }
     this.onGeneratorsChange();
@@ -167,22 +155,17 @@ export class PassiveMenuComponent implements OnInit {
 
   BuyGeneratorTier() {
     const generatorToBuy = this.passiveService.getGenerators().find(
-      (x) => x.id == this.gameService.game.passiveGenerators.length + 1
+      (x) => x.id == this.gameService.game.value.passiveGenerators.length + 1
     );
     if (!generatorToBuy) return;
     if (
-      this.gameService.game.passiveGenerators.find(
+      this.gameService.game.value.passiveGenerators.find(
         (x) => x.id == generatorToBuy.id - 1
       )!.amountGained >= generatorToBuy.cost
     ) {
-      this.gameService.game.passiveGenerators.find(
-        (x) => x.id == generatorToBuy.id - 1
-      )!.amountGained -= generatorToBuy.cost;
-      this.gameService.game.passiveGenerators.push(generatorToBuy);
-      this.gameService.game.passiveGenerators.find((x) => x.id == generatorToBuy.id)!
-        .amountBought++;
-      this.gameService.game.passiveGenerators.find((x) => x.id == generatorToBuy.id)!
-        .amountGained++;
+      this.gameService.removeGenerators(generatorToBuy.id - 1, generatorToBuy.cost);
+      this.gameService.addGenerator(generatorToBuy);
+      this.gameService.buyGenerator(generatorToBuy.id);
 
       const generator = document.querySelector(
         `#PassivePointsGenerator${generatorToBuy.id - 1}`
@@ -194,28 +177,16 @@ export class PassiveMenuComponent implements OnInit {
   }
 
   CalculatePassiveGenerators() {
-    if (this.gameService.game.passiveGenerators.length == 1) return;
+    if (this.gameService.game.value.passiveGenerators.length == 1) return;
     for (
       let index = 2;
-      index <= this.gameService.game.passiveGenerators.length;
+      index <= this.gameService.game.value.passiveGenerators.length;
       index++
     ) {
       if (this.gameUtils.IsPurchasedPassiveUpgrade(6)) {
-        this.gameService.game.passiveGenerators.find(
-          (x) => x.id == index - 1
-        )!.amountGained +=
-          this.gameService.game.passiveGenerators.find((x) => x.id == index)!
-            .amountGained *
-          this.gameService.game.passiveGenerators.reduce(
-            (acc, val) => acc + val.amountBought,
-            0
-          );
+        this.gameService.addGainedGeneratorsBoosted(index);
       } else {
-        this.gameService.game.passiveGenerators.find(
-          (x) => x.id == index - 1
-        )!.amountGained += this.gameService.game.passiveGenerators.find(
-          (x) => x.id == index
-        )!.amountGained;
+        this.gameService.addGainedGenerators(index);
       }
     }
   }

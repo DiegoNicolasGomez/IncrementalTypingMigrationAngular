@@ -77,20 +77,14 @@ export class UpgradesMenuComponent implements OnInit {
     console.log(upgradeNumber);
     if (!upgrade) return;
     if (
-      this.GameService.game.upgrades.find((x) => x.id == upgradeNumber) ==
-        undefined &&
-      this.GameService.game.points >= upgrade.cost
+      !this.GameService.game.value.upgrades.some((x) => x.id == upgradeNumber) &&
+      this.GameService.game.value.points >= upgrade.cost
     ) {
-      this.GameService.game.points -= upgrade.cost;
-      this.GameService.game.upgrades.push(upgrade);
+      this.GameService.updatePoints(-upgrade.cost);
+      this.GameService.addUpgrade(upgrade);
       if (upgradeNumber == 4) {
-        this.GameService.game.passiveGenerators.push(
-          this.generators.find((x) => x.id == 1)!
-        );
-        this.GameService.game.passiveGenerators.find((x) => x.id == 1)!
-          .amountBought++;
-        this.GameService.game.passiveGenerators.find((x) => x.id == 1)!
-          .amountGained++;
+        this.GameService.addGenerator(this.generators.find((x) => x.id == 1)!)
+        this.GameService.buyGenerator(1);
       }
     }
   }
@@ -101,13 +95,12 @@ export class UpgradesMenuComponent implements OnInit {
       .find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
     if (
-      this.GameService.game.passiveUpgrades.find((x) => x.id == upgradeNumber) ==
-        undefined &&
-      this.GameService.game.passivePoints >= upgrade.cost
+      this.GameService.game.value.passiveUpgrades.some((x) => x.id == upgradeNumber) &&
+      this.GameService.game.value.passivePoints >= upgrade.cost
     ) {
-      this.GameService.game.passivePoints -= upgrade.cost;
-      this.GameService.game.passiveUpgrades.push(upgrade);
-      if (upgradeNumber == 4) this.GameService.game.passiveLength++;
+      this.GameService.updatePassivePoints(-upgrade.cost);
+      this.GameService.addPassiveUpgrade(upgrade);
+      if (upgradeNumber == 4) this.GameService.updatePassiveLength();
     }
   }
 
@@ -117,25 +110,24 @@ export class UpgradesMenuComponent implements OnInit {
       .find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
     if (
-      this.GameService.game.passiveUpgrades.find((x) => x.id == upgradeNumber) ==
-        undefined &&
-      this.GameService.game.prestigePoints >= upgrade.cost
+      !this.GameService.game.value.passiveUpgrades.some((x) => x.id == upgradeNumber)  &&
+      this.GameService.game.value.prestigePoints >= upgrade.cost
     ) {
-      this.GameService.game.prestigePoints -= upgrade.cost;
-      this.GameService.game.prestigeUpgrades.push(upgrade);
-      if (upgradeNumber == 1) this.GameService.game.rollsAmount += 2;
+      this.GameService.updatePrestigePoints(-upgrade.cost);
+      this.GameService.addPrestigeUpgrade(upgrade);
+      if (upgradeNumber == 1) this.GameService.updateRollsAmount(2);
     }
   }
 
   isUpgradeActive(index: number):  boolean {
-    return this.GameService.game.upgrades.some((x) => x.id == index)
+    return this.GameService.game.value.upgrades.some((x) => x.id == index)
   }
 
   isPassiveUpgradeActive(index: number):  boolean {
-    return this.GameService.game.passiveUpgrades.some((x) => x.id == index)
+    return this.GameService.game.value.passiveUpgrades.some((x) => x.id == index)
   }
 
   isPrestigeUpgradeActive(index: number):  boolean {
-    return this.GameService.game.prestigeUpgrades.some((x) => x.id == index)
+    return this.GameService.game.value.prestigeUpgrades.some((x) => x.id == index)
   }
 }

@@ -11,7 +11,7 @@ import { HeaderModuleModule } from './header-module/header-module.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
