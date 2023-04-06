@@ -34,6 +34,7 @@ export class UpgradesMenuComponent implements OnInit {
 
   currentBasicUpgradeName: string = 'Hover and upgrade to see its description';
   currentBasicUpgradeDesc: string = '';
+  currentBasicUpgradeCost: string = 'Cost: -';
   
   ChangeBasicUpgradesText(upgradeNumber: number) {
 
@@ -42,10 +43,12 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentBasicUpgradeName = upgrade.name;
     this.currentBasicUpgradeDesc = upgrade.description;
+    this.currentBasicUpgradeCost = `Cost: ${upgrade.cost}`;
   }
 
   currentPassiveUpgradeName: string = 'Hover and upgrade to see its description';
   currentPassiveUpgradeDesc: string = '';
+  currentPassiveUpgradeCost: string = 'Cost: -';
 
   ChangePassiveUpgradesText(upgradeNumber: number) {
 
@@ -54,10 +57,12 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentPassiveUpgradeName = upgrade.name;
     this.currentPassiveUpgradeDesc = upgrade.description;
+    this.currentPassiveUpgradeCost = `Cost: ${upgrade.cost}`;
   }
 
   currentPrestigeUpgradeName: string = 'Hover and upgrade to see its description';
   currentPrestigeUpgradeDesc: string = '';
+  currentPrestigeUpgradeCost: string = 'Cost: -';
 
   ChangePrestigeUpgradesText(upgradeNumber: number) {
 
@@ -66,6 +71,7 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentPrestigeUpgradeName = upgrade.name;
     this.currentPrestigeUpgradeDesc = upgrade.description;
+    this.currentPrestigeUpgradeCost = `Cost: ${upgrade.cost}`;
   }
 
   getNumberToChar(number: number): string {

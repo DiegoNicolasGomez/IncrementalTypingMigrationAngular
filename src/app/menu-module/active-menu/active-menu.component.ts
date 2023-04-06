@@ -42,6 +42,7 @@ export class ActiveMenuComponent implements OnInit {
       );
       if (!upgradeBought) return;
 
+      console.log(upgradeNumber);
       this.gameService.buyMultiUpgrade(upgradeNumber);
 
       this.gameService.setMultiUpgradeCost(upgradeNumber, 1);

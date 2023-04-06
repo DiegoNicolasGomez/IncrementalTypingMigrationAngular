@@ -9,7 +9,7 @@ import { Generator } from '../classes/generator';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(0));
+  game = new BehaviorSubject<Game>(new Game(1000000000));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -93,14 +93,15 @@ export class GameService {
 
   buyMultiUpgrade(id: number) {
     const game = this.game.value;
-    const upgrade = game.multiUpgrades.find((x) => x.id);
+    const upgrade = game.multiUpgrades.find((x) => x.id == id);
+    console.log(upgrade);
     upgrade!.amountBought++;
     this.game.next(game);
   }
 
   setMultiUpgradeCost(id: number, bonus: number) {
     const game = this.game.value;
-    const upgrade = game.multiUpgrades.find((x) => x.id);
+    const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=
       (upgrade!.amountBought / bonus + 1) ** Math.log10(upgrade!.amountBought / bonus + 1);
     this.game.next(game);

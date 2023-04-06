@@ -11,6 +11,6 @@ export class PointsCounterComponent {
   points$: Observable<number>;
 
   constructor(private gameService: GameService) {
-    this.points$ = this.gameService.getGame().pipe(map(x => x.points))
+    this.points$ = this.gameService.getGame().pipe(map(x => x.points));
   }
 }

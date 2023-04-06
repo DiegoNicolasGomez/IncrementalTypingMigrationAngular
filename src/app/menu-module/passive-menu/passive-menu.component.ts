@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
 import { GameUtils } from '../../utils/utils';
 import { ActiveService } from 'src/app/services/active.service';
 import { PassiveService } from 'src/app/services/passive.service';
 import { GameService } from 'src/app/services/game.service';
 import { Generator } from '../../classes/generator';
+import { BehaviorSubject, interval, map, Observable, of, switchMap } from 'rxjs';
 // import translator from "./translator";
 
 @Component({
@@ -14,121 +15,33 @@ import { Generator } from '../../classes/generator';
 export class PassiveMenuComponent implements OnInit {
 
   generators: Generator[] = [];
+  wordInterval$ = interval(5000);
+  passiveWord$: Observable<string>;
+  passivePoints$: Observable<number>;
+  nextTierGeneratorsCost$: Observable<number>; 
 
   constructor(private activeService: ActiveService, 
     private passiveService: PassiveService, 
-    private cd: ChangeDetectorRef,
-    private gameService: GameService) {}
+    private gameService: GameService) {
+      this.passiveWord$ = this.passiveService.getPassiveWord();
+      
+      this.passivePoints$ = this.gameService.getGame().pipe(map(x => x.passivePoints));
+
+      this.nextTierGeneratorsCost$ = this.gameService.getGame().pipe(map(game => {
+        const nextTierGenerators = this.passiveService.getGenerators().find(generator => generator.id === game.passiveGenerators.length + 1);
+      return nextTierGenerators ? nextTierGenerators.cost : 0;
+      }));
+    }
 
   gameUtils = new GameUtils(this.gameService);
 
   ngOnInit() {
-    this.generators = this.passiveService.getGenerators();
+    this.generators = this.gameService.game.value.passiveGenerators;
   }
 
   onGeneratorsChange(): void {
     this.generators = this.gameService.game.value.passiveGenerators;
-    this.cd.detectChanges(); // detect changes and update the view
   }
-
-  createWord() {
-    const passivePointsWord = document.querySelector('#passivePointsWord');
-    const portableGenerator = this.gameService.game.value.passiveGenerators.find(
-      (x) => x.name == 'Portable Generator'
-    );
-    if (!portableGenerator) return;
-    var passiveWord = this.GetRandomString(this.gameService.game.value.passiveLength);
-    if (passivePointsWord) passivePointsWord.textContent = passiveWord;
-    var points = this.GetPassivePoints(passiveWord);
-    points *= portableGenerator.amountGained;
-    if (this.gameUtils.IsPurchasedUpgrade(4))
-      this.gameService.updatePassivePoints(points);
-  }
-
-  // setInterval(this.createWord, this.gameService.game.passiveRate);
-
-  GetPassivePoints(passiveWord: string) {
-    var totalPoints = 0;
-    totalPoints += passiveWord.length;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(4))
-      totalPoints += this.activeService.GetPointsLetters(passiveWord);
-    if (this.gameUtils.HasCard(4))
-      totalPoints +=
-        2 *
-        this.gameService.game.value.cards.filter((x) => x.name === '+2 Passive Points (C)')
-          .length;
-    if (this.gameUtils.HasCard(8))
-      totalPoints +=
-        5 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+5 Passive Points (UC)'
-        ).length;
-    if (this.gameUtils.HasCard(15))
-      totalPoints +=
-        10 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+10 Passive Points (E)'
-        ).length;
-    if (this.gameUtils.HasCard(21))
-      totalPoints +=
-        25 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+25 Passive Points (L)'
-        ).length;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(2)) totalPoints += 5;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(1)) totalPoints *= 1.25;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(3)) totalPoints *= 1.5;
-    if (this.gameUtils.HasCard(3))
-      totalPoints *=
-        1 +
-        0.1 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '10% Passive Points (C)'
-          ).length;
-    if (this.gameUtils.HasCard(7))
-      totalPoints *=
-        1 +
-        0.25 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '25% Passive Points (UC)'
-          ).length;
-    if (this.gameUtils.HasCard(14))
-      totalPoints *=
-        1 +
-        0.5 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '50% Passive Points (E)'
-          ).length;
-    if (this.gameUtils.HasCard(20))
-      totalPoints *=
-        1 +
-        1 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'x2 Passive Points (L)'
-          ).length;
-    return totalPoints;
-  }
-
-  GetRandomString(lettersAmount: number) {
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let randomString: string = '';
-    for (let i = 0; i < lettersAmount; i++) {
-      randomString += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return randomString;
-  }
-  
-  // SetGenerators() {
-  //   if (GeneratorButton)
-  //     GeneratorButton.textContent = `${translator.t('tierCurrency')} | ${translator.t('cost')} ${
-  //       generators.find(
-  //         (x) => x.id == this.gameService.game.passiveGenerators.length + 1
-  //       )!.cost
-  //     } ${translator.t('tierCurrencyAddition')}`;
-  // }
 
   BuyGenerator(generatorNumber: number) {
     const yourGenerator = this.gameService.game.value.passiveGenerators.find(
@@ -174,20 +87,5 @@ export class PassiveMenuComponent implements OnInit {
         generator.style.display = 'block';
     }
     this.onGeneratorsChange();
-  }
-
-  CalculatePassiveGenerators() {
-    if (this.gameService.game.value.passiveGenerators.length == 1) return;
-    for (
-      let index = 2;
-      index <= this.gameService.game.value.passiveGenerators.length;
-      index++
-    ) {
-      if (this.gameUtils.IsPurchasedPassiveUpgrade(6)) {
-        this.gameService.addGainedGeneratorsBoosted(index);
-      } else {
-        this.gameService.addGainedGenerators(index);
-      }
-    }
   }
 }

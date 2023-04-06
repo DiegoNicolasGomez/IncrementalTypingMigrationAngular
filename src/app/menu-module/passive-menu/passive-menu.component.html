@@ -1,8 +1,8 @@
 <section id="passiveMenu">
     <div id="PassivePointsWrapper" class="passivePointsWrapper">
         <div id="PassivePointsLeft" class="passivePointsLeft">
-            <p id="passivePointsWord" class="passivePointsWord"></p>
-            <p id="passivePoints" class="passivePoints"></p>
+            <p id="passivePointsWord" class="passivePointsWord">{{ passiveWord$ | async }}</p>
+            <p id="passivePoints" class="passivePoints">{{ (passivePoints$ | async) ?? 0 | exponentialNumber }}</p>
         </div>
 
         <div id="PassivePointsRight" class="passivePointsRight">
@@ -10,7 +10,7 @@
                 <p>{{generator.name}} | Generators: {{generator.amountGained | number:'1.1-1'}} (Bought: {{generator.amountBought}}) | Cost: {{generator.cost | number:'1.1-1'}}</p>
             </div>
             <button id="GeneratorButton" class="generatorButton" (click)="BuyGeneratorTier()">
-                Buy the next Tier of Generators! | Cost
+                Buy the next Tier of Generators! | Cost {{ (nextTierGeneratorsCost$ | async) | number:'1.1-1' }}
             </button>
         </div>
     </div>
