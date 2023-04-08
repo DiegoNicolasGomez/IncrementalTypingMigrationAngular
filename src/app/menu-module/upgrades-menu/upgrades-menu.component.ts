@@ -5,6 +5,7 @@ import { GameService } from 'src/app/services/game.service';
 import { Upgrade } from '../../classes/upgrade';
 import { Generator } from '../../classes/generator';
 import { MenuService } from 'src/app/services/menu.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-upgrades-menu',
@@ -16,7 +17,8 @@ export class UpgradesMenuComponent implements OnInit {
     private upgradeService: UpgradeService,
     private passiveService: PassiveService,
     private GameService: GameService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private layoutService: LayoutService
   ) {}
 
   basicUpgrades: Upgrade[] = [];
@@ -90,6 +92,9 @@ export class UpgradesMenuComponent implements OnInit {
     ) {
       this.GameService.updatePoints(-upgrade.cost);
       this.GameService.addUpgrade(upgrade);
+      if(upgradeNumber == 3) {
+        this.layoutService.setLettersPerSecondVisibility(true);
+      }
       if (upgradeNumber == 4) {
         this.GameService.addGenerator(this.generators.find((x) => x.id == 1)!)
         this.GameService.buyGenerator(1);

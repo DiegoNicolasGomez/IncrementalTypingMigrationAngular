@@ -1,4 +1,5 @@
 <div id="WordWrapper" class="wordWrapper">
+    <p *ngIf="isCounterVisible()" id="LettersPerSecond" class="lettersPerSecond"> LPS: {{ lettersPerSecond | number:'1.1-1' }}</p>
     <input type="text" id="WordBox" class="wordBox" name="WordBox" [(ngModel)]="inputValue" (keyup)="checkWord()"/>
     <div id="gameButtonWrapper" class="gameButtonWrapper hoverEffectContainer">
         <button id="saveButton" class="gameButton hoverEffectChild">
