@@ -18,7 +18,6 @@ export class WordsToGuessComponent implements OnInit {
 
   constructor(private wordService: WordsService, private http: HttpClient) {
     this.http.get(this.wordListUrl, { responseType: 'text' } ).subscribe((response) => {
-      console.log(response);
       const wordList = response.split("\n");
       this.wordService.wordList = wordList;
       this.setWords();

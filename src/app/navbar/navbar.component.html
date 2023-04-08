@@ -1,29 +1,8 @@
 <div id="TabsContainer" class="tabsContainer hoverEffectContainer">
-    <button id="activeMenuButton" class="menuButton hoverEffectChild" routerLink="/activeMenu">
-        Active
-    </button>
-    <button id="passiveMenuButton" class="menuButton hoverEffectChild" routerLink="/passiveMenu">
-        Passive
-    </button>
-    <button id="upgradesMenuButton" class="menuButton hoverEffectChild" routerLink="/upgradesMenu">
-        Upgrades
-    </button>
-    <button id="challengesMenuButton" class="menuButton hoverEffectChild" routerLink="/challengesMenu" style="display: none">
-        Challenges
-    </button>
-    <button id="prestigeMenuButton" class="menuButton hoverEffectChild" routerLink="/prestigeMenu" style="display: none">
-        Prestige
-    </button>
-    <button id="cardsMenuButton" class="menuButton hoverEffectChild" routerLink="/cardsMenu" style="display: none">
-        Cards
-    </button>
-    <button id="achievementsMenuButton" class="menuButton hoverEffectChild" routerLink="/achievementsMenu" style="display: none">
-        Achievements
-    </button>
-    <button id="statsMenuButton" class="menuButton hoverEffectChild" routerLink="/statsMenu">
-        Stats
-    </button>
-    <button id="optionsMenuButton" class="menuButton hoverEffectChild" routerLink="/optionsMenu">
-        Options
-    </button>
+    <ng-container *ngFor="let item of navbarItems">
+        <button id="{{item.id}}MenuButton" class="menuButton hoverEffectChild" 
+            [routerLink]="['/', item.id + 'Menu']" *ngIf="item.visible"> 
+            {{ item.id | titlecase }}
+        </button>
+    </ng-container>
 </div>

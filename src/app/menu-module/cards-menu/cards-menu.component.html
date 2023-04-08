@@ -1,7 +1,11 @@
 <section id="cardsMenu">
     <div id="cardsHeaderContainer" class="cardsHeaderContainer">
-        <button id="cardsButton" class="cardsButton"></button>
+        <button id="cardsButton" class="cardsButton" (click)="getPack()">Get a Pack! | Cost: {{(cardsCost$ | async) ?? 0}}</button>
     </div>
     <p id="cardBonus" class="cardBonus"></p>
-    <div id="cardsContainer" class="cardsContainer"></div>
+    <div id="cardsContainer" class="cardsContainer">
+        <div *ngFor="let card of (cardsDisplayed$ | async)" [ngClass]="getCardType(card)" class="normalCard">
+            {{card.description}}
+        </div>
+    </div>
 </section>

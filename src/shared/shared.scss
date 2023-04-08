@@ -13,3 +13,59 @@
     transition: transform 50ms ease-in;
   }
   
+  .commonCard {
+    border: 5px solid var(--green);
+    background: var(--green);
+    color: var(--black-900);
+  }
+  
+  .uncommonCard {
+    border: 5px solid var(--primary-400);
+    background: var(--primary-400);
+    color: var(--black-900);
+  }
+  
+  .epicCard {
+    border: 5px solid var(--fucsia);
+    background: linear-gradient(to bottom, var(--fucsia), var(--black-900), var(--fucsia));
+    color: var(--fucsia);
+  }
+  
+  .legendaryCard {
+    animation: background-pan 2s linear infinite;
+    border: 5px solid var(--golden);
+    background: linear-gradient(to bottom, var(--golden), var(--black-900), var(--golden));
+    color: rgb(240, 240, 240);
+  }
+
+  @keyframes background-pan {
+    from {
+      background-position-x: 0%;
+    }
+  
+    to {
+      background-position-x: -200%;
+    }
+  }
+  
+  @keyframes scale {
+    from,
+    to {
+      transform: scale(0);
+    }
+  
+    50% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+      transform: rotate(180deg);
+    }
+  }
+  

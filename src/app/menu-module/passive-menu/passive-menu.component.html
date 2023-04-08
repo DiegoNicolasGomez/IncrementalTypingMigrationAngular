@@ -6,9 +6,11 @@
         </div>
 
         <div id="PassivePointsRight" class="passivePointsRight">
-            <div *ngFor="let generator of generators" class="passivePointsGenerator" (click)="BuyGenerator(generator.id)">
-                <p>{{generator.name}} | Generators: {{generator.amountGained | number:'1.1-1'}} (Bought: {{generator.amountBought}}) | Cost: {{generator.cost | number:'1.1-1'}}</p>
-            </div>
+            <ng-container *ngFor="let generator of generators">
+                <div *ngIf="shouldDisplayGenerator(generator.id)" class="passivePointsGenerator" (click)="BuyGenerator(generator.id)">
+                    <p>{{generator.name}} | Generators: {{generator.amountGained | number:'1.1-1'}} (Bought: {{generator.amountBought}}) | Cost: {{generator.cost | number:'1.1-1'}}</p>
+                </div>
+            </ng-container>
             <button id="GeneratorButton" class="generatorButton" (click)="BuyGeneratorTier()">
                 Buy the next Tier of Generators! | Cost {{ (nextTierGeneratorsCost$ | async) | number:'1.1-1' }}
             </button>

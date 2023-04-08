@@ -1,0 +1,7 @@
+<div id="overlay" class="overlay"></div>
+<div id="light" class="light"></div>
+<div id="viewerCardsContainer" class="viewerCardsContainer" (click)="removeOverlay()">
+    <div *ngFor="let card of cards" [ngClass]="getCardType(card)" class="singleCard">
+        {{card.description}}
+    </div>
+</div>

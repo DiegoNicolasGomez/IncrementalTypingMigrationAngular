@@ -51,8 +51,6 @@ export class WordsService {
   }
 
   guessedWord(word: string) {
-    console.log(word);
-    console.log(this.gameService.game.value);
     var pointsLetters = word.length;
     var lettersValue = this.activeService.GetPointsLetters(word);
 

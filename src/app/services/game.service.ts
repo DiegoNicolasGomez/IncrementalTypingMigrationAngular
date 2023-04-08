@@ -4,6 +4,7 @@ import { Achievement } from '../classes/achievement';
 import { Game } from '../classes/game';
 import { Upgrade } from '../classes/upgrade';
 import { Generator } from '../classes/generator';
+import { Card } from '../classes/card';
 
 @Injectable({
   providedIn: 'root',
@@ -19,30 +20,20 @@ export class GameService {
     return this.game.asObservable();
   }
 
+  //Game
+
   updatePoints(points: number) {
     const game = this.game.value;
     game.points += points;
     this.game.next(game);
   }
-
-  updatePassivePoints(points: number) {
-    const game = this.game.value;
-    game.passivePoints += points;
-    this.game.next(game);
-  }
-
-  updatePrestigePoints(points: number) {
-    const game = this.game.value;
-    game.prestigePoints += points;
-    this.game.next(game);
-  }
-
+  
   updateAllTimePoints(points: number) {
     const game = this.game.value;
     game.allTimePoints += points;
     this.game.next(game);
   }
-
+  
   updateWordsAmount() {
     const game = this.game.value;
     game.wordsAmount++;
@@ -61,49 +52,23 @@ export class GameService {
     this.game.next(game);
   }
 
-  addAchievement(achievement: Achievement) {
+  //Passive
+
+  updatePassivePoints(points: number) {
     const game = this.game.value;
-    game.achievements.push(achievement);
+    game.passivePoints += points;
     this.game.next(game);
   }
 
-  addUpgrade(upgrade: Upgrade) {
+  updatePassiveLength(number: number) {
     const game = this.game.value;
-    game.upgrades.push(upgrade);
+    game.passiveLength += number;
     this.game.next(game);
   }
 
-  addPassiveUpgrade(upgrade: Upgrade) {
+  updatePassiveRate(passiveRatePercentage: number) {
     const game = this.game.value;
-    game.passiveUpgrades.push(upgrade);
-    this.game.next(game);
-  }
-
-  addPrestigeUpgrade(upgrade: Upgrade) {
-    const game = this.game.value;
-    game.prestigeUpgrades.push(upgrade);
-    this.game.next(game);
-  }
-
-  addMultiUpgrade(upgrade: Upgrade) {
-    const game = this.game.value;
-    game.multiUpgrades.push(upgrade);
-    this.game.next(game);
-  }
-
-  buyMultiUpgrade(id: number) {
-    const game = this.game.value;
-    const upgrade = game.multiUpgrades.find((x) => x.id == id);
-    console.log(upgrade);
-    upgrade!.amountBought++;
-    this.game.next(game);
-  }
-
-  setMultiUpgradeCost(id: number, bonus: number) {
-    const game = this.game.value;
-    const upgrade = game.multiUpgrades.find((x) => x.id == id);
-    upgrade!.cost *=
-      (upgrade!.amountBought / bonus + 1) ** Math.log10(upgrade!.amountBought / bonus + 1);
+    game.passiveRate -= game.passiveRate * passiveRatePercentage / 100;
     this.game.next(game);
   }
 
@@ -149,15 +114,81 @@ export class GameService {
     this.game.next(game);
   }
 
-  updatePassiveLength() {
+  //Prestige
+
+  updatePrestigePoints(points: number) {
     const game = this.game.value;
-    game.passiveLength++;
+    game.prestigePoints += points;
     this.game.next(game);
   }
+
+  //Achievement
+
+  addAchievement(achievement: Achievement) {
+    const game = this.game.value;
+    game.achievements.push(achievement);
+    this.game.next(game);
+  }
+
+  //Upgrades
+
+  addUpgrade(upgrade: Upgrade) {
+    const game = this.game.value;
+    game.upgrades.push(upgrade);
+    this.game.next(game);
+  }
+
+  addPassiveUpgrade(upgrade: Upgrade) {
+    const game = this.game.value;
+    game.passiveUpgrades.push(upgrade);
+    this.game.next(game);
+  }
+
+  addPrestigeUpgrade(upgrade: Upgrade) {
+    const game = this.game.value;
+    game.prestigeUpgrades.push(upgrade);
+    this.game.next(game);
+  }
+
+  addMultiUpgrade(upgrade: Upgrade) {
+    const game = this.game.value;
+    game.multiUpgrades.push(upgrade);
+    this.game.next(game);
+  }
+
+  buyMultiUpgrade(id: number) {
+    const game = this.game.value;
+    const upgrade = game.multiUpgrades.find((x) => x.id == id);
+    console.log(upgrade);
+    upgrade!.amountBought++;
+    this.game.next(game);
+  }
+
+  setMultiUpgradeCost(id: number, bonus: number) {
+    const game = this.game.value;
+    const upgrade = game.multiUpgrades.find((x) => x.id == id);
+    upgrade!.cost *=
+      (upgrade!.amountBought / bonus + 1) ** Math.log10(upgrade!.amountBought / bonus + 1);
+    this.game.next(game);
+  }
+
+  //Cards
 
   updateRollsAmount(amount: number) {
     const game = this.game.value;
     game.rollsAmount += amount;
+    this.game.next(game);
+  }
+
+  updateCardsCost() {
+    const game = this.game.value;
+    game.cardCost = 100000 * 2 ** (game.cards.length / game.rollsAmount);
+    this.game.next(game);
+  }
+
+  addCard(card: Card) {
+    const game = this.game.value;
+    game.cards.push(card);
     this.game.next(game);
   }
 }

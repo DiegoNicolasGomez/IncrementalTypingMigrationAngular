@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MenuModuleModule } from './menu-module/menu-module.module';
 import { HeaderModuleModule } from './header-module/header-module.module';
+import { OverlayComponent } from './overlay/overlay.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    OverlayComponent
   ],
   imports: [
     BrowserModule,

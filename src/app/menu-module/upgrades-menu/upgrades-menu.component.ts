@@ -4,6 +4,7 @@ import { UpgradeService } from 'src/app/services/upgrade.service';
 import { GameService } from 'src/app/services/game.service';
 import { Upgrade } from '../../classes/upgrade';
 import { Generator } from '../../classes/generator';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-upgrades-menu',
@@ -14,7 +15,8 @@ export class UpgradesMenuComponent implements OnInit {
   constructor(
     private upgradeService: UpgradeService,
     private passiveService: PassiveService,
-    private GameService: GameService
+    private GameService: GameService,
+    private menuService: MenuService
   ) {}
 
   basicUpgrades: Upgrade[] = [];
@@ -91,6 +93,13 @@ export class UpgradesMenuComponent implements OnInit {
       if (upgradeNumber == 4) {
         this.GameService.addGenerator(this.generators.find((x) => x.id == 1)!)
         this.GameService.buyGenerator(1);
+        this.menuService.updateNavbarItem('passive');
+      }
+      if(upgradeNumber == 9) {
+        this.menuService.updateNavbarItem('cards');
+      }
+      if(upgradeNumber == 11) {
+        this.menuService.updateNavbarItem('challenges');
       }
     }
   }
@@ -106,7 +115,7 @@ export class UpgradesMenuComponent implements OnInit {
     ) {
       this.GameService.updatePassivePoints(-upgrade.cost);
       this.GameService.addPassiveUpgrade(upgrade);
-      if (upgradeNumber == 4) this.GameService.updatePassiveLength();
+      if (upgradeNumber == 4) this.GameService.updatePassiveLength(1);
     }
   }
 

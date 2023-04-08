@@ -23,7 +23,7 @@ export class Card {
     }
   }
   
-  enum BonusType {
+  export enum BonusType {
     PointsPercentage = 'PointsPercentage',
     PointsAmount = 'PointsAmount',
     PassivePointsPercentage = 'PassivePointsPercentage',
@@ -33,7 +33,7 @@ export class Card {
     Lowercase = 'Lowercase' 
   }
   
-  enum CardType {
+  export enum CardType {
     Common = 'Common',
     Uncommon = 'Uncommon',
     Epic = 'Epic',
