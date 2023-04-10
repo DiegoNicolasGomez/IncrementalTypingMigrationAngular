@@ -91,7 +91,6 @@ export class PassiveMenuComponent implements OnInit {
 
   shouldDisplayGenerator(id: number): boolean {
     const game = this.gameService.game.value;
-    console.log(game.passiveGenerators.length);
     return game.passiveGenerators.length >= id;
   }
 }

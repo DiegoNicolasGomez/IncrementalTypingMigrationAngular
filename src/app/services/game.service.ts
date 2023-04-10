@@ -5,6 +5,8 @@ import { Game } from '../classes/game';
 import { Upgrade } from '../classes/upgrade';
 import { Generator } from '../classes/generator';
 import { Card } from '../classes/card';
+import { GameUtils } from '../utils/utils';
+import { UpgradeService } from './upgrade.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +18,14 @@ export class GameService {
 
   constructor() {}
 
+  gameUtils = new GameUtils(this);
+
   getGame(): Observable<Game> {
     return this.game.asObservable();
+  }
+
+  loadGame(game: Game) {
+    this.game.next(game);
   }
 
   //Game
@@ -27,13 +35,13 @@ export class GameService {
     game.points += points;
     this.game.next(game);
   }
-  
+
   updateAllTimePoints(points: number) {
     const game = this.game.value;
     game.allTimePoints += points;
     this.game.next(game);
   }
-  
+
   updateWordsAmount() {
     const game = this.game.value;
     game.wordsAmount++;
@@ -68,7 +76,7 @@ export class GameService {
 
   updatePassiveRate(passiveRatePercentage: number) {
     const game = this.game.value;
-    game.passiveRate -= game.passiveRate * passiveRatePercentage / 100;
+    game.passiveRate -= (game.passiveRate * passiveRatePercentage) / 100;
     this.game.next(game);
   }
 
@@ -122,6 +130,27 @@ export class GameService {
     this.game.next(game);
   }
 
+  updatePrestige() {
+    const game = this.game.value;
+    game.prestigePoints = Math.round(Math.cbrt(game.allTimePoints));
+    game.prestigeCount++;
+    game.points = 0;
+    game.allTimePoints = 0;
+    game.upgrades = [];
+    game.maxLength = 4;
+    game.bestWord = '';
+    game.multiUpgrades = [];
+    game.wordsAmount = 0;
+    game.passiveUpgrades = [];
+    game.passiveLength = 4;
+    game.passivePoints = 0;
+    game.passiveRate = 1000;
+    game.cards = [];
+    game.cardCost = 0;
+    game.isInChallenge = false;
+    this.game.next(game);
+  }
+
   //Achievement
 
   addAchievement(achievement: Achievement) {
@@ -159,7 +188,6 @@ export class GameService {
   buyMultiUpgrade(id: number) {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
-    console.log(upgrade);
     upgrade!.amountBought++;
     this.game.next(game);
   }
@@ -168,7 +196,8 @@ export class GameService {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=
-      (upgrade!.amountBought / bonus + 1) ** Math.log10(upgrade!.amountBought / bonus + 1);
+      (upgrade!.amountBought / bonus + 1) **
+      Math.log10(upgrade!.amountBought / bonus + 1);
     this.game.next(game);
   }
 

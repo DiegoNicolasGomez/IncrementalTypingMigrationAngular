@@ -56,4 +56,12 @@ export class GameUtils {
         return 'legendaryCard';
     }
   }
+
+  getProperty<T>(obj: Record<string, unknown>, propertyName: string, defaultValue: T): T {
+    if (propertyName in obj) {
+      return obj[propertyName] as T;
+    } else {
+      return defaultValue;
+    }
+  }
 }

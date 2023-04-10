@@ -54,14 +54,11 @@ export class OverlayComponent {
 
   showOverlay() {
     if (this.cards.length == 0) return;
-    console.log('Reached!');
     const overlay = this.el.nativeElement.querySelector('#overlay');
     const light = this.el.nativeElement.querySelector('#light');
     const viewerCardsContainer = this.el.nativeElement.querySelector(
       '#viewerCardsContainer'
     );
-    console.log(this.el.nativeElement);
-    console.log(overlay);
     this.renderer.addClass(overlay, 'show');
     this.renderer.addClass(light, 'show');
     this.renderer.addClass(viewerCardsContainer, 'viewerActive');

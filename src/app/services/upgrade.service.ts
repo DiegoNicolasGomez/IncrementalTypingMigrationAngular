@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Upgrade } from '../classes/upgrade';
+import { GameService } from './game.service';
+import { LayoutService } from './layout.service';
+import { PassiveService } from './passive.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +13,7 @@ export class UpgradeService {
   private prestigeUpgrades: Upgrade[] = [];
   private multiUpgrades: Upgrade[] = [];
 
-  constructor() {
+  constructor(private gameService: GameService, private layoutService: LayoutService, private passiveService: PassiveService) {
     this.createBasicUpgrade(
       new Upgrade('First Upgrade of them all', 'x1.3 Points', 50, 1)
     );
@@ -188,5 +191,61 @@ export class UpgradeService {
 
   getMultiUpgrades(): Upgrade[] {
     return this.multiUpgrades;
+  }
+
+  getUpgrade(upgradeNumber: number) {
+    const upgrade = this.basicUpgrades.find((x) => x.id == upgradeNumber);
+    console.log(upgradeNumber);
+    if (!upgrade) return;
+    if (
+      !this.gameService.game.value.upgrades.some(
+        (x) => x.id == upgradeNumber
+      ) &&
+      this.gameService.game.value.points >= upgrade.cost
+    ) {
+      this.gameService.updatePoints(-upgrade.cost);
+      this.gameService.addUpgrade(upgrade);
+      if (upgradeNumber == 3) {
+        this.layoutService.setLettersPerSecondVisibility(true);
+      }
+      if (upgradeNumber == 4) {
+        this.gameService.addGenerator(this.passiveService.generators.find((x) => x.id == 1)!);
+        this.gameService.buyGenerator(1);
+      }
+    }
+  }
+
+  getPassiveUpgrade(upgradeNumber: number) {
+    const upgrade = this.getPassiveUpgrades().find(
+      (x) => x.id == upgradeNumber
+    );
+    if (!upgrade) return;
+    if (
+      this.gameService.game.value.passiveUpgrades.some(
+        (x) => x.id == upgradeNumber
+      ) &&
+      this.gameService.game.value.passivePoints >= upgrade.cost
+    ) {
+      this.gameService.updatePassivePoints(-upgrade.cost);
+      this.gameService.addPassiveUpgrade(upgrade);
+      if (upgradeNumber == 4) this.gameService.updatePassiveLength(1);
+    }
+  }
+
+  getPrestigeUpgrade(upgradeNumber: number) {
+    const upgrade = this.getPrestigeUpgrades().find(
+      (x) => x.id == upgradeNumber
+    );
+    if (!upgrade) return;
+    if (
+      !this.gameService.game.value.passiveUpgrades.some(
+        (x) => x.id == upgradeNumber
+      ) &&
+      this.gameService.game.value.prestigePoints >= upgrade.cost
+    ) {
+      this.gameService.updatePrestigePoints(-upgrade.cost);
+      this.gameService.addPrestigeUpgrade(upgrade);
+      if (upgradeNumber == 1) this.gameService.updateRollsAmount(2);
+    }
   }
 }

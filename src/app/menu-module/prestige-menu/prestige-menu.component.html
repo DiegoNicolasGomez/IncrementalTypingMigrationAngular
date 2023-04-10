@@ -1,7 +1,7 @@
 <section id="prestigeMenu">
     <div id="prestigePointsContainer" class="prestigePointsContainer">
-        <p id="prestigePointsToGet"></p>
-        <p id="prestigePointsAmount"></p>
-        <button id="prestigeButton" class="cardsButton">Prestige!</button>
+        <p id="prestigePointsToGet">Prestige Points when Prestige: {{prestigePointsToGet}}</p>
+        <p id="prestigePointsAmount">Prestige Points: {{prestigePoints}}</p>
+        <button id="prestigeButton" class="cardsButton" (click)="prestigeGame()">Prestige!</button>
     </div>
 </section>

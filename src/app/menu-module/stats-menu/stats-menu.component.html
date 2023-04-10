@@ -1,11 +1,11 @@
 <div id="statsContainer" class="statsContainer">
-    <p id="pointsStat"></p>
-    <p id="maxLengthStat"></p>
-    <p id="bestWordStat"></p>
-    <p id="multiupgradesStat"></p>
-    <p id="achievementsAmountStat"></p>
-    <p id="wordsAmountStat"></p>
-    <p id="passiveLengthStat"></p>
-    <p id="passivePointsStat"></p>
-    <p id="cardsAmountStat"></p>
+    <p id="pointsStat">Points: {{gameStats.points | number:'1.1-1'}}</p>
+    <p id="maxLengthStat">Max Length: {{gameStats.maxLength}}</p>
+    <p id="bestWordStat">Best Word: {{gameStats.bestWord}}</p>
+    <p id="multiupgradesStat">Multiupgrades: {{getMultiUpgradesStat()}} </p>
+    <p id="achievementsAmountStat">Achievements Amount: {{gameStats.achievements.length}}</p>
+    <p id="wordsAmountStat">Words Typed: {{gameStats.wordsAmount}}</p>
+    <p id="passivePointsStat">Passive Points: {{gameStats.passivePoints | number:'1.1-1'}}</p>
+    <p id="passiveLengthStat">Passive Length: {{gameStats.passiveLength}}</p>
+    <p id="cardsAmountStat">Cards Amount: {{gameStats.cards.length}}</p>
 </div>

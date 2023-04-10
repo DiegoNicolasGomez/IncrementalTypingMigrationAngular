@@ -9,7 +9,7 @@ import { GameService } from './game.service';
   providedIn: 'root'
 })
 export class PassiveService {
-  private generators: Generator[] = [];
+  generators: Generator[] = [];
   wordInterval$ = interval(5000);
   passiveWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   constructor(private gameService: GameService,
@@ -51,7 +51,6 @@ export class PassiveService {
     if (!portableGenerator) return;
     const word = this.GetRandomString(this.gameService.game.value.passiveLength)
     this.passiveWord$.next(word);
-    console.log(this.passiveWord$.value)
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;
     if (this.gameUtils.IsPurchasedUpgrade(4))

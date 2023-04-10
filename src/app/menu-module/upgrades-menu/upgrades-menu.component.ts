@@ -82,61 +82,16 @@ export class UpgradesMenuComponent implements OnInit {
     return String.fromCharCode(number + 65);
   }
 
-  GetUpgrade(upgradeNumber: number) {
-    const upgrade = this.basicUpgrades.find((x) => x.id == upgradeNumber);
-    console.log(upgradeNumber);
-    if (!upgrade) return;
-    if (
-      !this.GameService.game.value.upgrades.some((x) => x.id == upgradeNumber) &&
-      this.GameService.game.value.points >= upgrade.cost
-    ) {
-      this.GameService.updatePoints(-upgrade.cost);
-      this.GameService.addUpgrade(upgrade);
-      if(upgradeNumber == 3) {
-        this.layoutService.setLettersPerSecondVisibility(true);
-      }
-      if (upgradeNumber == 4) {
-        this.GameService.addGenerator(this.generators.find((x) => x.id == 1)!)
-        this.GameService.buyGenerator(1);
-        this.menuService.updateNavbarItem('passive');
-      }
-      if(upgradeNumber == 9) {
-        this.menuService.updateNavbarItem('cards');
-      }
-      if(upgradeNumber == 11) {
-        this.menuService.updateNavbarItem('challenges');
-      }
-    }
+  getUpgrade(upgradeNumber: number) {
+    this.upgradeService.getUpgrade(upgradeNumber);
   }
 
-  GetPassiveUpgrade(upgradeNumber: number) {
-    const upgrade = this.upgradeService
-      .getPassiveUpgrades()
-      .find((x) => x.id == upgradeNumber);
-    if (!upgrade) return;
-    if (
-      this.GameService.game.value.passiveUpgrades.some((x) => x.id == upgradeNumber) &&
-      this.GameService.game.value.passivePoints >= upgrade.cost
-    ) {
-      this.GameService.updatePassivePoints(-upgrade.cost);
-      this.GameService.addPassiveUpgrade(upgrade);
-      if (upgradeNumber == 4) this.GameService.updatePassiveLength(1);
-    }
+  getPassiveUpgrade(upgradeNumber: number) {
+    this.upgradeService.getPassiveUpgrade(upgradeNumber);
   }
 
-  GetPrestigeUpgrade(upgradeNumber: number) {
-    const upgrade = this.upgradeService
-      .getPrestigeUpgrades()
-      .find((x) => x.id == upgradeNumber);
-    if (!upgrade) return;
-    if (
-      !this.GameService.game.value.passiveUpgrades.some((x) => x.id == upgradeNumber)  &&
-      this.GameService.game.value.prestigePoints >= upgrade.cost
-    ) {
-      this.GameService.updatePrestigePoints(-upgrade.cost);
-      this.GameService.addPrestigeUpgrade(upgrade);
-      if (upgradeNumber == 1) this.GameService.updateRollsAmount(2);
-    }
+  getPrestigeUpgrade(upgradeNumber: number) {
+    this.upgradeService.getPrestigeUpgrade(upgradeNumber);
   }
 
   isUpgradeActive(index: number):  boolean {
