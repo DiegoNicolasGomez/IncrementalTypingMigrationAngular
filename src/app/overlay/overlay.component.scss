@@ -79,3 +79,32 @@
     transition: transform 200ms cubic-bezier(0.15, 0.72, 0.2, 0.83);
     transform: translateX(var(--offset)) rotate(var(--degrees));
   }
+
+  .challengeProgress {
+    position: absolute;
+    z-index: -9;
+    background: rgb(255, 255, 255);
+    opacity: 0.2;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    transition: opacity 400ms ease, background-color 100ms ease-out, width 500ms ease;
+  }
+  
+  .challengeProgress.red {
+    background: rgb(255, 0, 0);
+    opacity: 0;
+    width: 0%;
+  }
+  
+  .challengeProgress.green {
+    background: rgb(0, 255, 0);
+    opacity: 0;
+    width: 0%;
+  }
+
+  .challengeProgress.inactive {
+    opacity: 0;
+  }
+  

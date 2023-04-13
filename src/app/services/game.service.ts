@@ -60,6 +60,12 @@ export class GameService {
     this.game.next(game);
   }
 
+  updateLetterCounter() {
+    const game = this.game.value;
+    game.letterCounter++;
+    this.game.next(game);
+  }
+
   //Passive
 
   updatePassivePoints(points: number) {
@@ -158,6 +164,12 @@ export class GameService {
     game.achievements.push(achievement);
     this.game.next(game);
   }
+  
+  updateAchievements() {
+    const game = this.challengeGame.value;
+    game.achievements = this.game.value.achievements;
+    this.challengeGame.next(game);
+  }
 
   //Upgrades
 
@@ -209,6 +221,12 @@ export class GameService {
     this.game.next(game);
   }
 
+  updateRollsAmountActive(amount: number) {
+    const game = this.activeGame.value;
+    game.rollsAmount += amount;
+    this.activeGame.next(game);
+  }
+
   updateCardsCost() {
     const game = this.game.value;
     game.cardCost = 100000 * 2 ** (game.cards.length / game.rollsAmount);
@@ -219,5 +237,33 @@ export class GameService {
     const game = this.game.value;
     game.cards.push(card);
     this.game.next(game);
+  }
+
+  //Challenges
+
+  updateChallengeState(state: boolean, challengeNumber: number) {
+    const game = this.game.value;
+    game.isInChallenge = state;
+    game.challenges.find((x) => x.id == challengeNumber)!.onChallenge = state;
+    this.game.next(game);
+  }
+
+  resetLetterCounter() {
+    const game = this.game.value;
+    game.letterCounter = 0;
+    this.game.next(game);
+  }
+
+  completeChallenge(challengeNumber: number) {
+    const game = this.activeGame.value;
+    game.challenges.find((x) => x.id == challengeNumber)!.amount++;
+    game.challengesAmount++;
+    this.activeGame.next(game);
+  }
+
+  updateChallenges() {
+    const game = this.challengeGame.value;
+    game.challenges = this.game.value.challenges;
+    this.challengeGame.next(game);
   }
 }

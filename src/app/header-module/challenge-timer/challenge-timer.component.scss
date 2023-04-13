@@ -2,7 +2,8 @@
     margin: 1rem 0 0 0;
     font-size: var(--medium-custom-text);
     transition: transform 250ms ease-out;
-    display: none;
+    color: white;
+    text-align: center;
   }
   
   .challengeTimer.show {
@@ -20,4 +21,8 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: background-pan 2s linear infinite;
+  }
+
+  .challengeTimer.red { 
+    color: red;
   }

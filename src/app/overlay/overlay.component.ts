@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Card, CardType } from '../classes/card';
 import { GameService } from '../services/game.service';
 import { OverlayService } from '../services/overlay.service';
@@ -13,6 +13,10 @@ import { GameUtils } from '../utils/utils';
 export class OverlayComponent {
   cards: Card[] = [];
   cardsSubscription = new Subscription();
+
+  progress: number = 0;
+
+  challengeStatus: string = 'inactive';
 
   constructor(
     private overlayService: OverlayService,
@@ -28,6 +32,14 @@ export class OverlayComponent {
         this.cards = cards;
         this.showOverlay();
       });
+
+    this.overlayService.getProgress().subscribe((progress) => {
+      this.progress = progress;
+    });
+
+    this.overlayService.getChallengeStatus().subscribe((status) => {
+      this.challengeStatus = status;
+    });
   }
 
   gameUtils = new GameUtils(this.gameService);
@@ -62,5 +74,9 @@ export class OverlayComponent {
     this.renderer.addClass(overlay, 'show');
     this.renderer.addClass(light, 'show');
     this.renderer.addClass(viewerCardsContainer, 'viewerActive');
+  }
+
+  onOverlayAnimationEnd() {
+    if (this.progress >= 100) this.overlayService.resetChallengeStatus();
   }
 }

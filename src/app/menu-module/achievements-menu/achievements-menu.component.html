@@ -1,4 +1,4 @@
-<section id="achievementsMenu">
+<section id="achievementsMenu" class="menu">
     <div id="achievementContainer" class="achievementContainer">
         <div *ngFor="let achievement of achievements" [ngClass]="isUnlocked(achievement.id)" class="achievement">
             {{achievement.name}}

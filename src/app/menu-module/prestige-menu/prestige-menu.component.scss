@@ -1,3 +1,5 @@
+@import '../../../shared/shared.scss';
+
 .prestigePointsContainer {
     display: flex;
     justify-content: center;
@@ -15,3 +17,12 @@
     font-size: var(--big-custom-text);
   }
   
+  .prestigeButton {
+    animation: background-pan 2s linear infinite;
+    background: linear-gradient(to right, var(--black-900), var(--golden), var(--black-900));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap; 
+  }

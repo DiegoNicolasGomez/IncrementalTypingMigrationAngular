@@ -40,6 +40,7 @@ export class WordboxComponent implements OnInit, OnDestroy {
   }
 
   checkWord() {
+    this.gameService.updateLetterCounter();
     if (this.wordService.checkWordMatch(this.inputValue)) {
       this.wordService.wordShifted.next();
       this.wordService.guessedWord(this.inputValue);
@@ -69,13 +70,11 @@ export class WordboxComponent implements OnInit, OnDestroy {
     const el = event.target as HTMLInputElement;
     const file = el.files?.[0];
     if(!file) return;
-    console.log(file);
     const fileReader = new FileReader();
     fileReader.onload = async (event) => {
       const encodedString = event.target?.result as string;
       if(!encodedString) return;
       const decodedString = await this.saveService.decode(encodedString);
-      console.log(decodedString);
       this.saveService.loadGame(decodedString);
     }
     fileReader.readAsText(file);

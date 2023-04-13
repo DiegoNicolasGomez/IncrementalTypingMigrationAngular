@@ -1,1 +1,1 @@
-<p id="challengeTimer" class="challengeTimer"></p>
+<p *ngIf="isTimerVisible()" [ngClass]="{'red': (+challengeTimerValue <= 10) || challengeTimerValue === 'Failed!', 'success': challengeTimerValue === 'Success!'}" [@pulseAnimation]="timerAnimation" id="challengeTimer" class="challengeTimer">{{challengeTimerValue}}</p>
