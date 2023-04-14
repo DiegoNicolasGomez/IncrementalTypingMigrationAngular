@@ -1,26 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GameUtils } from '../../utils/utils';
 import { GameService } from 'src/app/services/game.service';
 import { Upgrade } from '../../classes/upgrade';
 import { UpgradeService } from 'src/app/services/upgrade.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-active-menu',
   templateUrl: './active-menu.component.html',
   styleUrls: ['./active-menu.component.scss'],
 })
-export class ActiveMenuComponent implements OnInit {
+export class ActiveMenuComponent implements OnDestroy {
   multiUpgrades: Upgrade[] = [];
+  private multiUpgradesSubscription = new Subscription;
 
   constructor(
     public gameService: GameService,
-    private upgradeService: UpgradeService
-  ) {}
+  ) {
+    this.multiUpgradesSubscription = this.gameService.getGame().subscribe((game) => {
+      this.multiUpgrades = game.multiUpgrades;
+    })
+  }
 
   gameUtils = new GameUtils(this.gameService);
 
-  ngOnInit() {
-    this.multiUpgrades = this.upgradeService.getMultiUpgrades();
+  ngOnDestroy() {
+    this.multiUpgradesSubscription.unsubscribe();
   }
 
   AddMultiUpgrade(upgradeNumber: number) {

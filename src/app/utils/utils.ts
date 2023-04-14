@@ -64,4 +64,8 @@ export class GameUtils {
       return defaultValue;
     }
   }
+
+  deepCopy(obj: any){
+    return JSON.parse(JSON.stringify(obj));
+  }
 }

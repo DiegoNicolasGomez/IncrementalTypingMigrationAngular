@@ -23,19 +23,39 @@ export class MenuService {
   constructor(private gameService: GameService) {
     this.gameService.getGame().subscribe((game) => {
       if(game.achievements.length > 1) {
+        console.log('Menu Achievements', game.achievements.length);
         this.navbarItems.find(x => x.id === 'achievements')!.visible = true;
       }
+      else {
+        this.navbarItems.find(x => x.id === 'achievements')!.visible = false;
+      }
       if(game.upgrades.find(x => x.id === 4)) {
+        console.log('Menu Passive', game.upgrades.find(x => x.id === 4));
         this.navbarItems.find(x => x.id === 'passive')!.visible = true;
       }
+      else {
+        this.navbarItems.find(x => x.id === 'passive')!.visible = false;
+      }
       if(game.upgrades.find(x => x.id === 11)) {
+        console.log('Menu Challenges', game.upgrades.find(x => x.id === 11));
         this.navbarItems.find(x => x.id === 'challenges')!.visible = true;
       }
+      else {
+        this.navbarItems.find(x => x.id === 'challenges')!.visible = false;
+      }
       if(game.allTimePoints >= 1000000) {
+        console.log('Menu Prestige', game.allTimePoints >= 1000000);
         this.navbarItems.find(x => x.id === 'prestige')!.visible = true;
       }
+      else {
+        this.navbarItems.find(x => x.id === 'prestige')!.visible = false;
+      }
       if(game.upgrades.find(x => x.id === 9)) {
+        console.log('Menu Cards', game.upgrades.find(x => x.id === 9));
         this.navbarItems.find(x => x.id === 'cards')!.visible = true;
+      }
+      else {
+        this.navbarItems.find(x => x.id === 'cards')!.visible = false;
       }
     })
    }

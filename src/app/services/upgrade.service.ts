@@ -11,7 +11,6 @@ export class UpgradeService {
   private basicUpgrades: Upgrade[] = [];
   private passiveUpgrades: Upgrade[] = [];
   private prestigeUpgrades: Upgrade[] = [];
-  private multiUpgrades: Upgrade[] = [];
 
   constructor(private gameService: GameService, private layoutService: LayoutService, private passiveService: PassiveService) {
     this.createBasicUpgrade(
@@ -145,20 +144,6 @@ export class UpgradeService {
         4
       )
     );
-    this.createMultiUpgrade(
-      new Upgrade('You have to start somewhere', '+1 Point per Word', 50, 1)
-    );
-    this.createMultiUpgrade(
-      new Upgrade(
-        "I'm sure you can handle longer words, am i right?",
-        '+1 letter per word',
-        100,
-        2
-      )
-    );
-    this.createMultiUpgrade(
-      new Upgrade('Simple is better', 'x1.25 Points', 500, 3)
-    );
   }
 
   createBasicUpgrade(upgrade: Upgrade) {
@@ -173,10 +158,6 @@ export class UpgradeService {
     this.prestigeUpgrades.push(upgrade);
   }
 
-  createMultiUpgrade(upgrade: Upgrade) {
-    this.multiUpgrades.push(upgrade);
-  }
-
   getBasicUpgrades(): Upgrade[] {
     return this.basicUpgrades;
   }
@@ -187,10 +168,6 @@ export class UpgradeService {
 
   getPrestigeUpgrades(): Upgrade[] {
     return this.prestigeUpgrades;
-  }
-
-  getMultiUpgrades(): Upgrade[] {
-    return this.multiUpgrades;
   }
 
   getUpgrade(upgradeNumber: number) {

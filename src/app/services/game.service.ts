@@ -29,15 +29,16 @@ export class GameService {
   }
 
   loadChallengeGame() {
-    this.game.next(this.challengeGame.value);
+    this.game.next(this.gameUtils.deepCopy(this.challengeGame.value));
   }
 
   loadActiveGame() {
-    this.game.next(this.activeGame.value);
+    console.log('Loading Active Game!');
+    this.game.next(this.gameUtils.deepCopy(this.activeGame.value));
   }
 
   saveToActiveGame() {
-    this.activeGame.next(this.game.value);
+    this.activeGame.next(this.gameUtils.deepCopy(this.game.value));
   }
 
   //Game
@@ -183,7 +184,7 @@ export class GameService {
   
   updateAchievements() {
     const game = this.challengeGame.value;
-    game.achievements = this.game.value.achievements;
+    game.achievements = this.gameUtils.deepCopy(this.game.value.achievements);
     this.challengeGame.next(game);
   }
 
@@ -279,7 +280,7 @@ export class GameService {
 
   updateChallenges() {
     const game = this.challengeGame.value;
-    game.challenges = this.game.value.challenges;
+    game.challenges = this.gameUtils.deepCopy(this.game.value.challenges);
     this.challengeGame.next(game);
   }
 }

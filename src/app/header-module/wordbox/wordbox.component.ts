@@ -81,8 +81,8 @@ export class WordboxComponent implements OnInit, OnDestroy {
   }
 
   logGame() {
-    console.log(this.gameService.game.value);
-    console.log(this.gameService.challengeGame.value);
-    console.log(this.gameService.activeGame.value);
+    console.log('Current Game: ', this.gameService.game.value);
+    console.log('Challenge Game: ', this.gameService.challengeGame.value);
+    console.log('ACtive Game: ', this.gameService.activeGame.value);
   }
 }
