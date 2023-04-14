@@ -75,13 +75,13 @@ export class ChallengesService {
           );
         clearInterval(this.intervalId);
         this.exitChallenge(challengeNumber);
-      } else if (challenge.restriction <= this.gameService.game.value.letterCounter || seconds <= 0) {
+      } else if (challenge.restriction <= this.gameService.game.value.letterCounter || secondsChallenge <= 0) {
         this.layoutService.challengeFailed();
         this.overlayService.challengeFailed();
         clearInterval(this.intervalId);
         this.exitChallenge(challengeNumber);
       }
-      seconds--;
+      secondsChallenge--;
     }, 1000);
   }
 
@@ -102,16 +102,17 @@ export class ChallengesService {
     if (!challenge) return;
     this.prestigeService.prestigeStats();
     setTimeout(() => {
+      this.gameService.saveToActiveGame();
       this.loadAchievements();
       this.loadChallenges();
-      this.gameService.loadGame(this.gameService.challengeGame.value);
+      this.gameService.loadChallengeGame();
       this.gameService.updateChallengeState(true, challengeNumber);
       this.startTimer(challenge.time, challengeNumber);
     }, 500);
   }
 
   exitChallenge(challengeNumber: number) {
-    this.gameService.loadGame(this.gameService.activeGame.value);
+    this.gameService.loadActiveGame();
     this.gameService.updateChallengeState(false, challengeNumber);
     this.gameService.resetLetterCounter();
   }

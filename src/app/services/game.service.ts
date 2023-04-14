@@ -28,6 +28,18 @@ export class GameService {
     this.game.next(game);
   }
 
+  loadChallengeGame() {
+    this.game.next(this.challengeGame.value);
+  }
+
+  loadActiveGame() {
+    this.game.next(this.activeGame.value);
+  }
+
+  saveToActiveGame() {
+    this.activeGame.next(this.game.value);
+  }
+
   //Game
 
   updatePoints(points: number) {
@@ -145,7 +157,11 @@ export class GameService {
     game.upgrades = [];
     game.maxLength = 4;
     game.bestWord = '';
-    game.multiUpgrades = [];
+    const costs = [50, 100, 500];
+    game.multiUpgrades.forEach((multiUpgrade, index) => {
+      multiUpgrade.amountBought = 0;
+      multiUpgrade.cost = costs[index];
+    });
     game.wordsAmount = 0;
     game.passiveUpgrades = [];
     game.passiveLength = 4;
