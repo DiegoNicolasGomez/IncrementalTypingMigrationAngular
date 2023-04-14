@@ -50,3 +50,12 @@
     font-size: var(--xsmall-custom-text);
     text-align: center;
   }
+
+  .all-bought {
+    background: linear-gradient(to right, var(--green), var(--black-900), var(--green));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: background-pan 2s linear infinite;
+  }

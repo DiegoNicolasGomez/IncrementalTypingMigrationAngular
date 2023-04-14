@@ -15,7 +15,7 @@ html {
 :root {
     --xsmall-custom-text: 1rem;
     --small-custom-text: clamp(1rem, 1vw, 2rem);
-    --medium-custom-text: clamp(1.5rem, 3vw, 5rem);
+    --medium-custom-text: clamp(1.5rem, 2vw, 5rem);
     --medium-big-custom-text: clamp(2rem, 4vw, 6rem);
     --big-custom-text: clamp(2rem, 7vw, 10rem);
     --black-900: rgb(20, 20, 20);

@@ -105,7 +105,6 @@ export class ChallengesService {
       this.gameService.saveToActiveGame();
       this.loadAchievements();
       this.loadChallenges();
-      console.log('startChallenge');
       this.gameService.loadChallengeGame();
       this.gameService.updateChallengeState(true, challengeNumber);
       this.startTimer(challenge.time, challengeNumber);

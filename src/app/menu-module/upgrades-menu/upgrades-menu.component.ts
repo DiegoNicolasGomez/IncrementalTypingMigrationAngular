@@ -4,8 +4,6 @@ import { UpgradeService } from 'src/app/services/upgrade.service';
 import { GameService } from 'src/app/services/game.service';
 import { Upgrade } from '../../classes/upgrade';
 import { Generator } from '../../classes/generator';
-import { MenuService } from 'src/app/services/menu.service';
-import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-upgrades-menu',
@@ -16,9 +14,7 @@ export class UpgradesMenuComponent implements OnInit {
   constructor(
     private upgradeService: UpgradeService,
     private passiveService: PassiveService,
-    private GameService: GameService,
-    private menuService: MenuService,
-    private layoutService: LayoutService
+    private GameService: GameService
   ) {}
 
   basicUpgrades: Upgrade[] = [];
@@ -104,5 +100,25 @@ export class UpgradesMenuComponent implements OnInit {
 
   isPrestigeUpgradeActive(index: number):  boolean {
     return this.GameService.game.value.prestigeUpgrades.some((x) => x.id == index)
+  }
+
+  isPassiveUpgradePurchased() {
+    return this.GameService.game.value.upgrades.some((x) => x.id == 4);
+  }
+
+  hasPrestigePoints() {
+    return this.GameService.game.value.prestigePoints > 0;
+  }
+
+  hasAllBasicUpgrades() {
+    return this.GameService.game.value.upgrades.length === this.upgradeService.getBasicUpgrades().length;
+  }
+
+  hasAllPassiveUpgrades() {
+    return this.GameService.game.value.passiveUpgrades.length === this.upgradeService.getPassiveUpgrades().length;
+  }
+
+  hasAllPrestigeUpgrades() {
+    return this.GameService.game.value.prestigeUpgrades.length === this.upgradeService.getPrestigeUpgrades().length;
   }
 }

@@ -192,12 +192,12 @@ export class UpgradeService {
   }
 
   getPassiveUpgrade(upgradeNumber: number) {
-    const upgrade = this.getPassiveUpgrades().find(
+    const upgrade = this.passiveUpgrades.find(
       (x) => x.id == upgradeNumber
     );
     if (!upgrade) return;
     if (
-      this.gameService.game.value.passiveUpgrades.some(
+      !this.gameService.game.value.passiveUpgrades.some(
         (x) => x.id == upgradeNumber
       ) &&
       this.gameService.game.value.passivePoints >= upgrade.cost
@@ -209,7 +209,7 @@ export class UpgradeService {
   }
 
   getPrestigeUpgrade(upgradeNumber: number) {
-    const upgrade = this.getPrestigeUpgrades().find(
+    const upgrade = this.prestigeUpgrades.find(
       (x) => x.id == upgradeNumber
     );
     if (!upgrade) return;

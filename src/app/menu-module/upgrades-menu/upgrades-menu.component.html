@@ -1,7 +1,7 @@
 <section id="upgradesMenu" class="menu">
     <div id="upgradeWrapper" class="upgradeWrapper">
         <div id="BasicUpgradesWrapper" class="upgradeTypeWrapper">
-            <h2 id="basicUpgradeHeading">Basic Upgrades</h2>
+            <h2 id="basicUpgradeHeading" [ngClass]="{'all-bought': hasAllBasicUpgrades()}">Basic Upgrades</h2>
             <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of basicUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getUpgrade(upgrade.id)" (mouseenter)="ChangeBasicUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
                     <span>{{ getNumberToChar(i) }}</span>
@@ -19,7 +19,7 @@
                 </p>
             </div>
         </div>
-        <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" style="display: none">
+        <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="isPassiveUpgradePurchased()">
             <h2 id="passiveUpgradeHeading">Passive Upgrades</h2>
             <div id="passiveUpgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of passiveUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getPassiveUpgrade(upgrade.id)" (mouseenter)="ChangePassiveUpgradesText(upgrade.id)" [style.color]="isPassiveUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
@@ -38,7 +38,7 @@
                 </p>
             </div>
         </div>
-        <div id="PrestigeUpgradesWrapper" class="upgradeTypeWrapper" style="display: none">
+        <div id="PrestigeUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="hasPrestigePoints()">
             <h2 id="prestigeUpgradeHeading">Prestige Upgrades</h2>
             <div id="prestigeUpgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of prestigeUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getPrestigeUpgrade(upgrade.id)" (mouseenter)="ChangePrestigeUpgradesText(upgrade.id)" [style.color]="isPrestigeUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
