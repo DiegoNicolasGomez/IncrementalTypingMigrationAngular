@@ -172,7 +172,6 @@ export class UpgradeService {
 
   getUpgrade(upgradeNumber: number) {
     const upgrade = this.basicUpgrades.find((x) => x.id == upgradeNumber);
-    console.log(upgradeNumber);
     if (!upgrade) return;
     if (
       !this.gameService.game.value.upgrades.some(

@@ -33,7 +33,6 @@ export class GameService {
   }
 
   loadActiveGame() {
-    console.log('Loading Active Game!');
     this.game.next(this.gameUtils.deepCopy(this.activeGame.value));
   }
 

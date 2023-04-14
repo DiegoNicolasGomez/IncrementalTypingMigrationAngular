@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { LayoutService } from 'src/app/services/layout.service';
 
@@ -9,9 +9,12 @@ import { LayoutService } from 'src/app/services/layout.service';
   animations: [
     trigger('pulseAnimation', [
       state('inactive', style({})),
-      state('active', style({ transform: 'scale(1.2)' })),
-      transition('inactive => active', animate('0.2s')),
-      transition('active => inactive', animate('0.2s'))
+      state('active', style({})),
+      transition('inactive => active', animate('0.5s', keyframes([
+        style({ transform: 'scale(1)', offset: 0 }),
+        style({ transform: 'scale(1.2)', offset: 0.5 }),
+        style({ transform: 'scale(1)', offset: 1 })
+      ])))
     ])
   ]
 })
