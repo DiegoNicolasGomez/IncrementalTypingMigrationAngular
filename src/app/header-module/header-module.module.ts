@@ -8,20 +8,28 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
     ChallengeTimerComponent,
     WordboxComponent,
     WordsToGuessComponent,
-    PointsCounterComponent
+    PointsCounterComponent,
   ],
-  imports: [CommonModule, FormsModule, HttpClientModule, SharedModule, BrowserAnimationsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    SharedModule,
+    BrowserAnimationsModule,
+    ToastModule
+  ],
   exports: [
     ChallengeTimerComponent,
     WordboxComponent,
     WordsToGuessComponent,
-    PointsCounterComponent
+    PointsCounterComponent,
   ],
 })
 export class HeaderModuleModule {}

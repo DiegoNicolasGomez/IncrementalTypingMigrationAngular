@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Achievement } from '../classes/achievement';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class AchievementsService implements OnDestroy{
   private achievements: Achievement[] = [];
   private intervalId;
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, private messageService: MessageService) {
     this.createAchievement(
       new Achievement(
         'First Word',
@@ -349,6 +350,6 @@ export class AchievementsService implements OnDestroy{
   }
 
   showAchievement(achievementName: string) {
-    alert(achievementName);
+    this.messageService.add({severity: 'info', summary: `New Achievement! ${achievementName}`, life: 3000, contentStyleClass: 'my-toast'});
   }
 }

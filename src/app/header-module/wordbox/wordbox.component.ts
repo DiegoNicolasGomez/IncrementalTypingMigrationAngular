@@ -4,6 +4,7 @@ import { GameService } from 'src/app/services/game.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SaveService } from 'src/app/services/save.service';
 import { WordsService } from 'src/app/services/words.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-wordbox',
@@ -22,7 +23,8 @@ export class WordboxComponent implements OnInit, OnDestroy {
     private wordService: WordsService,
     private layoutService: LayoutService,
     private gameService: GameService,
-    private saveService: SaveService
+    private saveService: SaveService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -64,6 +66,7 @@ export class WordboxComponent implements OnInit, OnDestroy {
 
   saveGame() {
     this.saveService.saveGame();
+    this.messageService.add({severity: 'info', summary: 'Saved!', life: 1000, contentStyleClass: 'my-toast'});
   }
 
   loadGame(event: Event) {
@@ -78,11 +81,13 @@ export class WordboxComponent implements OnInit, OnDestroy {
       this.saveService.loadGame(decodedString);
     }
     fileReader.readAsText(file);
+    this.messageService.add({severity: 'info', summary: 'Loaded!', life: 100000, contentStyleClass: 'my-toast'});
   }
 
   logGame() {
     console.log('Current Game: ', this.gameService.game.value);
     console.log('Challenge Game: ', this.gameService.challengeGame.value);
     console.log('ACtive Game: ', this.gameService.activeGame.value);
+    this.messageService.add({severity: 'info', summary: 'Logged!', life: 1000, contentStyleClass: 'my-toast'});
   }
 }

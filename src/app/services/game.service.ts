@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(0));
+  game = new BehaviorSubject<Game>(new Game(1000000000));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 

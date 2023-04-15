@@ -8,6 +8,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MenuModuleModule } from './menu-module/menu-module.module';
 import { HeaderModuleModule } from './header-module/header-module.module';
 import { OverlayComponent } from './overlay/overlay.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,10 @@ import { OverlayComponent } from './overlay/overlay.component';
     AppRoutingModule,
     MenuModuleModule,
     HeaderModuleModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
