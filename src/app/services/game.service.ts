@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(1000000000));
+  game = new BehaviorSubject<Game>(new Game(1500));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -252,6 +252,12 @@ export class GameService {
   addCard(card: Card) {
     const game = this.game.value;
     game.cards.push(card);
+    this.game.next(game);
+  }
+
+  addCardsAmount() { 
+    const game = this.game.value;
+    game.cardsAmount++;
     this.game.next(game);
   }
 

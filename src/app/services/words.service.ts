@@ -66,14 +66,13 @@ export class WordsService {
     this.gameService.updatePoints(wordPoints);
     this.gameService.updateAllTimePoints(wordPoints);
     this.gameService.updateWordsAmount();
-    // if(this.gameService.game.isInChallenge) {this.challengeService.checkProgress()}
     if(word === "Jack-go-to-bed-at-noon" && this.gameUtils.IsUnlockedAchievement("Best Word")) {
       this.achievementService.unlockAchievement("Best Word");
-      //this.achievementService.showAchievement("Best Word");
+      this.achievementService.showAchievement("Best Word");
     }
     if(word.length == 10 && this.gameUtils.IsUnlockedAchievement("10-letter Word")) {
       this.achievementService.unlockAchievement("10-letter Word");
-      //this.achievementService.showAchievement("10-letter Word");
+      this.achievementService.showAchievement("10-letter Word");
     }
   }
 }

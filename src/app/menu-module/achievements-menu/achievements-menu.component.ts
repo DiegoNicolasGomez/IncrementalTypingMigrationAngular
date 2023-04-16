@@ -21,4 +21,11 @@ export class AchievementsMenuComponent {
     const isUnlocked =  this.gameService.game.value.achievements.some(x => x.id == achievementNumber);
     return isUnlocked ? 'unlocked' : '';
   }
+
+  getAchievementProgress(achievement: Achievement): number {
+    if(this.gameService.game.value.achievements.some(x => x.id == achievement.id)){
+      return 100;
+    }
+    return this.achievementService.getAchievementProgress(achievement);
+  }
 }

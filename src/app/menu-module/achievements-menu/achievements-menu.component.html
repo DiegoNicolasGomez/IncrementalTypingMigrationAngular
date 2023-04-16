@@ -2,6 +2,9 @@
     <div id="achievementContainer" class="achievementContainer">
         <div *ngFor="let achievement of achievements" [ngClass]="isUnlocked(achievement.id)" class="achievement">
             {{achievement.name}}
+            <div class="progress-bar" [style.width.%]="getAchievementProgress(achievement)" [ngClass]="{ 'hidden': getAchievementProgress(achievement) === 0, 'completed': getAchievementProgress(achievement) === 100 }">
+
+            </div>
         </div>
     </div>
 </section>

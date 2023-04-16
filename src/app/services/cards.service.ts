@@ -277,6 +277,7 @@ export class CardsService {
         continue;
       }
       this.gameService.addCard(card);
+      this.gameService.addCardsAmount();
       if (card.id == 10) this.gameService.updatePassiveLength(1);
       if (card.id == 17) this.gameService.updatePassiveLength(2);
       if (card.id == 23) this.gameService.updatePassiveLength(5);

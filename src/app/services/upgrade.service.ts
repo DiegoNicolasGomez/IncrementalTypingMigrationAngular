@@ -87,18 +87,18 @@ export class UpgradeService {
       new Upgrade(
         'You force the enhancer to be enhancerer',
         'x1.25 Points',
-        100,
+        50000,
         1
       )
     );
     this.createPassiveUpgrade(
-      new Upgrade("Here's a little bonus for you", '+5 points per Word', 250, 2)
+      new Upgrade("Here's a little bonus for you", '+5 points per Word', 200000, 2)
     );
     this.createPassiveUpgrade(
       new Upgrade(
         "I don't know exactly what to upgrade, I'm sorry",
         'x1.5 Points',
-        1000,
+        1000000,
         3
       )
     );
@@ -106,18 +106,18 @@ export class UpgradeService {
       new Upgrade(
         'Wow, it seems that they made a Scrabble module for the enhancer too. Interesting',
         'Every letter gets a value',
-        4000,
+        5000000,
         4
       )
     );
     this.createPassiveUpgrade(
-      new Upgrade('Horizontal scaling ftw', '+1 Letter', 8000, 5)
+      new Upgrade('Horizontal scaling ftw', '+1 Letter', 100000000, 5)
     );
     this.createPassiveUpgrade(
       new Upgrade(
         'More modules! This time you found a synergy module.',
         'Every Generator Bought gives a Bonus to the other Generators!',
-        20000,
+        500000000,
         6
       )
     );
@@ -185,6 +185,7 @@ export class UpgradeService {
         this.layoutService.setLettersPerSecondVisibility(true);
       }
       if (upgradeNumber == 4) {
+        console.time('passive-timer');
         this.gameService.addGenerator(this.passiveService.generators.find((x) => x.id == 1)!);
         this.gameService.buyGenerator(1);
       }
@@ -202,6 +203,7 @@ export class UpgradeService {
       ) &&
       this.gameService.game.value.passivePoints >= upgrade.cost
     ) {
+      console.timeLog('passive-timer');
       this.gameService.updatePassivePoints(-upgrade.cost);
       this.gameService.addPassiveUpgrade(upgrade);
       if (upgradeNumber == 4) this.gameService.updatePassiveLength(1);

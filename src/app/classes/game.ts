@@ -19,6 +19,7 @@ export class Game {
   passivePoints: number;
   passiveRate: number;
   cards: Card[];
+  cardsAmount: number;
   cardCost: number;
   rollsAmount: number;
   challenges: Challenge[];
@@ -53,6 +54,7 @@ export class Game {
     this.passivePoints = 0;
     this.passiveRate = 1000;
     this.cards = [];
+    this.cardsAmount = 0;
     this.cardCost = 0;
     this.rollsAmount = 10;
     this.challenges = [];
