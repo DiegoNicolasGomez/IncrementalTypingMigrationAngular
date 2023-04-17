@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GameService } from 'src/app/services/game.service';
+import { eIdUpgrade } from '../classes/upgrade';
 import { GameUtils } from '../utils/utils';
 import { AchievementsService } from './achievements.service';
 import { ActiveService } from './active.service';
@@ -52,14 +53,21 @@ export class WordsService {
 
   guessedWord(word: string) {
     var pointsLetters = word.length;
-    var lettersValue = this.activeService.GetPointsLetters(word);
-
-    if (this.gameUtils.IsPurchasedUpgrade(7)) {
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.ScrabbleModule)) {
+      var lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
       if (lettersValue > this.activeService.GetPointsLetters(this.gameService.game.value.bestWord))
       {
         this.gameService.setBestWord(word);
       }
+    }
+
+    if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.SameLetterBonus)) {
+      pointsLetters += Math.pow(1.25, this.activeService.getRepeatedLetters(word));
+    }
+
+    if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.DifferentLetterBonus)) {
+      pointsLetters += Math.pow(1.1, this.activeService.getDifferentLetters(word));
     }
 
     var wordPoints = this.activeService.CalculatePoints(pointsLetters);

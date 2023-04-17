@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(1500));
+  game = new BehaviorSubject<Game>(new Game(0));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -68,7 +68,7 @@ export class GameService {
 
   setBestWord(word: string) {
     const game = this.game.value;
-    game.bestWord += word;
+    game.bestWord = word;
     this.game.next(game);
   }
 
@@ -167,6 +167,7 @@ export class GameService {
     game.passiveLength = 4;
     game.passivePoints = 0;
     game.passiveRate = 1000;
+    game.passiveGenerators = [];
     game.cards = [];
     game.cardCost = 0;
     game.isInChallenge = false;

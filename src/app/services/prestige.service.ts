@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { eIdUpgrade } from '../classes/upgrade';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
 import { UpgradeService } from './upgrade.service';
@@ -15,7 +16,7 @@ export class PrestigeService {
   prestigeStats() {
     let maintainsPassive = false;
     if (
-      this.gameUtils.IsPurchasedUpgrade(4) &&
+      this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordPassiveEnhancer) &&
       this.gameUtils.IsPurchasedPrestigeUpgrade(4)
       ) {
         maintainsPassive = true;

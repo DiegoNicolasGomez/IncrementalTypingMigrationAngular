@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
     {id: 'active', visible: true},
     {id: 'passive', visible: false},
     {id: 'upgrades', visible: true},
+    {id: 'modules', visible: false},
     {id: 'challenges', visible: false},
     {id: 'prestige', visible: false},
     {id: 'cards', visible: false},
@@ -32,5 +33,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnDestroy() {
     this.navbarItemsSubscription.unsubscribe();
+  }
+
+  onNavbarScroll(event: WheelEvent) {
+    const container = event.currentTarget as HTMLElement;
+    if(!container) return;
+    container.scrollLeft += event.deltaY;
+    event.preventDefault();
   }
 }

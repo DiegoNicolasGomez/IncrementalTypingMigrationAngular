@@ -19,6 +19,25 @@
                 </p>
             </div>
         </div>
+        <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper">
+            <h2 id="intermediateUpgradeHeading" [ngClass]="{'all-bought': hasAllIntermediateUpgrades()}">Intermediate Upgrades</h2>
+            <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
+                <button *ngFor="let upgrade of intermediateUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getIntermediateUpgrade(upgrade.id)" (mouseenter)="ChangeIntermediateUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
+                    <span>{{ getNumberToChar(i) }}</span>
+                </button>
+            </div>
+            <div class="upgradeText">
+                <p id="intermediateUpgradesTitle" class="upgradesTitle">
+                    {{currentIntermediateUpgradeName}}
+                </p>
+                <p id="intermediateUpgradesDesc" class="upgradesDesc">
+                    {{currentIntermediateUpgradeDesc}}
+                </p>
+                <p id="intermediateUpgradesCost" class="upgradesDesc">
+                    {{currentIntermediateUpgradeCost}}
+                </p>
+            </div>
+        </div>
         <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="isPassiveUpgradePurchased()">
             <h2 id="passiveUpgradeHeading">Passive Upgrades</h2>
             <div id="passiveUpgradesTable" class="upgradesTable hoverEffectContainer">

@@ -1,4 +1,4 @@
-<div id="TabsContainer" class="tabsContainer hoverEffectContainer">
+<div id="TabsContainer" class="tabsContainer hoverEffectContainer" (wheel)="onNavbarScroll($event)">
     <ng-container *ngFor="let item of navbarItems">
         <button id="{{item.id}}MenuButton" class="menuButton hoverEffectChild" 
             [routerLink]="['/', item.id + 'Menu']" *ngIf="item.visible"> 

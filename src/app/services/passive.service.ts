@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, switchMap } from 'rxjs';
 import { Generator } from '../classes/generator';
+import { eIdUpgrade } from '../classes/upgrade';
 import { GameUtils } from '../utils/utils';
 import { ActiveService } from './active.service';
 import { GameService } from './game.service';
@@ -53,7 +54,7 @@ export class PassiveService {
     this.passiveWord$.next(word);
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;
-    if (this.gameUtils.IsPurchasedUpgrade(4))
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordPassiveEnhancer))
       this.gameService.updatePassivePoints(points);
   }
 

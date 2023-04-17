@@ -1,5 +1,6 @@
 import { GameService } from 'src/app/services/game.service';
 import { Card, CardType } from '../classes/card';
+import { eIdUpgrade } from '../classes/upgrade';
 
 export class GameUtils {
   constructor(private gameService: GameService) {}
@@ -57,7 +58,25 @@ export class GameUtils {
     }
   }
 
-  getProperty<T>(obj: Record<string, unknown>, propertyName: string, defaultValue: T): T {
+  getCardBonus(): number {
+    if (this.IsPurchasedUpgrade(eIdUpgrade.QualityCardsBonus)) {
+      const cardValueMap = {
+        [CardType.Common]: 1,
+        [CardType.Uncommon]: 2,
+        [CardType.Epic]: 4,
+        [CardType.Legendary]: 8
+      };
+      return this.gameService.game.value.cards.map((x) => cardValueMap[x.type]).reduce((a, b) => a + b);
+    } else {
+      return this.gameService.game.value.cardsAmount;
+    }
+  }
+
+  getProperty<T>(
+    obj: Record<string, unknown>,
+    propertyName: string,
+    defaultValue: T
+  ): T {
     if (propertyName in obj) {
       return obj[propertyName] as T;
     } else {
@@ -65,7 +84,7 @@ export class GameUtils {
     }
   }
 
-  deepCopy(obj: any){
+  deepCopy(obj: any) {
     return JSON.parse(JSON.stringify(obj));
   }
 }

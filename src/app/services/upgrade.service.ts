@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Upgrade } from '../classes/upgrade';
+import { eIdUpgrade, Upgrade } from '../classes/upgrade';
 import { GameService } from './game.service';
 import { LayoutService } from './layout.service';
 import { PassiveService } from './passive.service';
@@ -9,10 +9,16 @@ import { PassiveService } from './passive.service';
 })
 export class UpgradeService {
   private basicUpgrades: Upgrade[] = [];
+  private intermediateUpgrades: Upgrade[] = [];
   private passiveUpgrades: Upgrade[] = [];
   private prestigeUpgrades: Upgrade[] = [];
 
-  constructor(private gameService: GameService, private layoutService: LayoutService, private passiveService: PassiveService) {
+  constructor(
+    private gameService: GameService,
+    private layoutService: LayoutService,
+    private passiveService: PassiveService
+  ) {
+    //Basic Upgrade
     this.createBasicUpgrade(
       new Upgrade('First Upgrade of them all', 'x1.3 Points', 50, 1)
     );
@@ -30,7 +36,7 @@ export class UpgradeService {
     this.createBasicUpgrade(
       new Upgrade(
         'You found a word passive enhancer!',
-        'Unlock passive income',
+        'Unlock passive income. Bonus: Multiplied by Math.log10([PassivePoints])',
         1500,
         4
       )
@@ -41,7 +47,7 @@ export class UpgradeService {
     this.createBasicUpgrade(
       new Upgrade(
         'Every goal has its reward',
-        'Every achievement gives a bonus!',
+        'Every achievement gives a bonus! Bonus: Multiplied by Math.sqrt([Achievements])',
         6000,
         6
       )
@@ -83,6 +89,75 @@ export class UpgradeService {
       )
     );
 
+    //Intermediate Upgrade
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Screw it, now you can upgrade all those modules you've been collecting`,
+        'Unlock Modules Tab!',
+        100000000,
+        13
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `For every same letter that the word has, you get a bonus`,
+        'Bonus: Math.pow(1.25, [DifferentRepeatedLetter])',
+        250_000_000,
+        14
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(`Lets go back to the basics`, 'x3 Points!', 600_000_000, 15)
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `The word length now increases the word value`,
+        'Bonus: x[WordLength], simple.',
+        1_000_000_000,
+        16
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Now for every DIFFERENT letter that the word has, you get a bonus`,
+        'Bonus: Math.pow(1.1, [DifferentLetters])',
+        4_500_000_000,
+        17
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Lets go back to the basics v2`,
+        '+25 Points per Word',
+        6_000_000_000,
+        18
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Your cards amount gives a bonus too.`,
+        'Bonus: Multiplied by ln([CardsAmount])',
+        10_000_000_000,
+        19
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Last Intermediate Upgrade! Now the quality of the cards provides a better bonus!`,
+        'Bonus: Every card counts as x*Math.pow(2, [Tier])',
+        50_000_000_000,
+        20
+      )
+    );
+
+    //Passive Upgrade
     this.createPassiveUpgrade(
       new Upgrade(
         'You force the enhancer to be enhancerer',
@@ -92,7 +167,12 @@ export class UpgradeService {
       )
     );
     this.createPassiveUpgrade(
-      new Upgrade("Here's a little bonus for you", '+5 points per Word', 200000, 2)
+      new Upgrade(
+        "Here's a little bonus for you",
+        '+5 points per Word',
+        200000,
+        2
+      )
     );
     this.createPassiveUpgrade(
       new Upgrade(
@@ -122,6 +202,7 @@ export class UpgradeService {
       )
     );
 
+    //Prestige Upgrade
     this.createPrestigeUpgrade(
       new Upgrade(
         'Welcome to Prestige! Take a free x2 multiplier',
@@ -150,6 +231,10 @@ export class UpgradeService {
     this.basicUpgrades.push(upgrade);
   }
 
+  createIntermediateUpgrade(upgrade: Upgrade) {
+    this.intermediateUpgrades.push(upgrade);
+  }
+
   createPassiveUpgrade(upgrade: Upgrade) {
     this.passiveUpgrades.push(upgrade);
   }
@@ -160,6 +245,10 @@ export class UpgradeService {
 
   getBasicUpgrades(): Upgrade[] {
     return this.basicUpgrades;
+  }
+
+  getIntermediateUpgrades(): Upgrade[] {
+    return this.intermediateUpgrades;
   }
 
   getPassiveUpgrades(): Upgrade[] {
@@ -181,21 +270,37 @@ export class UpgradeService {
     ) {
       this.gameService.updatePoints(-upgrade.cost);
       this.gameService.addUpgrade(upgrade);
-      if (upgradeNumber == 3) {
+      if (upgradeNumber == eIdUpgrade.ImSpeed) {
         this.layoutService.setLettersPerSecondVisibility(true);
       }
-      if (upgradeNumber == 4) {
+      if (upgradeNumber == eIdUpgrade.WordPassiveEnhancer) {
         console.time('passive-timer');
-        this.gameService.addGenerator(this.passiveService.generators.find((x) => x.id == 1)!);
+        this.gameService.addGenerator(
+          this.passiveService.generators.find((x) => x.id == 1)!
+        );
         this.gameService.buyGenerator(1);
       }
     }
   }
 
-  getPassiveUpgrade(upgradeNumber: number) {
-    const upgrade = this.passiveUpgrades.find(
+  getIntermediateUpgrade(upgradeNumber: number) {
+    const upgrade = this.intermediateUpgrades.find(
       (x) => x.id == upgradeNumber
     );
+    if (!upgrade) return;
+    if (
+      !this.gameService.game.value.upgrades.some(
+        (x) => x.id == upgradeNumber
+      ) &&
+      this.gameService.game.value.points >= upgrade.cost
+    ) {
+      this.gameService.updatePoints(-upgrade.cost);
+      this.gameService.addUpgrade(upgrade);
+    }
+  }
+
+  getPassiveUpgrade(upgradeNumber: number) {
+    const upgrade = this.passiveUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
     if (
       !this.gameService.game.value.passiveUpgrades.some(
@@ -211,9 +316,7 @@ export class UpgradeService {
   }
 
   getPrestigeUpgrade(upgradeNumber: number) {
-    const upgrade = this.prestigeUpgrades.find(
-      (x) => x.id == upgradeNumber
-    );
+    const upgrade = this.prestigeUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
     if (
       !this.gameService.game.value.passiveUpgrades.some(

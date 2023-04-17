@@ -18,6 +18,7 @@ export class UpgradesMenuComponent implements OnInit {
   ) {}
 
   basicUpgrades: Upgrade[] = [];
+  intermediateUpgrades: Upgrade[] = [];
   passiveUpgrades: Upgrade[] = [];
   prestigeUpgrades: Upgrade[] = [];
 
@@ -26,6 +27,7 @@ export class UpgradesMenuComponent implements OnInit {
   ngOnInit() {
    
     this.basicUpgrades = this.upgradeService.getBasicUpgrades();
+    this.intermediateUpgrades = this.upgradeService.getIntermediateUpgrades();
     this.passiveUpgrades = this.upgradeService.getPassiveUpgrades();
     this.prestigeUpgrades = this.upgradeService.getPrestigeUpgrades();
 
@@ -44,6 +46,20 @@ export class UpgradesMenuComponent implements OnInit {
     this.currentBasicUpgradeName = upgrade.name;
     this.currentBasicUpgradeDesc = upgrade.description;
     this.currentBasicUpgradeCost = `Cost: ${upgrade.cost}`;
+  }
+
+  currentIntermediateUpgradeName: string = 'Hover and upgrade to see its description';
+  currentIntermediateUpgradeDesc: string = '';
+  currentIntermediateUpgradeCost: string = 'Cost: -';
+  
+  ChangeIntermediateUpgradesText(upgradeNumber: number) {
+
+    const upgrade = this.intermediateUpgrades.find((x) => x.id == upgradeNumber);
+    if (!upgrade) return;
+
+    this.currentIntermediateUpgradeName = upgrade.name;
+    this.currentIntermediateUpgradeDesc = upgrade.description;
+    this.currentIntermediateUpgradeCost = `Cost: ${upgrade.cost}`;
   }
 
   currentPassiveUpgradeName: string = 'Hover and upgrade to see its description';
@@ -82,6 +98,10 @@ export class UpgradesMenuComponent implements OnInit {
     this.upgradeService.getUpgrade(upgradeNumber);
   }
 
+  getIntermediateUpgrade(upgradeNumber: number) {
+    this.upgradeService.getIntermediateUpgrade(upgradeNumber);
+  }
+
   getPassiveUpgrade(upgradeNumber: number) {
     this.upgradeService.getPassiveUpgrade(upgradeNumber);
   }
@@ -111,7 +131,11 @@ export class UpgradesMenuComponent implements OnInit {
   }
 
   hasAllBasicUpgrades() {
-    return this.GameService.game.value.upgrades.length === this.upgradeService.getBasicUpgrades().length;
+    return this.GameService.game.value.upgrades.length === this.basicUpgrades.length;
+  }
+
+  hasAllIntermediateUpgrades() {
+    return this.GameService.game.value.upgrades.length === this.basicUpgrades.length + this.intermediateUpgrades.length;
   }
 
   hasAllPassiveUpgrades() {

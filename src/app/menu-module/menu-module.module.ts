@@ -11,12 +11,14 @@ import { PrestigeMenuComponent } from './prestige-menu/prestige-menu.component';
 import { UpgradesMenuComponent } from './upgrades-menu/upgrades-menu.component';
 import { StatsMenuComponent } from './stats-menu/stats-menu.component';
 import { SharedModule } from '../shared/shared.module';
+import { ModulesMenuComponent } from './modules-menu/modules-menu.component';
 
 export const routes: Routes = [
   { path: '', component: ActiveMenuComponent },
   { path: 'activeMenu', component: ActiveMenuComponent },
   { path: 'passiveMenu', component: PassiveMenuComponent },
   { path: 'upgradesMenu', component: UpgradesMenuComponent },
+  { path: 'modulesMenu', component: ModulesMenuComponent },
   { path: 'prestigeMenu', component: PrestigeMenuComponent },
   { path: 'cardsMenu', component: CardsMenuComponent },
   { path: 'challengesMenu', component: ChallengesMenuComponent },
@@ -35,10 +37,12 @@ export const routes: Routes = [
     PassiveMenuComponent,
     PrestigeMenuComponent,
     UpgradesMenuComponent,
-    StatsMenuComponent
+    StatsMenuComponent,
+    ModulesMenuComponent,
   ],
-  imports: [CommonModule, SharedModule], 
-  exports: [ AchievementsMenuComponent,
+  imports: [CommonModule, SharedModule],
+  exports: [
+    AchievementsMenuComponent,
     ActiveMenuComponent,
     CardsMenuComponent,
     ChallengesMenuComponent,
@@ -46,6 +50,8 @@ export const routes: Routes = [
     PassiveMenuComponent,
     PrestigeMenuComponent,
     UpgradesMenuComponent,
-    StatsMenuComponent]
+    StatsMenuComponent,
+    ModulesMenuComponent,
+  ],
 })
 export class MenuModuleModule {}
