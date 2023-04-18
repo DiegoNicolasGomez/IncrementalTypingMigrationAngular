@@ -81,7 +81,7 @@ export class WordboxComponent implements OnInit, OnDestroy {
       this.saveService.loadGame(decodedString);
     }
     fileReader.readAsText(file);
-    this.messageService.add({severity: 'info', summary: 'Loaded!', life: 100000, contentStyleClass: 'my-toast'});
+    this.messageService.add({severity: 'info', summary: 'Loaded!', life: 1000, contentStyleClass: 'my-toast'});
   }
 
   logGame() {

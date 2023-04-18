@@ -215,7 +215,7 @@ export class UpgradeService {
       new Upgrade('The Gacha Gods have spoken', '+2 Cards Per Roll', 50, 2)
     );
     this.createPrestigeUpgrade(
-      new Upgrade('Better Scaling for MultiUpgrades!', 'x1.25 Points', 100, 3)
+      new Upgrade('Better Scaling for MultiUpgrades!', 'Cost: ([AmountBought]/2)**(Math.log10([AmountBought]/2))', 100, 3)
     );
     this.createPrestigeUpgrade(
       new Upgrade(
@@ -275,9 +275,13 @@ export class UpgradeService {
       }
       if (upgradeNumber == eIdUpgrade.WordPassiveEnhancer) {
         console.time('passive-timer');
-        this.gameService.addGenerator(
-          this.passiveService.generators.find((x) => x.id == 1)!
-        );
+        if (
+          !this.gameService.game.value.passiveGenerators.some((x) => x.id == 1)
+        ) {
+          this.gameService.addGenerator(
+            this.passiveService.generators.find((x) => x.id == 1)!
+          );
+        }
         this.gameService.buyGenerator(1);
       }
     }

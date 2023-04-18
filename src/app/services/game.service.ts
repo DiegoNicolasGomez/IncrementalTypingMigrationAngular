@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(0));
+  game = new BehaviorSubject<Game>(new Game(10000000));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -152,22 +152,27 @@ export class GameService {
     const game = this.game.value;
     game.prestigePoints = Math.round(Math.cbrt(game.allTimePoints));
     game.prestigeCount++;
-    game.points = 0;
-    game.allTimePoints = 0;
+    game.points = 1500;
+    game.allTimePoints = 1500;
     game.upgrades = [];
     game.maxLength = 4;
     game.bestWord = '';
-    const costs = [50, 100, 500];
+    const MUcosts = [50, 100, 500];
     game.multiUpgrades.forEach((multiUpgrade, index) => {
       multiUpgrade.amountBought = 0;
-      multiUpgrade.cost = costs[index];
+      multiUpgrade.cost = MUcosts[index];
     });
     game.wordsAmount = 0;
     game.passiveUpgrades = [];
     game.passiveLength = 4;
     game.passivePoints = 0;
     game.passiveRate = 1000;
-    game.passiveGenerators = [];
+    const generatorCosts = [5, 6, 9, 12, 15, 18, 21, 24, 27, 30];
+    game.passiveGenerators.forEach((passiveGenerator, index) => {
+      passiveGenerator.amountBought = 0;
+      passiveGenerator.amountGained = 0;
+      passiveGenerator.cost = generatorCosts[index];
+    });
     game.cards = [];
     game.cardCost = 0;
     game.isInChallenge = false;
@@ -225,8 +230,8 @@ export class GameService {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=
-      (upgrade!.amountBought / bonus + 1) **
-      Math.log10(upgrade!.amountBought / bonus + 1);
+      (upgrade!.amountBought / bonus) **
+      Math.log10(upgrade!.amountBought / bonus);
     this.game.next(game);
   }
 

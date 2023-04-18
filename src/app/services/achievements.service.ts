@@ -62,32 +62,80 @@ export class AchievementsService implements OnDestroy {
       new Achievement('500 Points', 'Save 500 points', 9, 500, 'points')
     );
     this.createAchievement(
-      new Achievement('1000 Points', 'Save 1000 points', 10, 1000, 'points')
+      new Achievement('2000 Points', 'Save 2000 points', 10, 2000, 'points')
     );
     this.createAchievement(
-      new Achievement('5000 Points', 'Save 5000 points', 11, 5000, 'points')
+      new Achievement('8000 Points', 'Save 8000 points', 11, 8000, 'points')
     );
     this.createAchievement(
-      new Achievement('10000 Points', 'Save 10000 points', 12, 10000, 'points')
+      new Achievement('15000 Points', 'Save 15000 points', 12, 15000, 'points')
     );
     this.createAchievement(
-      new Achievement('50000 Points', 'Save 50000 points', 13, 50000, 'points')
+      new Achievement('40000 Points', 'Save 40000 points', 13, 40000, 'points')
+    );
+    this.createAchievement(
+      new Achievement('80000 Points', 'Save 80000 points', 14, 80000, 'points')
     );
     this.createAchievement(
       new Achievement(
-        '100000 Points',
-        'Save 100000 points',
-        14,
-        100000,
+        '125000 Points',
+        'Save 125000 points',
+        15,
+        125000,
         'points'
       )
     );
     this.createAchievement(
       new Achievement(
-        '200000 Points',
-        'Save 200000 points',
-        15,
-        200000,
+        '250000 Points',
+        'Save 250000 points',
+        16,
+        250000,
+        'points'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        '500000 Points',
+        'Save 500000 points',
+        17,
+        500000,
+        'points'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        '1000000 Points',
+        'Save 1000000 points',
+        18,
+        1000000,
+        'points'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        '3000000 Points',
+        'Save 3000000 points',
+        19,
+        3000000,
+        'points'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        '10000000 Points',
+        'Save 10000000 points',
+        20,
+        10000000,
+        'points'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        '50000000 Points',
+        'Save 50000000 points',
+        21,
+        50000000,
         'points'
       )
     );
@@ -95,7 +143,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '10000 Passive Points',
         'Reach 10000 Passive Points',
-        16,
+        22,
         10000,
         'passivePoints'
       )
@@ -104,7 +152,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '200000 Passive Points',
         'Reach 200000 Passive Points',
-        17,
+        23,
         200000,
         'passivePoints'
       )
@@ -113,7 +161,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '5000000 Passive Points',
         'Reach 5000000 Passive Points',
-        18,
+        24,
         5000000,
         'passivePoints'
       )
@@ -122,7 +170,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '100000000 Passive Points',
         'Reach 100000000 Passive Points',
-        19,
+        25,
         100000000,
         'passivePoints'
       )
@@ -131,22 +179,22 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '10 Cards',
         'You bought your first pack!',
-        20,
+        26,
         10,
         'cardsAmount'
       )
     );
     this.createAchievement(
-      new Achievement('50 Cards', 'Have 50 Cards', 21, 50, 'cardsAmount')
+      new Achievement('50 Cards', 'Have 50 Cards', 27, 50, 'cardsAmount')
     );
     this.createAchievement(
-      new Achievement('100 Cards', 'Have 100 Cards', 22, 100, 'cardsAmount')
+      new Achievement('100 Cards', 'Have 100 Cards', 28, 100, 'cardsAmount')
     );
     this.createAchievement(
       new Achievement(
         '1 Challenge',
         'Complete your first challenge',
-        23,
+        29,
         1,
         'challengesAmount'
       )
@@ -155,7 +203,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '5 Challenges',
         'Complete 5 challenges',
-        24,
+        30,
         5,
         'challengesAmount'
       )
@@ -164,7 +212,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         'Reach Prestige!',
         'Prestige for the first time',
-        25,
+        31,
         1,
         'prestigeCount'
       )
@@ -173,7 +221,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '100 Prestige Points',
         'Have 100 Prestige Points',
-        26,
+        32,
         100,
         'prestigePoints'
       )
@@ -182,7 +230,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '250 Prestige Points',
         'Have 250 Prestige Points',
-        27,
+        33,
         250,
         'prestigePoints'
       )
@@ -191,7 +239,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '500 Prestige Points',
         'Have 500 Prestige Points',
-        28,
+        34,
         500,
         'prestigePoints'
       )
@@ -200,7 +248,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         '10-letter Word',
         'Write a 10-letter word',
-        29,
+        35,
         1,
         ExternalProperty.Other
       )
@@ -209,7 +257,7 @@ export class AchievementsService implements OnDestroy {
       new Achievement(
         'Best Word',
         'Write the best word possible',
-        30,
+        36,
         1,
         ExternalProperty.Other
       )
@@ -255,11 +303,11 @@ export class AchievementsService implements OnDestroy {
 
   getAchievementProgress(achievement: Achievement): number {
     const target =
-    this.gameService.game.value[achievement.property as keyof Game];
+      this.gameService.game.value[achievement.property as keyof Game];
     if (!(typeof target === 'number')) {
       return 0;
     }
-    const progress = target * 100 / achievement.target;
+    const progress = (target * 100) / achievement.target;
     return progress <= 100 ? progress : 100;
   }
 
