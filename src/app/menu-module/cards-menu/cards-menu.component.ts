@@ -45,4 +45,8 @@ export class CardsMenuComponent {
       this.overlayService.appendCards(cards);
     }
   }
+
+  getBonus(): string {
+    return this.cardService.getBonus();
+  }
 }

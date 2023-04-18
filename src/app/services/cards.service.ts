@@ -263,11 +263,11 @@ export class CardsService {
     ) {
       var randomNumber = Math.floor(Math.random() * 100);
       var card: Card;
-      if (randomNumber >= 40) {
+      if (randomNumber >= 47) {
         card = this.GetCommonCard();
-      } else if (randomNumber >= 10) {
+      } else if (randomNumber >= 20) {
         card = this.GetUncommonCard();
-      } else if (randomNumber >= 1) {
+      } else if (randomNumber >= 7) {
         card = this.GetEpicCard();
       } else {
         card = this.GetLegendaryCard();
@@ -289,27 +289,82 @@ export class CardsService {
     return cards;
   }
 
+  getBonus(): string {
+    var bonusPercentage = 1;
+    var bonusPointAmount = 0;
+    var bonusPassivePercentage = 1;
+    var bonusPassiveAmount = 0;
+    var bonusPassiveSpeed = 1;
+    var bonusPassiveLength = 0;
+    var extraBonus = '';
+    this.gameService.game.value.cards.forEach((x) => {
+      switch (x.bonusType) {
+        case 'PointsPercentage':
+          bonusPercentage *= x.bonusAmount;
+          break;
+        case 'PointsAmount':
+          bonusPointAmount += x.bonusAmount;
+          break;
+        case 'PassivePointsPercentage':
+          bonusPassivePercentage *= x.bonusAmount;
+          break;
+        case 'PassivePointsAmount':
+          bonusPassiveAmount += x.bonusAmount;
+          break;
+        case 'PassivePointsSpeed':
+          bonusPassiveSpeed *= x.bonusAmount;
+          break;
+        case 'PassivePointsLength':
+          bonusPassiveLength += x.bonusAmount;
+          break;
+        case 'Lowercase':
+          extraBonus += '- All Lowercase';
+          break;
+        default:
+          break;
+      }
+    });
+    return `You have x${bonusPercentage.toFixed(
+      2
+    )} + ${bonusPointAmount} Bonus Points, x${bonusPassivePercentage.toFixed(
+      2
+    )} + ${bonusPassiveAmount} Bonus Passive Points, x${bonusPassiveSpeed.toFixed(
+      2
+    )} faster and ${bonusPassiveLength} letters longer ${extraBonus}`;
+  }
+
   GetCommonCard(): Card {
     return this.cards.filter((x) => x.type == CardType.Common)[
-      Math.floor(Math.random() * this.cards.filter(x => x.type == CardType.Common).length)
+      Math.floor(
+        Math.random() *
+          this.cards.filter((x) => x.type == CardType.Common).length
+      )
     ];
   }
 
   GetUncommonCard(): Card {
     return this.cards.filter((x) => x.type == CardType.Uncommon)[
-      Math.floor(Math.random() * this.cards.filter(x => x.type == CardType.Uncommon).length)
+      Math.floor(
+        Math.random() *
+          this.cards.filter((x) => x.type == CardType.Uncommon).length
+      )
     ];
   }
 
   GetEpicCard(): Card {
     return this.cards.filter((x) => x.type == CardType.Epic)[
-      Math.floor(Math.random() * this.cards.filter(x => x.type == CardType.Epic).length)
+      Math.floor(
+        Math.random() * this.cards.filter((x) => x.type == CardType.Epic).length
+      )
     ];
   }
 
   GetLegendaryCard(): Card {
     return this.cards.filter((x) => x.type == CardType.Legendary)[
-      Math.floor(Math.random() * this.cards.filter(x => x.type == CardType.Legendary).length)
+      Math.floor(
+        Math.random() *
+          this.cards.filter((x) => x.type == CardType.Legendary).length
+      )
     ];
   }
 }
