@@ -11,102 +11,119 @@ export class ActiveService {
 
   gameUtils = new GameUtils(this.gameService);
 
-  CalculatePoints(wordLength: number) {
+  CalculatePoints(wordLength: number): [number, string] {
+    var bonus = '';
     var totalPoints: number = 0;
     totalPoints += wordLength;
     const multiUpgrade1 = this.gameService.game.value.multiUpgrades.find(
       (x) => x.id == 1
-    );
-    totalPoints += multiUpgrade1 ? multiUpgrade1.amountBought : 0;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordsValueBitMore))
+    )!;
+    if (multiUpgrade1.amountBought > 0) {
+      totalPoints += multiUpgrade1.amountBought;
+      bonus += ' + [MultiUpgrade1]';
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordsValueBitMore)) {
       totalPoints += 4;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.LastBasic))
+      bonus += ' + 4 (Upgrade 2)';
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.LastBasic)) {
       totalPoints += 20;
-    if (this.gameUtils.HasCard(2))
-      totalPoints +=
-        1 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+1 Points (C)'
-        ).length;
-    if (this.gameUtils.HasCard(6))
-      totalPoints +=
-        1 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+3 Points (UC)'
-        ).length;
-    if (this.gameUtils.HasCard(13))
-      totalPoints +=
-        1 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+6 Points (E)'
-        ).length;
-    if (this.gameUtils.HasCard(19))
-      totalPoints +=
-        1 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+10 Points (L)'
-        ).length;
+      bonus += ' + 20 (Upgrade 12)';
+    }
 
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordsValueBitMoreMore))
+    const cardsPointsMap: { [key: number]: number } = {
+      [2]: 1,
+      [6]: 3,
+      [13]: 6,
+      [19]: 10,
+    };
+
+    var cardsPointsBonus = this.gameService.game.value.cards.map(
+      (x) => cardsPointsMap[x.id] || 0
+    );
+    totalPoints += cardsPointsBonus.reduce((a, b) => a + b, 0);
+
+    if (cardsPointsBonus.some((x) => x > 0)) {
+      bonus += ' + [Cards+Points]';
+    }
+
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordsValueBitMoreMore)) {
       totalPoints += 10;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.IntermediateBasicsTwo))
+      bonus += ' + 10 (Upgrade 7)'
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.IntermediateBasicsTwo)) {
       totalPoints += 25;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.SecondUpgradePoints))
+      bonus += ' + 25 (Upgrade 18)'
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.SecondUpgradePoints)) {
       totalPoints *= 1.5;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.FirstUpgradePoints))
+      bonus += ' x 1.5 (Upgrade 5)'
+    }
+    
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.FirstUpgradePoints)) {
       totalPoints *= 1.3;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.ThirdUpgradePoints))
+      bonus += ' x 1.3 (Upgrade 1)'
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.ThirdUpgradePoints)) {
       totalPoints *= 2;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.IntermediateBasicsOne))
+      bonus += ' x 2 (Upgrade 10)'
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.IntermediateBasicsOne)) {
       totalPoints *= 3;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordLengthBonus))
+      bonus += ' x 3 (Upgrade 15)'
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordLengthBonus)) {
       totalPoints *= wordLength;
+      bonus += ' x[WordLength] (Upgrade 16)'
+    }
     if (
       this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.EveryGoalReward) &&
       this.gameService.game.value.achievements.length > 0
-    )
+    ) {
       totalPoints *= Math.sqrt(this.gameService.game.value.achievements.length);
+      bonus += ' x sqrt([Achievements] (Upgrade 6))'
+    }
     if (
       this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordPassiveEnhancer) &&
       this.gameService.game.value.passivePoints > 0
-    )
+    ) {
       totalPoints *= Math.log10(this.gameService.game.value.passivePoints);
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.CardsAmountBonus))
+      bonus += ' x log10([PassivePoints])';
+    }
+    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.CardsAmountBonus)) {
       totalPoints *= Math.log(this.gameUtils.getCardBonus());
-    if (this.gameUtils.HasCard(1))
-      totalPoints *=
-        1 +
-        0.05 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'Fast+ Progress (C)'
-          ).length;
-    if (this.gameUtils.HasCard(5))
-      totalPoints *=
-        1 +
-        0.25 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'Faster Progress (UC)'
-          ).length;
-    if (this.gameUtils.HasCard(11))
-      totalPoints *=
-        1 +
-        0.5 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'Fasterer Progress (E)'
-          ).length;
-    if (this.gameUtils.HasCard(18))
-      totalPoints *=
-        1 +
-        1 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'Fastest Progress (L)'
-          ).length;
+      bonus += ' x ln([CardsBonus] (Upgrade 19 & 20))'
+    }
+
+    const cardsPercentageMap: { [key: number]: number } = {
+      [1]: 0.05,
+      [5]: 0.25,
+      [11]: 0.5,
+      [18]: 1,
+     }
+
+     var cardsPercentageBonus = this.gameService.game.value.cards.map(
+      (x) => cardsPercentageMap[x.id] || 0
+    );
+    totalPoints *= 1 + cardsPointsBonus.reduce((a, b) => a + b, 0);
+
+    if (cardsPercentageBonus.some((x) => x > 0)) {
+      bonus += ' x 1 + [CardsPercentage]';
+    }
+
     const multiUpgrade2 = this.gameService.game.value.multiUpgrades.find(
       (x) => x.id == 2
-    );
-    totalPoints *= !multiUpgrade2 ? 1 : 1 + multiUpgrade2.amountBought * 0.25;
-    if (this.gameUtils.IsPurchasedPrestigeUpgrade(1)) totalPoints *= 2;
-    return totalPoints;
+    )!;
+
+    if(multiUpgrade2.amountBought > 0) {
+      totalPoints *= 1 + multiUpgrade2.amountBought * 0.25;
+      bonus += ' x 0.25[MultiUpgrade 2]';
+    }
+    if (this.gameUtils.IsPurchasedPrestigeUpgrade(1)) {
+      totalPoints *= 2;
+      bonus += 'x 2 (Prestige Upgrade 1)';
+    }
+    return [totalPoints, bonus];
   }
 
   GetPointsLetters(word: string) {
@@ -178,7 +195,7 @@ export class ActiveService {
         differentLetters.add(char);
       }
     }
-  
+
     return differentLetters.size;
   }
 }

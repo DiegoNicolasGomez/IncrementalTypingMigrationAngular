@@ -139,7 +139,7 @@ export class PassiveService {
   }
 
   CalculatePassiveGenerators() {
-    if (this.gameService.game.value.passiveGenerators.filter(x => x.amountGained == 1).length == 1) return;
+    if (this.gameService.game.value.passiveGenerators.length == 1) return;
     for (
       let index = 2;
       index <= this.gameService.game.value.passiveGenerators.length;

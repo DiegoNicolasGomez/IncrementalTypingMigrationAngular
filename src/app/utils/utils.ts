@@ -55,6 +55,8 @@ export class GameUtils {
         return 'epicCard';
       case CardType.Legendary:
         return 'legendaryCard';
+      case CardType.Ultimate:
+        return 'ultimateCard';
     }
   }
 
@@ -64,9 +66,11 @@ export class GameUtils {
         [CardType.Common]: 1,
         [CardType.Uncommon]: 2,
         [CardType.Epic]: 4,
-        [CardType.Legendary]: 8
+        [CardType.Legendary]: 8,
+        [CardType.Ultimate]: 16
+
       };
-      return this.gameService.game.value.cards.map((x) => cardValueMap[x.type]).reduce((a, b) => a + b);
+      return this.gameService.game.value.cards.map((x) => cardValueMap[x.type]).reduce((a, b) => a + b, 1);
     } else {
       return this.gameService.game.value.cardsAmount;
     }

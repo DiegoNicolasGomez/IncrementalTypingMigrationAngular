@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ToastModule } from 'primeng/toast';
     HttpClientModule,
     SharedModule,
     BrowserAnimationsModule,
+    MatIconModule,
+    MatTooltipModule,
     ToastModule
   ],
   exports: [

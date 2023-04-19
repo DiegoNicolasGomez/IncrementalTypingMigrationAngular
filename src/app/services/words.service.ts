@@ -16,6 +16,7 @@ export class WordsService {
    wordList: string[] = [];
    private currentWord = new BehaviorSubject<string>('');
    wordShifted = new Subject<void>();
+   wordBonus: string = '';
    
    constructor(private gameService: GameService, private http: HttpClient, private activeService: ActiveService, private achievementService: AchievementsService) {}
 
@@ -52,10 +53,13 @@ export class WordsService {
   }
 
   guessedWord(word: string) {
+    this.wordBonus = '';
     var pointsLetters = word.length;
+    this.wordBonus += '[WordLength] '
     if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.ScrabbleModule)) {
       var lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
+      this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
       if (lettersValue > this.activeService.GetPointsLetters(this.gameService.game.value.bestWord))
       {
         this.gameService.setBestWord(word);
@@ -64,15 +68,18 @@ export class WordsService {
 
     if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.SameLetterBonus)) {
       pointsLetters += Math.pow(1.25, this.activeService.getRepeatedLetters(word));
+      this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
     }
 
     if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.DifferentLetterBonus)) {
       pointsLetters += Math.pow(1.1, this.activeService.getDifferentLetters(word));
+      this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
     }
 
-    var wordPoints = this.activeService.CalculatePoints(pointsLetters);
-    this.gameService.updatePoints(wordPoints);
-    this.gameService.updateAllTimePoints(wordPoints);
+    var result = this.activeService.CalculatePoints(pointsLetters);
+    this.wordBonus += result[1];
+    this.gameService.updatePoints(result[0]);
+    this.gameService.updateAllTimePoints(result[0]);
     this.gameService.updateWordsAmount();
     if(word === "Jack-go-to-bed-at-noon" && this.gameUtils.IsUnlockedAchievement("Best Word")) {
       this.achievementService.unlockAchievement("Best Word");
@@ -82,6 +89,10 @@ export class WordsService {
       this.achievementService.unlockAchievement("10-letter Word");
       this.achievementService.showAchievement("10-letter Word");
     }
+  }
+
+  getWordBonus(): string {
+    return this.wordBonus;
   }
 }
 

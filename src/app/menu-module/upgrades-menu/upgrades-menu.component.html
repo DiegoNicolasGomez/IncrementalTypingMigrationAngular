@@ -1,7 +1,7 @@
 <section id="upgradesMenu" class="menu">
     <div id="upgradeWrapper" class="upgradeWrapper">
         <div id="BasicUpgradesWrapper" class="upgradeTypeWrapper">
-            <h2 id="basicUpgradeHeading" [ngClass]="{'all-bought': hasAllBasicUpgrades()}">Basic Upgrades</h2>
+            <h2 id="basicUpgradeHeading" [ngClass]="{'all-bought': isEveryBasicUpgradePurchased()}">Basic Upgrades</h2>
             <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of basicUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getUpgrade(upgrade.id)" (mouseenter)="ChangeBasicUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
                     <span>{{ getNumberToChar(i) }}</span>
@@ -15,11 +15,11 @@
                     {{currentBasicUpgradeDesc}}
                 </p>
                 <p id="basicUpgradesCost" class="upgradesDesc">
-                    {{currentBasicUpgradeCost}}
+                    Cost: {{currentBasicUpgradeCost | exponentialNumber}}
                 </p>
             </div>
         </div>
-        <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper">
+        <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="isEveryBasicUpgradePurchased()">
             <h2 id="intermediateUpgradeHeading" [ngClass]="{'all-bought': hasAllIntermediateUpgrades()}">Intermediate Upgrades</h2>
             <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of intermediateUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getIntermediateUpgrade(upgrade.id)" (mouseenter)="ChangeIntermediateUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
@@ -34,7 +34,7 @@
                     {{currentIntermediateUpgradeDesc}}
                 </p>
                 <p id="intermediateUpgradesCost" class="upgradesDesc">
-                    {{currentIntermediateUpgradeCost}}
+                    Cost: {{currentIntermediateUpgradeCost | exponentialNumber}}
                 </p>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     {{ currentPassiveUpgradeDesc }}
                 </p>
                 <p id="passiveUpgradesCost" class="upgradesDesc">
-                    {{ currentPassiveUpgradeCost }}
+                    Cost: {{ currentPassiveUpgradeCost | exponentialNumber}}
                 </p>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     {{ currentPrestigeUpgradeDesc }}
                 </p>
                 <p id="prestigeUpgradesCost" class="upgradesDesc">
-                    {{ currentPrestigeUpgradeCost }}
+                    Cost: {{ currentPrestigeUpgradeCost | exponentialNumber}}
                 </p>
             </div>
         </div>

@@ -12,6 +12,9 @@ import { UpgradesMenuComponent } from './upgrades-menu/upgrades-menu.component';
 import { StatsMenuComponent } from './stats-menu/stats-menu.component';
 import { SharedModule } from '../shared/shared.module';
 import { ModulesMenuComponent } from './modules-menu/modules-menu.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 export const routes: Routes = [
   { path: '', component: ActiveMenuComponent },
@@ -40,7 +43,8 @@ export const routes: Routes = [
     StatsMenuComponent,
     ModulesMenuComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, MatIconModule,
+    MatTooltipModule,],
   exports: [
     AchievementsMenuComponent,
     ActiveMenuComponent,

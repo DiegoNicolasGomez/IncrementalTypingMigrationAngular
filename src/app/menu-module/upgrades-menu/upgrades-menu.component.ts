@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PassiveService } from 'src/app/services/passive.service';
 import { UpgradeService } from 'src/app/services/upgrade.service';
 import { GameService } from 'src/app/services/game.service';
-import { Upgrade } from '../../classes/upgrade';
+import { eIdUpgrade, Upgrade } from '../../classes/upgrade';
 import { Generator } from '../../classes/generator';
 
 @Component({
@@ -36,7 +36,7 @@ export class UpgradesMenuComponent implements OnInit {
 
   currentBasicUpgradeName: string = 'Hover and upgrade to see its description';
   currentBasicUpgradeDesc: string = '';
-  currentBasicUpgradeCost: string = 'Cost: -';
+  currentBasicUpgradeCost: number = 0;
   
   ChangeBasicUpgradesText(upgradeNumber: number) {
 
@@ -45,12 +45,12 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentBasicUpgradeName = upgrade.name;
     this.currentBasicUpgradeDesc = upgrade.description;
-    this.currentBasicUpgradeCost = `Cost: ${upgrade.cost}`;
+    this.currentBasicUpgradeCost = upgrade.cost;
   }
 
   currentIntermediateUpgradeName: string = 'Hover and upgrade to see its description';
   currentIntermediateUpgradeDesc: string = '';
-  currentIntermediateUpgradeCost: string = 'Cost: -';
+  currentIntermediateUpgradeCost: number = 0;
   
   ChangeIntermediateUpgradesText(upgradeNumber: number) {
 
@@ -59,12 +59,12 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentIntermediateUpgradeName = upgrade.name;
     this.currentIntermediateUpgradeDesc = upgrade.description;
-    this.currentIntermediateUpgradeCost = `Cost: ${upgrade.cost}`;
+    this.currentIntermediateUpgradeCost = upgrade.cost;
   }
 
   currentPassiveUpgradeName: string = 'Hover and upgrade to see its description';
   currentPassiveUpgradeDesc: string = '';
-  currentPassiveUpgradeCost: string = 'Cost: -';
+  currentPassiveUpgradeCost: number = 0;
 
   ChangePassiveUpgradesText(upgradeNumber: number) {
 
@@ -73,12 +73,12 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentPassiveUpgradeName = upgrade.name;
     this.currentPassiveUpgradeDesc = upgrade.description;
-    this.currentPassiveUpgradeCost = `Cost: ${upgrade.cost}`;
+    this.currentPassiveUpgradeCost = upgrade.cost;
   }
 
   currentPrestigeUpgradeName: string = 'Hover and upgrade to see its description';
   currentPrestigeUpgradeDesc: string = '';
-  currentPrestigeUpgradeCost: string = 'Cost: -';
+  currentPrestigeUpgradeCost: number = 0;
 
   ChangePrestigeUpgradesText(upgradeNumber: number) {
 
@@ -87,7 +87,7 @@ export class UpgradesMenuComponent implements OnInit {
 
     this.currentPrestigeUpgradeName = upgrade.name;
     this.currentPrestigeUpgradeDesc = upgrade.description;
-    this.currentPrestigeUpgradeCost = `Cost: ${upgrade.cost}`;
+    this.currentPrestigeUpgradeCost = upgrade.cost ;
   }
 
   getNumberToChar(number: number): string {
@@ -123,7 +123,11 @@ export class UpgradesMenuComponent implements OnInit {
   }
 
   isPassiveUpgradePurchased() {
-    return this.GameService.game.value.upgrades.some((x) => x.id == 4);
+    return this.GameService.game.value.upgrades.some((x) => x.id == eIdUpgrade.WordPassiveEnhancer);
+  }
+
+  isEveryBasicUpgradePurchased() {
+    return Array.from({length: 12}, (_, index) => index + 1).every(id => this.GameService.game.value.upgrades.some(u => u.id === id));
   }
 
   hasPrestigePoints() {
@@ -131,11 +135,11 @@ export class UpgradesMenuComponent implements OnInit {
   }
 
   hasAllBasicUpgrades() {
-    return this.GameService.game.value.upgrades.length === this.basicUpgrades.length;
+    return this.GameService.game.value.upgrades.length >= this.basicUpgrades.length;
   }
 
   hasAllIntermediateUpgrades() {
-    return this.GameService.game.value.upgrades.length === this.basicUpgrades.length + this.intermediateUpgrades.length;
+    return this.GameService.game.value.upgrades.length >= this.basicUpgrades.length + this.intermediateUpgrades.length;
   }
 
   hasAllPassiveUpgrades() {

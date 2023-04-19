@@ -82,7 +82,7 @@ export class UpgradeService {
     );
     this.createBasicUpgrade(
       new Upgrade(
-        'Last Basic Upgrade! Your words value MORE, a bit more',
+        'Last Basic Upgrade! Your words value MORE, a bit more.',
         '+20 points per word',
         10000000,
         12
@@ -274,7 +274,6 @@ export class UpgradeService {
         this.layoutService.setLettersPerSecondVisibility(true);
       }
       if (upgradeNumber == eIdUpgrade.WordPassiveEnhancer) {
-        console.time('passive-timer');
         if (
           !this.gameService.game.value.passiveGenerators.some((x) => x.id == 1)
         ) {
@@ -312,7 +311,6 @@ export class UpgradeService {
       ) &&
       this.gameService.game.value.passivePoints >= upgrade.cost
     ) {
-      console.timeLog('passive-timer');
       this.gameService.updatePassivePoints(-upgrade.cost);
       this.gameService.addPassiveUpgrade(upgrade);
       if (upgradeNumber == 4) this.gameService.updatePassiveLength(1);

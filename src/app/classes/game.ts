@@ -29,6 +29,7 @@ export class Game {
   prestigePoints: number;
   prestigeCount: number;
   prestigeUpgrades: Upgrade[];
+  mergeAmount: number;
 
   constructor(pointsAmount: number) {
     this.points = pointsAmount;
@@ -64,5 +65,6 @@ export class Game {
     this.prestigePoints = 0;
     this.prestigeCount = 0;
     this.prestigeUpgrades = [];
+    this.mergeAmount = 10;
   }
 }

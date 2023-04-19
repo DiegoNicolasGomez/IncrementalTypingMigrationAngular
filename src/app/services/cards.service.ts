@@ -367,4 +367,22 @@ export class CardsService {
       )
     ];
   }
+
+  mergeCards(card: Card) {
+    const cards = this.gameService.game.value.cards.filter(x => x.id === card.id);
+    if(this.gameService.game.value.mergeAmount <= cards.length) {
+      const cardsToBeMerged = cards.slice(0, this.gameService.game.value.mergeAmount);
+      this.gameService.game.value.cards = this.gameService.game.value.cards.filter(x => !cardsToBeMerged.includes(x));
+
+      const cardsTiersMap: {[key in CardType]: CardType} = {
+        [CardType.Common]: CardType.Uncommon,
+        [CardType.Uncommon]: CardType.Epic,
+        [CardType.Epic]: CardType.Legendary,
+        [CardType.Legendary]: CardType.Ultimate,
+        [CardType.Ultimate]: CardType.Ultimate
+      };
+
+      this.gameService.addCard(this.cards.find(x => x.bonusType === card.bonusType && x.type === cardsTiersMap[card.type])!);
+    }
+  }
 }

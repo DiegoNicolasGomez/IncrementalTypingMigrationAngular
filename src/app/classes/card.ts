@@ -38,4 +38,5 @@ export class Card {
     Uncommon = 'Uncommon',
     Epic = 'Epic',
     Legendary = 'Legendary',
+    Ultimate = 'Ultimate'
   }

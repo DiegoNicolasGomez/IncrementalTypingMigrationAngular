@@ -49,4 +49,8 @@ export class WordsToGuessComponent implements OnInit {
     this.wordRight = this.wordRight2;
     this.wordRight2 = this.wordService.generateWord();
   }
+
+  getWordBonus(): string {
+    return this.wordService.getWordBonus();
+  }
 }

@@ -1,6 +1,6 @@
 <section id="cardsMenu" class="menu">
     <div id="cardsHeaderContainer" class="cardsHeaderContainer">
-        <button id="cardsButton" class="cardsButton" (click)="getPack()">Get a Pack! | Cost: {{(cardsCost$ | async) ?? 0}}</button>
+        <button id="cardsButton" class="cardsButton" (click)="getPack()">Get a Pack! | Cost: {{(cardsCost$ | async) ?? 0 | exponentialNumber}}</button>
     </div>
     <p id="cardBonus" class="cardBonus"> {{ getBonus() }}</p>
     <div id="cardsContainer" class="cardsContainer">
