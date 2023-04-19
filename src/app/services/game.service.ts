@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(100000000000));
+  game = new BehaviorSubject<Game>(new Game(1000000000000));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -251,7 +251,7 @@ export class GameService {
 
   updateCardsCost() {
     const game = this.game.value;
-    game.cardCost = 100000 * 2 ** (game.cards.length / game.rollsAmount);
+    game.cardCost = 100000 * 2 ** game.packsBought;
     this.game.next(game);
   }
 
@@ -264,6 +264,19 @@ export class GameService {
   addCardsAmount() { 
     const game = this.game.value;
     game.cardsAmount++;
+    this.game.next(game);
+  }
+
+  addPacksBought() { 
+    const game = this.game.value;
+    game.packsBought++;
+    this.game.next(game);
+  }
+
+  resetCards() {
+    const game = this.game.value;
+    game.cards = [];
+    game.cardsAmount = 0;
     this.game.next(game);
   }
 
@@ -293,5 +306,19 @@ export class GameService {
     const game = this.challengeGame.value;
     game.challenges = this.gameUtils.deepCopy(this.game.value.challenges);
     this.challengeGame.next(game);
+  }
+
+  //Modules
+
+  updateMergeCardCost(amount: number) {
+    const game = this.game.value;
+    game.mergeCardsCost += amount;
+    this.game.next(game);
+  }
+
+  updateMergeCardAmount() {
+    const game = this.game.value;
+    game.mergeAmount--;
+    this.game.next(game);
   }
 }

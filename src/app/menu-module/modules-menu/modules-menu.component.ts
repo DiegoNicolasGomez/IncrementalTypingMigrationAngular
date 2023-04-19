@@ -13,6 +13,8 @@ import { GameUtils } from 'src/app/utils/utils';
 export class ModulesMenuComponent {
   cards: Card[] = [];
   mergeAmount: number = 10;
+  mergeCardsCost: number = 200;
+  totalCards: number = 0;
 
   constructor(private gameService: GameService, private cardService: CardsService) {
     this.gameService.getGame().subscribe((game) => {
@@ -29,6 +31,8 @@ export class ModulesMenuComponent {
 
       this.cards = distinctCards;
       this.mergeAmount = game.mergeAmount;
+      this.mergeCardsCost = game.mergeCardsCost;
+      this.totalCards = game.cards.length;
     });
   }
 
@@ -49,5 +53,9 @@ export class ModulesMenuComponent {
 
   mergeCard(card: Card) {
     this.cardService.mergeCards(card);
+  }
+
+  reduceMergeCost() {
+    this.cardService.reduceMergeCost();
   }
 }

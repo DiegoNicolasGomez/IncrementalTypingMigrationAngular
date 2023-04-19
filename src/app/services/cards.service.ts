@@ -278,6 +278,7 @@ export class CardsService {
       }
       this.gameService.addCard(card);
       this.gameService.addCardsAmount();
+
       if (card.id == 10) this.gameService.updatePassiveLength(1);
       if (card.id == 17) this.gameService.updatePassiveLength(2);
       if (card.id == 23) this.gameService.updatePassiveLength(5);
@@ -286,6 +287,7 @@ export class CardsService {
       if (card.id == 22) this.gameService.updatePassiveRate(20);
       cards.push(card);
     }
+    this.gameService.addPacksBought();
     return cards;
   }
 
@@ -369,20 +371,43 @@ export class CardsService {
   }
 
   mergeCards(card: Card) {
-    const cards = this.gameService.game.value.cards.filter(x => x.id === card.id);
-    if(this.gameService.game.value.mergeAmount <= cards.length) {
-      const cardsToBeMerged = cards.slice(0, this.gameService.game.value.mergeAmount);
-      this.gameService.game.value.cards = this.gameService.game.value.cards.filter(x => !cardsToBeMerged.includes(x));
+    const cards = this.gameService.game.value.cards.filter(
+      (x) => x.id === card.id
+    );
+    if (this.gameService.game.value.mergeAmount <= cards.length) {
+      const cardsToBeMerged = cards.slice(
+        0,
+        this.gameService.game.value.mergeAmount
+      );
+      this.gameService.game.value.cards =
+        this.gameService.game.value.cards.filter(
+          (x) => !cardsToBeMerged.includes(x)
+        );
 
-      const cardsTiersMap: {[key in CardType]: CardType} = {
+      const cardsTiersMap: { [key in CardType]: CardType } = {
         [CardType.Common]: CardType.Uncommon,
         [CardType.Uncommon]: CardType.Epic,
         [CardType.Epic]: CardType.Legendary,
         [CardType.Legendary]: CardType.Ultimate,
-        [CardType.Ultimate]: CardType.Ultimate
+        [CardType.Ultimate]: CardType.Ultimate,
       };
 
-      this.gameService.addCard(this.cards.find(x => x.bonusType === card.bonusType && x.type === cardsTiersMap[card.type])!);
+      this.gameService.addCard(
+        this.cards.find(
+          (x) =>
+            x.bonusType === card.bonusType &&
+            x.type === cardsTiersMap[card.type]
+        )!
+      );
+    }
+  }
+
+  reduceMergeCost() {
+    const game = this.gameService.game.value;
+    if (game.cards.length >= game.mergeCardsCost) {
+      this.gameService.updateMergeCardCost(100);
+      this.gameService.updateMergeCardAmount();
+      this.gameService.resetCards();
     }
   }
 }

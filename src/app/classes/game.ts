@@ -22,6 +22,7 @@ export class Game {
   cardsAmount: number;
   cardCost: number;
   rollsAmount: number;
+  packsBought: number;
   challenges: Challenge[];
   isInChallenge: boolean;
   challengesAmount: number;
@@ -30,6 +31,7 @@ export class Game {
   prestigeCount: number;
   prestigeUpgrades: Upgrade[];
   mergeAmount: number;
+  mergeCardsCost: number;
 
   constructor(pointsAmount: number) {
     this.points = pointsAmount;
@@ -58,6 +60,7 @@ export class Game {
     this.cardsAmount = 0;
     this.cardCost = 0;
     this.rollsAmount = 10;
+    this.packsBought = 0;
     this.challenges = [];
     this.isInChallenge = false;
     this.challengesAmount = 0;
@@ -66,5 +69,6 @@ export class Game {
     this.prestigeCount = 0;
     this.prestigeUpgrades = [];
     this.mergeAmount = 10;
+    this.mergeCardsCost = 200;
   }
 }

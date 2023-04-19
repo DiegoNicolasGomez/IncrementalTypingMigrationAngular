@@ -33,7 +33,7 @@
         Unlock!
         <p>Cost: 100</p>
       </button>
-      <hr>
+      <hr />
       <div class="scrabble-module-desc">
         <div>
           <p>Synergy Module</p>
@@ -50,7 +50,7 @@
           <button>G8</button>
         </div>
       </div>
-      <hr>
+      <hr />
       <button>
         Enhance Everything by 1.3!
         <p>Cost: 100</p>
@@ -62,16 +62,27 @@
           <p>Merge Module</p>
           <div class="vertical-line"></div>
           <p>Merge Cards!</p>
-          <p>You need {{mergeAmount}} repeated cards to merge them to a better Tier!</p>
+          <div class="vertical-line"></div>
+          <p>
+            You need {{ mergeAmount }} repeated cards to merge them to a better
+            Tier!
+          </p>
+          <button (click)="reduceMergeCost()">
+            <p>Reduce Merge Amount!</p>
+            <p>Reach: {{ mergeCardsCost }} | Cards: {{totalCards}}</p>
+            <p class="red">ALL YOUR CARDS WILL BE RESET</p>
+          </button>
         </div>
       </div>
       <div class="merge-wrapper">
         <div *ngFor="let card of cards" class="card-wrapper">
-            <div [ngClass]="getCardType(card)" class="card-merge">
-                {{card.description}}
-            </div>
-            <p>Amount: {{getCardsAmount(card)}}</p>
-            <button *ngIf="canMerge(card)" (click)="mergeCard(card)">Merge!</button>
+          <div [ngClass]="getCardType(card)" class="card-merge">
+            {{ card.description }}
+          </div>
+          <p>Amount: {{ getCardsAmount(card) }}</p>
+          <button *ngIf="canMerge(card)" (click)="mergeCard(card)">
+            Merge!
+          </button>
         </div>
       </div>
     </div>
