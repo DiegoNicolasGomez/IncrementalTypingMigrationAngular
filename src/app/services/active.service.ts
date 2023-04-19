@@ -127,6 +127,7 @@ export class ActiveService {
   }
 
   GetPointsLetters(word: string) {
+    const lettersBonus = this.gameService.game.value.lettersBonus;
     var letters = word.toLowerCase().split('');
     var points = 0;
     letters.forEach((element) => {
@@ -142,16 +143,16 @@ export class ActiveService {
         element === 't' ||
         element === 'r'
       ) {
-        points++;
+        points += lettersBonus[0];
       } else if (element === 'd' || element === 'g') {
-        points += 2;
+        points += lettersBonus[1];
       } else if (
         element === 'b' ||
         element === 'c' ||
         element === 'm' ||
         element === 'p'
       ) {
-        points += 3;
+        points += lettersBonus[2];
       } else if (
         element === 'f' ||
         element === 'h' ||
@@ -159,15 +160,15 @@ export class ActiveService {
         element === 'w' ||
         element === 'y'
       ) {
-        points += 4;
+        points += lettersBonus[3];
       } else if (element === 'k') {
-        points += 5;
+        points += lettersBonus[4];
       } else if (element === 'j' || element === 'x') {
-        points += 8;
+        points += lettersBonus[5];
       } else if (element === 'q' || element === 'z') {
-        points += 10;
+        points += lettersBonus[6];
       } else {
-        points += 20;
+        points += lettersBonus[7];
       }
     });
     return points;
@@ -197,5 +198,13 @@ export class ActiveService {
     }
 
     return differentLetters.size;
+  }
+
+  buyLetterTier(index: number) {
+    const letterBonus = this.gameService.game.value.lettersBonus[index];
+    if(letterBonus <= this.gameService.game.value.prestigePoints) {
+      this.gameService.updatePrestigePoints(-letterBonus);
+      this.gameService.addLettersValue(index);
+    }
   }
 }

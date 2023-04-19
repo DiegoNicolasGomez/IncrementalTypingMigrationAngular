@@ -75,9 +75,23 @@
     padding: 1rem;
     margin: 1rem;
     box-shadow: 0 0 0.3rem black;
+    overflow: hidden;
+    position: relative;
 }
 
+.module-overlay {
+    position: absolute;
+    background: linear-gradient(to right, rgba($color: #000000, $alpha: 0.7), rgba($color: #353535, $alpha: 0.7), rgba($color: #000000, $alpha: 0.7));
+    z-index: 10;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--medium-custom-text);
+}
 .module-two {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -95,9 +109,6 @@
     gap: 0.25rem;
     box-shadow: 0 0 0.3rem var(--primary-400);
     background: var(--primary-400);
-}
-
-.module > button {
     padding: 1rem 2rem;
 }
 
@@ -110,7 +121,6 @@
     width: 1px;
     background: linear-gradient(var(--primary-700), white, var(--primary-700));
     margin-inline: 1rem;
-    height: 100%;
 }
 
 .scrabble-module-desc {
@@ -142,14 +152,22 @@
     background: var(--primary-400);
 } 
 
+.buttonTierWrapper > div button {
+    width: 7rem;
+    box-shadow: 0 0 0.3rem var(--primary-400);
+    background: var(--primary-400);
+}
+
+.buttonTierWrapper > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .merge-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
     gap: 1rem;    
-}
-
-.merge-cards-amount {
-    
 }
 
 .text-wrapper button {

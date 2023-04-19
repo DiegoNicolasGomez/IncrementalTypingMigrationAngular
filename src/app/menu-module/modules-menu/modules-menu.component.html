@@ -1,43 +1,37 @@
 <section>
   <div class="module-wrapper">
     <div class="module">
-      <button>
-        Unlock!
-        <p>Cost: 100</p>
-      </button>
+      <div class="module-overlay" [@fadeOut]="!scrabbleModuleBought ? 'visible' : 'hidden'" (click)="buyScrabbleModule()">Cost: 1e+9</div>
       <div class="scrabble-module-desc">
         <div class="text-wrapper">
           <p>Scrabble Module</p>
           <div class="vertical-line"></div>
           <p>Enhance every letter separately!</p>
+          <div class="vertical-line"></div>
+          <p>Cost: The Bonus in Prestige Points!</p>
         </div>
         <div class="buttonTierWrapper">
-          <button>Tier 1</button>
-          <button>Tier 2</button>
-          <button>Tier 3</button>
-          <button>Tier 4</button>
-          <button>Tier 5</button>
-          <button>Tier 6</button>
-          <button>Tier 7</button>
-          <button>Tier 8</button>
-          <mat-icon matTooltip="Tier 1: a-e-i-o-u-l-n-s-t-r | Tier 2: d-g | Tier 3: b-c-m-p | Tier 4: f-h-v-w-y | Tier 5: k | Tier 6: j-x | Tier 7: q-z | Tier 8: Specials Characters" matTooltipPosition="right" matTooltipDelay="500">info</mat-icon>
+          <div *ngFor="let bonus of lettersBonus; let i = index">
+            <button (click)="buyLetterTier(i)">Tier {{ i + 1 }}</button>
+            <p>{{ bonus }}</p>
+          </div>
+          <mat-icon
+            matTooltip="Tier 1: a-e-i-o-u-l-n-s-t-r | Tier 2: d-g | Tier 3: b-c-m-p | Tier 4: f-h-v-w-y | Tier 5: k | Tier 6: j-x | Tier 7: q-z | Tier 8: Specials Characters"
+            matTooltipPosition="right"
+            matTooltipDelay="500"
+            >info</mat-icon
+          >
         </div>
       </div>
-      <button>
-        Enhance Everything by 1.3!
-        <p>Cost: 100</p>
-      </button>
     </div>
     <div class="module">
-      <button>
-        Unlock!
-        <p>Cost: 100</p>
-      </button>
+      <div class="module-overlay" [@fadeOut]="!synergyModuleBought ? 'visible' : 'hidden'" (click)="buySynergyModule()">Cost: 1e+12</div>
       <hr />
       <div class="scrabble-module-desc">
         <div>
           <p>Synergy Module</p>
-          <p>Enhance the synergy between generators!</p>
+          <p>Enhance the synergy</p>
+          <p>between generators!</p>
         </div>
         <div class="buttonTierWrapper">
           <button>G1</button>
@@ -57,6 +51,7 @@
       </button>
     </div>
     <div class="module-two">
+      <div class="module-overlay" [@fadeOut]="!mergeModuleBought ? 'visible' : 'hidden'" (click)="buyMergeModule()">Cost: 1e+15</div>
       <div class="scrabble-module-desc">
         <div class="text-wrapper">
           <p>Merge Module</p>
@@ -67,9 +62,10 @@
             You need {{ mergeAmount }} repeated cards to merge them to a better
             Tier!
           </p>
+          <div class="vertical-line"></div>
           <button (click)="reduceMergeCost()">
             <p>Reduce Merge Amount!</p>
-            <p>Reach: {{ mergeCardsCost }} | Cards: {{totalCards}}</p>
+            <p>Reach: {{ mergeCardsCost }} | Cards: {{ totalCards }}</p>
             <p class="red">ALL YOUR CARDS WILL BE RESET</p>
           </button>
         </div>

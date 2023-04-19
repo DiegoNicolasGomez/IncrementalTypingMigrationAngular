@@ -152,8 +152,8 @@ export class GameService {
     const game = this.game.value;
     game.prestigePoints = Math.round(Math.cbrt(game.allTimePoints));
     game.prestigeCount++;
-    game.points = 1500;
-    game.allTimePoints = 1500;
+    game.points = 15000000000;
+    game.allTimePoints = 15000000000;
     game.upgrades = [];
     game.maxLength = 4;
     game.bestWord = '';
@@ -319,6 +319,18 @@ export class GameService {
   updateMergeCardAmount() {
     const game = this.game.value;
     game.mergeAmount--;
+    this.game.next(game);
+  }
+
+  addLettersValue(index: number) {
+    const game = this.game.value;
+    game.lettersBonus[index]++;
+    this.game.next(game);
+  }
+
+  unlockModule(index: number) {
+    const game = this.game.value;
+    game.modulesUnlocked[index] = true;
     this.game.next(game);
   }
 }

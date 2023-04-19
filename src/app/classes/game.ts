@@ -30,8 +30,11 @@ export class Game {
   prestigePoints: number;
   prestigeCount: number;
   prestigeUpgrades: Upgrade[];
+  modulesUnlocked: boolean[];
   mergeAmount: number;
   mergeCardsCost: number;
+  lettersBonus: number[];
+
 
   constructor(pointsAmount: number) {
     this.points = pointsAmount;
@@ -68,7 +71,9 @@ export class Game {
     this.prestigePoints = 0;
     this.prestigeCount = 0;
     this.prestigeUpgrades = [];
+    this.modulesUnlocked = [];
     this.mergeAmount = 10;
     this.mergeCardsCost = 200;
+    this.lettersBonus = [1, 2, 3, 4, 5, 8, 10, 20];
   }
 }
