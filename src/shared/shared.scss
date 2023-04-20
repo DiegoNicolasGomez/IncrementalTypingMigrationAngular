@@ -36,9 +36,18 @@
 }
 
 .legendaryCard {
-  animation: background-pan 2s linear infinite;
+  animation: background-pan-y 2s linear infinite;
   border: 5px solid var(--golden);
   background: linear-gradient(to bottom, var(--golden), var(--black-900), var(--golden));
+  background-size: 200%;
+  color: rgb(240, 240, 240);
+}
+
+.ultimateCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--acent-600);
+  background: linear-gradient(to bottom, var(--accent-600), var(--black-900), var(--accent-600));
+  background-size: 200%;
   color: rgb(240, 240, 240);
 }
 
@@ -49,6 +58,17 @@
 
   to {
     background-position-x: -200%;
+  }
+}
+
+
+@keyframes background-pan-y {
+  from {
+    background-position-y: 0%;
+  }
+
+  to {
+    background-position-y: -200%;
   }
 }
 

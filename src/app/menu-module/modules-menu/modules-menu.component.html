@@ -1,7 +1,13 @@
 <section>
   <div class="module-wrapper">
     <div class="module">
-      <div class="module-overlay" [@fadeOut]="!scrabbleModuleBought ? 'visible' : 'hidden'" (click)="buyScrabbleModule()">Cost: 1e+9</div>
+      <div
+        class="module-overlay"
+        [@fadeOut]="!scrabbleModuleBought ? 'visible' : 'hidden'"
+        (click)="buyScrabbleModule()"
+      >
+        Cost: 1e+9
+      </div>
       <div class="scrabble-module-desc">
         <div class="text-wrapper">
           <p>Scrabble Module</p>
@@ -23,9 +29,21 @@
           >
         </div>
       </div>
+      <div class="enhance-wrapper">
+        <!-- <button>
+          <p>Enhance everything!</p>
+          <p>Cost: 500</p>
+        </button> -->
+      </div>
     </div>
     <div class="module">
-      <div class="module-overlay" [@fadeOut]="!synergyModuleBought ? 'visible' : 'hidden'" (click)="buySynergyModule()">Cost: 1e+12</div>
+      <div
+        class="module-overlay"
+        [@fadeOut]="!synergyModuleBought ? 'visible' : 'hidden'"
+        (click)="buySynergyModule()"
+      >
+        Cost: 1e+12
+      </div>
       <hr />
       <div class="scrabble-module-desc">
         <div>
@@ -34,24 +52,25 @@
           <p>between generators!</p>
         </div>
         <div class="buttonTierWrapper">
-          <button>G1</button>
-          <button>G2</button>
-          <button>G3</button>
-          <button>G4</button>
-          <button>G5</button>
-          <button>G6</button>
-          <button>G7</button>
-          <button>G8</button>
+            <button *ngFor="let generator of generators; let i = index;" (click)="buySynergyValue(generator)">
+                G{{i + 1}} | Cost: {{generator.synergyCost | exponentialNumber}} | SV: {{generator.synergyValue}} 
+            </button>
         </div>
       </div>
       <hr />
-      <button>
+      <!-- <button>
         Enhance Everything by 1.3!
         <p>Cost: 100</p>
-      </button>
+      </button> -->
     </div>
     <div class="module-two">
-      <div class="module-overlay" [@fadeOut]="!mergeModuleBought ? 'visible' : 'hidden'" (click)="buyMergeModule()">Cost: 1e+15</div>
+      <div
+        class="module-overlay"
+        [@fadeOut]="!mergeModuleBought ? 'visible' : 'hidden'"
+        (click)="buyMergeModule()"
+      >
+        Cost: 1e+15
+      </div>
       <div class="scrabble-module-desc">
         <div class="text-wrapper">
           <p>Merge Module</p>

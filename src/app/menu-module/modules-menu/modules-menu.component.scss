@@ -152,6 +152,20 @@
     background: var(--primary-400);
 } 
 
+.enhance-wrapper > button {
+    box-shadow: 0 0 0.3rem var(--primary-400);
+    background: var(--primary-400);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.enhance-wrapper > button p {
+    margin: 0;
+}
+
 .buttonTierWrapper > div button {
     width: 7rem;
     box-shadow: 0 0 0.3rem var(--primary-400);

@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(1000000000000));
+  game = new BehaviorSubject<Game>(new Game(10000000000000000));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -333,4 +333,13 @@ export class GameService {
     game.modulesUnlocked[index] = true;
     this.game.next(game);
   }
+
+  addSynergyValue(generatorNumber: number) {
+    const game = this.game.value;
+    const generator = game.passiveGenerators.find(x => x.id === generatorNumber)!;
+    generator.synergyValue++;
+    generator.synergyCost = generator.synergyCost * 2 ** generator.synergyValue;
+    this.game.next(game);
+  }
+
 }

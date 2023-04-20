@@ -6,6 +6,7 @@ import { ActiveService } from 'src/app/services/active.service';
 import { CardsService } from 'src/app/services/cards.service';
 import { GameService } from 'src/app/services/game.service';
 import { GameUtils } from 'src/app/utils/utils';
+import { Generator } from 'src/app/classes/generator';
 
 @Component({
   selector: 'app-modules-menu',
@@ -14,7 +15,7 @@ import { GameUtils } from 'src/app/utils/utils';
   animations: [
     trigger('fadeOut', [
       state('visible', style({ opacity: 1 })),
-      state('hidden', style({ opacity: 0 })),
+      state('hidden', style({ opacity: 0, pointerEvents: 'none' })),
       transition('visible => hidden', animate('300ms ease-out')),
       transition('hidden => visible', animate('300ms ease-in')),
     ]),
@@ -30,6 +31,7 @@ export class ModulesMenuComponent {
   mergeCardsCost: number = 200;
   totalCards: number = 0;
   lettersBonus: number[] = [];
+  generators: Generator[] = [];
 
   constructor(
     private gameService: GameService,
@@ -56,6 +58,7 @@ export class ModulesMenuComponent {
       this.scrabbleModuleBought = game.modulesUnlocked[0];
       this.synergyModuleBought = game.modulesUnlocked[1];
       this.mergeModuleBought = game.modulesUnlocked[2];
+      this.generators = game.passiveGenerators;
     });
   }
 
@@ -100,19 +103,29 @@ export class ModulesMenuComponent {
 
   buyMergeModule() {
     if (this.gameService.game.value.points >= 1_000_000_000_000_000) {
+      this.gameService.updatePoints(-1_000_000_000_000_000);
       this.gameService.unlockModule(2);
     }
   }
 
   buySynergyModule() {
     if (this.gameService.game.value.points >= 1_000_000_000_000) {
+      this.gameService.updatePoints(-1_000_000_000_000);
       this.gameService.unlockModule(1);
     }
   }
 
   buyScrabbleModule() {
     if (this.gameService.game.value.points >= 1_000_000_000) {
+      this.gameService.updatePoints(-1_000_000_000);
       this.gameService.unlockModule(0);
+    }
+  }
+
+  buySynergyValue(generator: Generator) {
+    if(this.gameService.game.value.passivePoints >= generator.synergyCost) {
+      this.gameService.updatePassivePoints(-generator.synergyCost);
+      this.gameService.addSynergyValue(generator.id);
     }
   }
 }
