@@ -38,7 +38,7 @@ export class UpgradesMenuComponent implements OnInit {
   currentBasicUpgradeDesc: string = '';
   currentBasicUpgradeCost: number = 0;
   
-  ChangeBasicUpgradesText(upgradeNumber: number) {
+  ChangeBasicUpgradesText(upgradeNumber: eIdUpgrade) {
 
     const upgrade = this.basicUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
@@ -52,7 +52,7 @@ export class UpgradesMenuComponent implements OnInit {
   currentIntermediateUpgradeDesc: string = '';
   currentIntermediateUpgradeCost: number = 0;
   
-  ChangeIntermediateUpgradesText(upgradeNumber: number) {
+  ChangeIntermediateUpgradesText(upgradeNumber: eIdUpgrade) {
 
     const upgrade = this.intermediateUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
@@ -66,7 +66,7 @@ export class UpgradesMenuComponent implements OnInit {
   currentPassiveUpgradeDesc: string = '';
   currentPassiveUpgradeCost: number = 0;
 
-  ChangePassiveUpgradesText(upgradeNumber: number) {
+  ChangePassiveUpgradesText(upgradeNumber: eIdUpgrade) {
 
     const upgrade = this.passiveUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
@@ -80,7 +80,7 @@ export class UpgradesMenuComponent implements OnInit {
   currentPrestigeUpgradeDesc: string = '';
   currentPrestigeUpgradeCost: number = 0;
 
-  ChangePrestigeUpgradesText(upgradeNumber: number) {
+  ChangePrestigeUpgradesText(upgradeNumber: eIdUpgrade) {
 
     const upgrade = this.prestigeUpgrades.find((x) => x.id == upgradeNumber);
     if (!upgrade) return;
@@ -94,40 +94,40 @@ export class UpgradesMenuComponent implements OnInit {
     return String.fromCharCode(number + 65);
   }
 
-  getUpgrade(upgradeNumber: number) {
+  getUpgrade(upgradeNumber: eIdUpgrade) {
     this.upgradeService.getUpgrade(upgradeNumber);
   }
 
-  getIntermediateUpgrade(upgradeNumber: number) {
+  getIntermediateUpgrade(upgradeNumber: eIdUpgrade) {
     this.upgradeService.getIntermediateUpgrade(upgradeNumber);
   }
 
-  getPassiveUpgrade(upgradeNumber: number) {
+  getPassiveUpgrade(upgradeNumber: eIdUpgrade) {
     this.upgradeService.getPassiveUpgrade(upgradeNumber);
   }
 
-  getPrestigeUpgrade(upgradeNumber: number) {
+  getPrestigeUpgrade(upgradeNumber: eIdUpgrade) {
     this.upgradeService.getPrestigeUpgrade(upgradeNumber);
   }
 
-  isUpgradeActive(index: number):  boolean {
+  isUpgradeActive(index: eIdUpgrade):  boolean {
     return this.GameService.game.value.upgrades.some((x) => x.id == index)
   }
 
-  isPassiveUpgradeActive(index: number):  boolean {
+  isPassiveUpgradeActive(index: eIdUpgrade):  boolean {
     return this.GameService.game.value.passiveUpgrades.some((x) => x.id == index)
   }
 
-  isPrestigeUpgradeActive(index: number):  boolean {
+  isPrestigeUpgradeActive(index: eIdUpgrade):  boolean {
     return this.GameService.game.value.prestigeUpgrades.some((x) => x.id == index)
   }
 
   isPassiveUpgradePurchased() {
-    return this.GameService.game.value.upgrades.some((x) => x.id == eIdUpgrade.WordPassiveEnhancer);
+    return this.GameService.game.value.upgrades.some((x) => x.id == "WordPassiveEnhancer");
   }
 
   isEveryBasicUpgradePurchased() {
-    return Array.from({length: 12}, (_, index) => index + 1).every(id => this.GameService.game.value.upgrades.some(u => u.id === id));
+    return this.basicUpgrades.map((x) => x.id).every(u => this.GameService.game.value.upgrades.map((x) => x.id).includes(u));
   }
 
   hasPrestigePoints() {

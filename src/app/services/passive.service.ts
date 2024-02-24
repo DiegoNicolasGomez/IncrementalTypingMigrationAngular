@@ -54,7 +54,7 @@ export class PassiveService {
     this.passiveWord$.next(word);
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordPassiveEnhancer))
+    if (this.gameUtils.IsPurchasedUpgrade("WordPassiveEnhancer"))
       this.gameService.updatePassivePoints(points);
   }
 
@@ -67,7 +67,7 @@ export class PassiveService {
   GetPassivePoints(passiveWord: string) {
     var totalPoints = 0;
     totalPoints += passiveWord.length;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(4))
+    if (this.gameUtils.IsPurchasedPassiveUpgrade('PassiveScrabbleModule'))
       totalPoints += this.activeService.GetPointsLetters(passiveWord);
     if (this.gameUtils.HasCard(4))
       totalPoints +=
@@ -92,9 +92,9 @@ export class PassiveService {
         this.gameService.game.value.cards.filter(
           (x) => x.name === '+25 Passive Points (L)'
         ).length;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(2)) totalPoints += 5;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(1)) totalPoints *= 1.25;
-    if (this.gameUtils.IsPurchasedPassiveUpgrade(3)) totalPoints *= 1.5;
+    if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveLittleBonus")) totalPoints += 5;
+    if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveEnhancerEnhancerer")) totalPoints *= 1.25;
+    if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveDontKnow")) totalPoints *= 1.5;
     if (this.gameUtils.HasCard(3))
       totalPoints *=
         1 +
@@ -145,7 +145,7 @@ export class PassiveService {
       index <= this.gameService.game.value.passiveGenerators.length;
       index++
     ) {
-      if (this.gameUtils.IsPurchasedPassiveUpgrade(6)) {
+      if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveMoreModules")) {
         this.gameService.addGainedGeneratorsBoosted(index);
       } else {
         this.gameService.addGainedGenerators(index);

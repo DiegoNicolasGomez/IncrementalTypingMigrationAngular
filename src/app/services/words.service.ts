@@ -56,7 +56,7 @@ export class WordsService {
     this.wordBonus = '';
     var pointsLetters = word.length;
     this.wordBonus += '[WordLength] '
-    if (this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.ScrabbleModule)) {
+    if (this.gameUtils.IsPurchasedUpgrade("ScrabbleModule")) {
       var lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
@@ -66,12 +66,12 @@ export class WordsService {
       }
     }
 
-    if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.SameLetterBonus)) {
+    if(this.gameUtils.IsPurchasedUpgrade("SameLetterBonus")) {
       pointsLetters += Math.pow(1.25, this.activeService.getRepeatedLetters(word));
       this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
     }
 
-    if(this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.DifferentLetterBonus)) {
+    if(this.gameUtils.IsPurchasedUpgrade("DifferentLetterBonus")) {
       pointsLetters += Math.pow(1.1, this.activeService.getDifferentLetters(word));
       this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
     }
@@ -81,6 +81,8 @@ export class WordsService {
     this.gameService.updatePoints(result[0]);
     this.gameService.updateAllTimePoints(result[0]);
     this.gameService.updateWordsAmount();
+
+    //CHECK
     if(word === "Jack-go-to-bed-at-noon" && this.gameUtils.IsUnlockedAchievement("Best Word")) {
       this.achievementService.unlockAchievement("Best Word");
       this.achievementService.showAchievement("Best Word");

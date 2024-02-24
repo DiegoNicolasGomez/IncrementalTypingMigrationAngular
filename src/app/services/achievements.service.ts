@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Achievement, ExternalProperty } from '../classes/achievement';
+import { Achievement } from '../classes/achievement';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
 import { MessageService } from 'primeng/api';
@@ -250,7 +250,7 @@ export class AchievementsService implements OnDestroy {
         'Write a 10-letter word',
         35,
         1,
-        ExternalProperty.Other
+        "Other"
       )
     );
     this.createAchievement(
@@ -259,7 +259,7 @@ export class AchievementsService implements OnDestroy {
         'Write the best word possible',
         36,
         1,
-        ExternalProperty.Other
+        "Other"
       )
     );
 

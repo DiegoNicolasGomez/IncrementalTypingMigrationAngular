@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   navbarItems: {id: string, visible: boolean}[] = [
     {id: 'active', visible: true},
     {id: 'passive', visible: false},
-    {id: 'upgrades', visible: true},
+    {id: 'upgrades', visible: false},
     {id: 'modules', visible: false},
     {id: 'challenges', visible: false},
     {id: 'prestige', visible: false},

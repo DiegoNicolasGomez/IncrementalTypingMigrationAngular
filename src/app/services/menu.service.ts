@@ -10,7 +10,7 @@ export class MenuService {
   navbarItems: {id: string, visible: boolean}[] = [
     {id: 'active', visible: true},
     {id: 'passive', visible: false},
-    {id: 'upgrades', visible: true},
+    {id: 'upgrades', visible: false},
     {id: 'modules', visible: false},
     {id: 'challenges', visible: false},
     {id: 'prestige', visible: false},
@@ -24,17 +24,19 @@ export class MenuService {
 
   constructor(private gameService: GameService) {
     this.gameService.getGame().subscribe((game) => {
-      this.navbarItems.find(x => x.id === 'achievements')!.visible = game.achievements.length > 1;
+      this.navbarItems.find(x => x.id === 'upgrades')!.visible = game.points >= 50;
 
-      this.navbarItems.find(x => x.id === 'passive')!.visible = game.upgrades.some(x => x.id === eIdUpgrade.WordPassiveEnhancer);
+      this.navbarItems.find(x => x.id === 'achievements')!.visible = game.achievements.length >= 1;
 
-      this.navbarItems.find(x => x.id === 'modules')!.visible = game.upgrades.some(x => x.id === eIdUpgrade.UnlockModules);
+      this.navbarItems.find(x => x.id === 'passive')!.visible = game.upgrades.some(x => x.id === "WordPassiveEnhancer");
 
-      this.navbarItems.find(x => x.id === 'challenges')!.visible = game.upgrades.some(x => x.id === eIdUpgrade.ChallengeYourself);
+      this.navbarItems.find(x => x.id === 'modules')!.visible = game.upgrades.some(x => x.id === "UnlockModules");
+
+      this.navbarItems.find(x => x.id === 'challenges')!.visible = game.upgrades.some(x => x.id === "ChallengeYourself");
 
       this.navbarItems.find(x => x.id === 'prestige')!.visible = game.allTimePoints >= 1000000;
 
-      this.navbarItems.find(x => x.id === 'cards')!.visible = game.upgrades.some(x => x.id === eIdUpgrade.Gacha);
+      this.navbarItems.find(x => x.id === 'cards')!.visible = game.upgrades.some(x => x.id === "Gacha");
     })
    }
 

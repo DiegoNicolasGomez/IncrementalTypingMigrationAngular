@@ -3,9 +3,9 @@ export class Challenge {
     description: string;
     rewardDescription: string;
     time: number;
-    onChallenge: boolean;
+    onChallenge: boolean = false;
     objective: number;
-    amount: number;
+    amount: number = 0;
     restriction: number;
     id: number;
   
@@ -22,9 +22,7 @@ export class Challenge {
       this.description = challengeDescription;
       this.rewardDescription = challengeRewardDescription;
       this.time = challengeTime;
-      this.onChallenge = false;
       this.objective = challengeObjective;
-      this.amount = 0;
       this.restriction = challengeRestriction;
       this.id = challengeNumber;
     }

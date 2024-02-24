@@ -23,20 +23,6 @@ export class Card {
     }
   }
   
-  export enum BonusType {
-    PointsPercentage = 'PointsPercentage',
-    PointsAmount = 'PointsAmount',
-    PassivePointsPercentage = 'PassivePointsPercentage',
-    PassivePointsAmount = 'PassivePointsAmount',
-    PassivePointsSpeed = 'PassivePointsSpeed',
-    PassivePointsLength = 'PassivePointsLength',
-    Lowercase = 'Lowercase' 
-  }
+  export type BonusType = 'PointsPercentage' | 'PointsAmount' | 'PassivePointsPercentage' | 'PassivePointsAmount' | 'PassivePointsSpeed' | 'PassivePointsLength' | 'Lowercase' 
   
-  export enum CardType {
-    Common = 'Common',
-    Uncommon = 'Uncommon',
-    Epic = 'Epic',
-    Legendary = 'Legendary',
-    Ultimate = 'Ultimate'
-  }
+  export type CardType  = 'Common' | 'Uncommon' | 'Epic' | 'Legendary' | 'Ultimate'

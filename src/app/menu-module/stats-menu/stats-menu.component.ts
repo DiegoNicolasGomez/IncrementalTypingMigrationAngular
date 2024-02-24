@@ -17,9 +17,9 @@ export class StatsMenuComponent {
   }
 
   getMultiUpgradesStat(): string {
-    const mu1 = this.gameStats.multiUpgrades.find(mu => mu.id === 1)?.amountBought || 0;
-    const mu2 = this.gameStats.multiUpgrades.find(mu => mu.id === 2)?.amountBought || 0;
-    const mu3 = this.gameStats.multiUpgrades.find(mu => mu.id === 3)?.amountBought || 0;
+    const mu1 = this.gameStats.multiUpgrades.find(mu => mu.id === "MultiUpgradePoints")?.amountBought || 0;
+    const mu2 = this.gameStats.multiUpgrades.find(mu => mu.id === "MultiUpgradeWords")?.amountBought || 0;
+    const mu3 = this.gameStats.multiUpgrades.find(mu => mu.id === "MultiUpgradePointsMult")?.amountBought || 0;
     return `${mu1} - ${mu2} - ${mu3}`;
 }
 }

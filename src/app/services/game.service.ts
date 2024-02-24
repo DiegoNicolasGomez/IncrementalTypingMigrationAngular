@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Achievement } from '../classes/achievement';
 import { Game } from '../classes/game';
-import { Upgrade } from '../classes/upgrade';
+import { Upgrade, eIdUpgrade } from '../classes/upgrade';
 import { Generator } from '../classes/generator';
 import { Card } from '../classes/card';
 import { GameUtils } from '../utils/utils';
@@ -12,7 +12,7 @@ import { UpgradeService } from './upgrade.service';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(10000000000000000));
+  game = new BehaviorSubject<Game>(new Game(0));
   challengeGame = new BehaviorSubject<Game>(new Game(0));
   activeGame = new BehaviorSubject<Game>(new Game(0));
 
@@ -152,8 +152,8 @@ export class GameService {
     const game = this.game.value;
     game.prestigePoints = Math.round(Math.cbrt(game.allTimePoints));
     game.prestigeCount++;
-    game.points = 15000000000;
-    game.allTimePoints = 15000000000;
+    game.points = 0;
+    game.allTimePoints = 0;
     game.upgrades = [];
     game.maxLength = 4;
     game.bestWord = '';
@@ -219,14 +219,14 @@ export class GameService {
     this.game.next(game);
   }
 
-  buyMultiUpgrade(id: number) {
+  buyMultiUpgrade(id: eIdUpgrade) {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.amountBought++;
     this.game.next(game);
   }
 
-  setMultiUpgradeCost(id: number, bonus: number) {
+  setMultiUpgradeCost(id: eIdUpgrade, bonus: number) {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=

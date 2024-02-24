@@ -5,23 +5,22 @@ import { GameService } from './game.service';
 import { UpgradeService } from './upgrade.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PrestigeService {
-
-  constructor(private gameService: GameService, private upgradeService: UpgradeService) {}
+  constructor(
+    private gameService: GameService,
+    private upgradeService: UpgradeService
+  ) {}
 
   gameUtils = new GameUtils(this.gameService);
 
   prestigeStats() {
-    let maintainsPassive = false;
-    if (
-      this.gameUtils.IsPurchasedUpgrade(eIdUpgrade.WordPassiveEnhancer) &&
-      this.gameUtils.IsPurchasedPrestigeUpgrade(4)
-      ) {
-        maintainsPassive = true;
-      }
+    let maintainsPassive =
+      this.gameUtils.IsPurchasedUpgrade('WordPassiveEnhancer') &&
+      this.gameUtils.IsPurchasedPrestigeUpgrade("PrestigeBringEnhancer");
     this.gameService.updatePrestige();
-    if(maintainsPassive) this.upgradeService.getUpgrade(4);
+    //CHECK
+    if (maintainsPassive) this.upgradeService.getUpgrade("PrestigeBringEnhancer");
   }
 }

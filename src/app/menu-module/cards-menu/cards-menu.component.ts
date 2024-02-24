@@ -40,7 +40,7 @@ export class CardsMenuComponent {
       this.gameService.game.value.points >= this.gameService.game.value.cardCost
     ) {
       this.gameService.updatePoints(-this.gameService.game.value.cardCost);
-      var cards: Card[] = this.cardService.getPack();
+      var cards = this.cardService.getPack();
       this.gameService.updateCardsCost();
       this.overlayService.appendCards(cards);
     }

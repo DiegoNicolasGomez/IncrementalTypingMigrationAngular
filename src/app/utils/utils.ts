@@ -5,19 +5,19 @@ import { eIdUpgrade } from '../classes/upgrade';
 export class GameUtils {
   constructor(private gameService: GameService) {}
 
-  IsPurchasedUpgrade(upgradeNumber: number): boolean {
+  IsPurchasedUpgrade(upgradeNumber: eIdUpgrade): boolean {
     return this.gameService.game.value.upgrades.some(
       (x) => x.id == upgradeNumber
     );
   }
 
-  IsPurchasedPassiveUpgrade(upgradeNumber: number): boolean {
+  IsPurchasedPassiveUpgrade(upgradeNumber: eIdUpgrade): boolean {
     return this.gameService.game.value.passiveUpgrades.some(
       (x) => x.id == upgradeNumber
     );
   }
 
-  IsPurchasedPrestigeUpgrade(upgradeNumber: number): boolean {
+  IsPurchasedPrestigeUpgrade(upgradeNumber: eIdUpgrade): boolean {
     return this.gameService.game.value.prestigeUpgrades.some(
       (x) => x.id == upgradeNumber
     );
@@ -47,27 +47,27 @@ export class GameUtils {
 
   getCardType(card: Card) {
     switch (card.type) {
-      case CardType.Common:
+      case "Common":
         return 'commonCard';
-      case CardType.Uncommon:
+      case "Uncommon":
         return 'uncommonCard';
-      case CardType.Epic:
+      case "Epic":
         return 'epicCard';
-      case CardType.Legendary:
+      case "Legendary":
         return 'legendaryCard';
-      case CardType.Ultimate:
+      case "Ultimate":
         return 'ultimateCard';
     }
   }
 
   getCardBonus(): number {
-    if (this.IsPurchasedUpgrade(eIdUpgrade.QualityCardsBonus)) {
+    if (this.IsPurchasedUpgrade("QualityCardsBonus")) {
       const cardValueMap = {
-        [CardType.Common]: 1,
-        [CardType.Uncommon]: 2,
-        [CardType.Epic]: 4,
-        [CardType.Legendary]: 8,
-        [CardType.Ultimate]: 16
+        ["Common"]: 1,
+        ["Uncommon"]: 2,
+        ["Epic"]: 4,
+        ["Legendary"]: 8,
+        ["Ultimate"]: 16
 
       };
       return this.gameService.game.value.cards.map((x) => cardValueMap[x.type]).reduce((a, b) => a + b, 1);
