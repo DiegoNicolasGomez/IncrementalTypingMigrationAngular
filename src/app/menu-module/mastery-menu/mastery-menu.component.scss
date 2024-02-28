@@ -1,0 +1,21 @@
+.mastery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--small-custom-text);
+    flex-direction: column;
+    background: var(--primary-900);
+    border-radius: 3rem;
+}
+
+.mastery-wrapper {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    margin-top: 2rem;
+    padding-inline: 2rem;
+}
+
+.mastery-title { 
+    font-size: var(--medium-custom-text);
+}

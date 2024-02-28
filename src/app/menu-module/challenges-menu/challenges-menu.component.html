@@ -1,6 +1,6 @@
 <section id="challengesMenu" class="menu">
     <div id="challengesContainerWrapper" class="challengesContainerWrapper hoverEffectContainer">
-        <div *ngFor="let challenge of challenges" class="challenge hoverEffectChild" (click)="startChallenge(challenge.id)">
+        <div *ngFor="let challenge of challenges" class="challenge hoverEffectChild" (click)="startChallenge(challenge.type)">
             <p>{{challenge.description}} - <span class="challengeReward">REWARD: {{challenge.rewardDescription}}</span></p>
         </div>
         <button id="exitChallengeButton" class="exitChallengeButton" (click)="exitAnyChallenge()">

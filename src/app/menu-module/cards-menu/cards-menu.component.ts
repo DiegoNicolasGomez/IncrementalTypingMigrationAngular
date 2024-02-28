@@ -4,6 +4,7 @@ import { Card } from 'src/app/classes/card';
 import { CardsService } from 'src/app/services/cards.service';
 import { GameService } from 'src/app/services/game.service';
 import { OverlayService } from 'src/app/services/overlay.service';
+import { TimerService } from 'src/app/services/timer.service';
 import { GameUtils } from 'src/app/utils/utils';
 
 @Component({
@@ -19,7 +20,8 @@ export class CardsMenuComponent {
   constructor(
     private cardService: CardsService,
     private gameService: GameService,
-    private overlayService: OverlayService
+    private overlayService: OverlayService,
+    private timerService: TimerService
   ) {
     this.cardsCost$ = this.gameService
       .getGame()
@@ -41,6 +43,7 @@ export class CardsMenuComponent {
     ) {
       this.gameService.updatePoints(-this.gameService.game.value.cardCost);
       var cards = this.cardService.getPack();
+      this.timerService.logGameTimer("Purchased Cards");
       this.gameService.updateCardsCost();
       this.overlayService.appendCards(cards);
     }

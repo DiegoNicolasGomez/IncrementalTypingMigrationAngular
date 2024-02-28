@@ -8,7 +8,7 @@ import { GameService } from './game.service';
 })
 export class StatsService {
 
-  gameStats$ = new BehaviorSubject<Game>(new Game(0));
+  gameStats$ = new BehaviorSubject<Game>(new Game(0, "Current"));
 
   constructor(private gameService: GameService) {
     this.gameService.getGame().subscribe((game) => {

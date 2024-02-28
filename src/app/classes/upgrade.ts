@@ -38,6 +38,8 @@ export type eIdUpgrade =
   | 'DifferentLetterBonus'
   | 'IntermediateBasicsTwo'
   | 'CardsAmountBonus'
+  | 'UnlockMastery'
+  | 'PrecisionKey'
   | 'QualityCardsBonus'
 	| 'PassiveEnhancerEnhancerer'
 	| 'PassiveLittleBonus'

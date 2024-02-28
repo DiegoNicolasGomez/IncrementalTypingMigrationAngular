@@ -14,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ModulesMenuComponent } from './modules-menu/modules-menu.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MasteryMenuComponent } from './mastery-menu/mastery-menu.component';
 
 
 export const routes: Routes = [
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'modulesMenu', component: ModulesMenuComponent },
   { path: 'prestigeMenu', component: PrestigeMenuComponent },
   { path: 'cardsMenu', component: CardsMenuComponent },
+  { path: 'masteryMenu', component: MasteryMenuComponent },
   { path: 'challengesMenu', component: ChallengesMenuComponent },
   { path: 'achievementsMenu', component: AchievementsMenuComponent },
   { path: 'statsMenu', component: StatsMenuComponent },
@@ -42,6 +44,7 @@ export const routes: Routes = [
     UpgradesMenuComponent,
     StatsMenuComponent,
     ModulesMenuComponent,
+    MasteryMenuComponent,
   ],
   imports: [CommonModule, SharedModule, MatIconModule,
     MatTooltipModule,],
@@ -56,6 +59,7 @@ export const routes: Routes = [
     UpgradesMenuComponent,
     StatsMenuComponent,
     ModulesMenuComponent,
+    MasteryMenuComponent
   ],
 })
 export class MenuModuleModule {}

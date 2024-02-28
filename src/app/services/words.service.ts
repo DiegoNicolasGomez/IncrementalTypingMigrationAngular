@@ -7,18 +7,19 @@ import { eIdUpgrade } from '../classes/upgrade';
 import { GameUtils } from '../utils/utils';
 import { AchievementsService } from './achievements.service';
 import { ActiveService } from './active.service';
+import { MasteryService } from './mastery.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WordsService {
-   private wordListUrl: string = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt";
    wordList: string[] = [];
    private currentWord = new BehaviorSubject<string>('');
    wordShifted = new Subject<void>();
    wordBonus: string = '';
+   private critical = new BehaviorSubject<boolean>(false);
    
-   constructor(private gameService: GameService, private http: HttpClient, private activeService: ActiveService, private achievementService: AchievementsService) {}
+   constructor(private gameService: GameService, private http: HttpClient, private activeService: ActiveService, private achievementService: AchievementsService, private masteryService: MasteryService) {}
 
    gameUtils = new GameUtils(this.gameService);
 
@@ -34,7 +35,7 @@ export class WordsService {
     var generatedWord =
       filteredWordList[Math.floor(Math.random() * filteredWordList.length)];
   
-    if (this.gameUtils.HasCard(12) || this.gameUtils.IsInChallenge(1))
+    if (this.gameUtils.HasCard(12) || this.gameUtils.IsInChallenge("Accuracy"))
       generatedWord = generatedWord.toLowerCase();
 
     return generatedWord;
@@ -50,6 +51,14 @@ export class WordsService {
 
   checkWordMatch(input: string) {
     return this.currentWord.value === input;
+  }
+
+  setCritical(value: boolean) {
+    this.critical.next(value);
+  }
+
+  getCritical() {
+    return this.critical.asObservable();
   }
 
   guessedWord(word: string) {
@@ -78,6 +87,14 @@ export class WordsService {
 
     var result = this.activeService.CalculatePoints(pointsLetters);
     this.wordBonus += result[1];
+
+    if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
+      const mastery = this.gameService.game.value.masteryLevels.find(x => x.letters.includes(word[0].toLowerCase()))!
+      result[0] *= mastery.value;
+    }
+
+    if(this.critical.value === true) result[0] *= 5;
+
     this.gameService.updatePoints(result[0]);
     this.gameService.updateAllTimePoints(result[0]);
     this.gameService.updateWordsAmount();
@@ -90,6 +107,12 @@ export class WordsService {
     if(word.length == 10 && this.gameUtils.IsUnlockedAchievement("10-letter Word")) {
       this.achievementService.unlockAchievement("10-letter Word");
       this.achievementService.showAchievement("10-letter Word");
+    }
+
+    if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
+      const initialLetter = word[0];
+      const mastery = this.gameService.game.value.masteryLevels.find(x => x.letters.includes(initialLetter.toLowerCase()))!
+      this.masteryService.updateMasteryValue(mastery.tier);
     }
   }
 

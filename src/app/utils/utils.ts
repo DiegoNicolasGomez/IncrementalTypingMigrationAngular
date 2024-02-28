@@ -1,6 +1,7 @@
 import { GameService } from 'src/app/services/game.service';
 import { Card, CardType } from '../classes/card';
 import { eIdUpgrade } from '../classes/upgrade';
+import { challengeType } from '../classes/challenge';
 
 export class GameUtils {
   constructor(private gameService: GameService) {}
@@ -27,13 +28,9 @@ export class GameUtils {
     return this.gameService.game.value.cards.some((x) => x.id == cardNumber);
   }
 
-  Copy(object: object) {
-    return JSON.parse(JSON.stringify(object));
-  }
-
-  IsInChallenge(challengeNumber: number): boolean {
+  IsInChallenge(challengeType: challengeType): boolean {
     const challenge = this.gameService.game.value.challenges.find(
-      (x) => x.id == challengeNumber
+      (x) => x.type == challengeType
     );
     if (!challenge) return false;
     return challenge.onChallenge;

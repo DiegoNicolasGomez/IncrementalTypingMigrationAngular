@@ -7,14 +7,16 @@ import { Generator } from '../classes/generator';
 import { Card } from '../classes/card';
 import { GameUtils } from '../utils/utils';
 import { UpgradeService } from './upgrade.service';
+import { challengeType } from '../classes/challenge';
+import { masteryTier } from '../classes/mastery';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(0));
-  challengeGame = new BehaviorSubject<Game>(new Game(0));
-  activeGame = new BehaviorSubject<Game>(new Game(0));
+  game = new BehaviorSubject<Game>(new Game(10000000000000, "Current"));
+  challengeGame = new BehaviorSubject<Game>(new Game(0, "Challenge"));
+  activeGame = new BehaviorSubject<Game>(new Game(0, "Active"));
 
   constructor() {}
 
@@ -72,9 +74,33 @@ export class GameService {
     this.game.next(game);
   }
 
-  updateLetterCounter() {
+  updateLetterCounter(add: number = 1) {
     const game = this.game.value;
-    game.letterCounter++;
+    game.letterCounter += add;
+    this.game.next(game);
+  }
+
+  setLetterCounterPerfection(value: number) {
+    const game = this.game.value;
+    game.letterCounterPerfection = value;
+    this.game.next(game);
+  }
+
+  updateLetterCounterPerfection(add: number = 1) {
+    const game = this.game.value;
+    game.letterCounterPerfection += add;
+    this.game.next(game);
+  }
+
+  updateWordCounterPerfection(add: number = 1) {
+    const game = this.game.value;
+    game.wordCounterPerfection += add;
+    this.game.next(game);
+  }
+
+  setWordCounterPerfection(value: number) {
+    const game = this.game.value;
+    game.wordCounterPerfection = value;
     this.game.next(game);
   }
 
@@ -175,7 +201,6 @@ export class GameService {
     });
     game.cards = [];
     game.cardCost = 0;
-    game.isInChallenge = false;
     this.game.next(game);
   }
 
@@ -230,8 +255,8 @@ export class GameService {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=
-      (upgrade!.amountBought / bonus) **
-      Math.log10(upgrade!.amountBought / bonus);
+    ((upgrade!.amountBought + 1) / bonus) **
+    Math.log10((upgrade!.amountBought + 1) / bonus);
     this.game.next(game);
   }
 
@@ -282,10 +307,9 @@ export class GameService {
 
   //Challenges
 
-  updateChallengeState(state: boolean, challengeNumber: number) {
+  updateChallengeState(state: boolean, challengeType: challengeType) {
     const game = this.game.value;
-    game.isInChallenge = state;
-    game.challenges.find((x) => x.id == challengeNumber)!.onChallenge = state;
+    game.challenges.find((x) => x.type == challengeType)!.onChallenge = state;
     this.game.next(game);
   }
 
@@ -295,9 +319,9 @@ export class GameService {
     this.game.next(game);
   }
 
-  completeChallenge(challengeNumber: number) {
+  completeChallenge(challengeType: challengeType) {
     const game = this.activeGame.value;
-    game.challenges.find((x) => x.id == challengeNumber)!.amount++;
+    game.challenges.find((x) => x.type == challengeType)!.amount++;
     game.challengesAmount++;
     this.activeGame.next(game);
   }
@@ -340,6 +364,21 @@ export class GameService {
     generator.synergyValue++;
     generator.synergyCost = generator.synergyCost * 2 ** generator.synergyValue;
     this.game.next(game);
+  }
+
+  //Mastery
+
+  updateMasteryValue(masteryTier: masteryTier) {
+    const game = this.game.value;
+    const mastery = game.masteryLevels.find(x => x.tier === masteryTier)!;
+    mastery.amount++;
+    if(mastery.amount === mastery.amountToLevel) {
+      mastery.amount = 0;
+      mastery.amountToLevel *= 2;
+      mastery.value *= 2;
+      mastery.level++;
+    }
+
   }
 
 }

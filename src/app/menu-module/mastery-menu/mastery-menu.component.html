@@ -1,0 +1,10 @@
+<section>
+  <div class="mastery-wrapper">
+    <div *ngFor="let mastery of masteries" class="mastery">
+      <p class="mastery-title">{{mastery.tier}}</p>
+      <p>Mastery Level: {{ mastery.level }}</p>
+      <p>Multiplier: {{ mastery.value }}</p>
+      <p>Progress: {{ mastery.amount }} / {{ mastery.amountToLevel }}</p>
+    </div>
+  </div>
+</section>

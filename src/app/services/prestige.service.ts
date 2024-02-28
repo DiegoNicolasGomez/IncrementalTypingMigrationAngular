@@ -20,7 +20,10 @@ export class PrestigeService {
       this.gameUtils.IsPurchasedUpgrade('WordPassiveEnhancer') &&
       this.gameUtils.IsPurchasedPrestigeUpgrade("PrestigeBringEnhancer");
     this.gameService.updatePrestige();
+    const prestigeBringEnhancer = this.upgradeService.getPrestigeUpgrades().find(x => x.id === "PrestigeBringEnhancer")!;
+    const challengeYourself = this.upgradeService.getBasicUpgrades().find(x => x.id === "ChallengeYourself")!;
     //CHECK
-    if (maintainsPassive) this.upgradeService.getUpgrade("PrestigeBringEnhancer");
+    if (maintainsPassive) this.gameService.addUpgrade(prestigeBringEnhancer);
+    this.gameService.addUpgrade(challengeYourself)
   }
 }

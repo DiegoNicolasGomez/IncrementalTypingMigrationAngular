@@ -3,6 +3,7 @@ import { eIdUpgrade, Upgrade } from '../classes/upgrade';
 import { GameService } from './game.service';
 import { LayoutService } from './layout.service';
 import { PassiveService } from './passive.service';
+import { TimerService } from './timer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class UpgradeService {
   constructor(
     private gameService: GameService,
     private layoutService: LayoutService,
-    private passiveService: PassiveService
+    private passiveService: PassiveService,
+    private timerService: TimerService
   ) {
     //Basic Upgrade
     this.createBasicUpgrade(
@@ -167,9 +169,27 @@ export class UpgradeService {
 
     this.createIntermediateUpgrade(
       new Upgrade(
+        `More mechanics!`,
+        'Unlock Mastery!',
+        50_000_000_000,
+        'UnlockMastery'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Precision is key`,
+        'Gets a bonus for every word perfectly typed',
+        100_000_000_000,
+        'PrecisionKey'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
         `Last Intermediate Upgrade! Now the quality of the cards provides a better bonus!`,
         'Bonus: Every card counts as x*Math.pow(2, [Tier])',
-        50_000_000_000,
+        500_000_000_000,
         'QualityCardsBonus'
       )
     );
@@ -302,6 +322,7 @@ export class UpgradeService {
     ) {
       this.gameService.updatePoints(-upgrade.cost);
       this.gameService.addUpgrade(upgrade);
+      this.timerService.logGameTimer(`Obtained Upgrade: ${upgrade.name}"`);
       if (upgradeType === "ImSpeed") {
         this.layoutService.setLettersPerSecondVisibility(true);
       }

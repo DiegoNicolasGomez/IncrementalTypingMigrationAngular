@@ -9,7 +9,7 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class StatsMenuComponent {
 
-  gameStats: Game = new Game(0);
+  gameStats: Game = new Game(0, "Current");
   constructor(private gameService: GameService) {
     this.gameService.getGame().subscribe((game) => {
       this.gameStats = game;

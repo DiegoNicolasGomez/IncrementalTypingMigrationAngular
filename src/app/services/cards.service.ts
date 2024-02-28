@@ -13,8 +13,8 @@ export class CardsService {
       new Card(
         'Fast+ Progress (C)',
         '+5% Points',
-        "Common",
-        "PointsPercentage",
+        'Common',
+        'PointsPercentage',
         1.05,
         1
       )
@@ -23,8 +23,8 @@ export class CardsService {
       new Card(
         '+1 Points (C)',
         '+1 Point Per Word',
-        "Common",
-        "PointsAmount",
+        'Common',
+        'PointsAmount',
         1,
         2
       )
@@ -33,8 +33,8 @@ export class CardsService {
       new Card(
         '10% Passive Points (C)',
         '10% Passive Points!',
-        "Common",
-        "PassivePointsPercentage",
+        'Common',
+        'PassivePointsPercentage',
         1.1,
         3
       )
@@ -43,8 +43,8 @@ export class CardsService {
       new Card(
         '+2 Passive Points (C)',
         '+2 Passive Points Per Word!',
-        "Common",
-        "PassivePointsAmount",
+        'Common',
+        'PassivePointsAmount',
         2,
         4
       )
@@ -54,8 +54,8 @@ export class CardsService {
       new Card(
         'Faster Progress (UC)',
         '+25% Points',
-        "Uncommon",
-        "PointsPercentage",
+        'Uncommon',
+        'PointsPercentage',
         1.25,
         5
       )
@@ -64,8 +64,8 @@ export class CardsService {
       new Card(
         '+3 Points (UC)',
         '+3 Points Per Word',
-        "Uncommon",
-        "PointsAmount",
+        'Uncommon',
+        'PointsAmount',
         3,
         6
       )
@@ -74,8 +74,8 @@ export class CardsService {
       new Card(
         '25% Passive Points (UC)',
         '25% Passive Points!',
-        "Uncommon",
-        "PassivePointsPercentage",
+        'Uncommon',
+        'PassivePointsPercentage',
         1.25,
         7
       )
@@ -84,8 +84,8 @@ export class CardsService {
       new Card(
         '+5 Passive Points (UC)',
         '+5 Passive Points Per Word!',
-        "Uncommon",
-        "PassivePointsAmount",
+        'Uncommon',
+        'PassivePointsAmount',
         5,
         8
       )
@@ -94,8 +94,8 @@ export class CardsService {
       new Card(
         'Faster Passive Words (UC)',
         'Generate Passive Words 5% Faster',
-        "Uncommon",
-        "PassivePointsSpeed",
+        'Uncommon',
+        'PassivePointsSpeed',
         1.05,
         9
       )
@@ -104,8 +104,8 @@ export class CardsService {
       new Card(
         'Longer Passive Words (UC)',
         '+1 Letter Per Passive Word',
-        "Uncommon",
-        "PassivePointsLength",
+        'Uncommon',
+        'PassivePointsLength',
         1,
         10
       )
@@ -115,8 +115,8 @@ export class CardsService {
       new Card(
         'Fasterer Progress (E)',
         '+50% Points',
-        "Epic",
-        "PointsPercentage",
+        'Epic',
+        'PointsPercentage',
         1.5,
         11
       )
@@ -125,8 +125,8 @@ export class CardsService {
       new Card(
         'All Lowercase (E)',
         'From now on, every word is lowercase',
-        "Epic",
-        "Lowercase",
+        'Epic',
+        'Lowercase',
         0,
         12
       )
@@ -135,8 +135,8 @@ export class CardsService {
       new Card(
         '+6 Points (E)',
         '+6 Points Per Word',
-        "Epic",
-        "PointsAmount",
+        'Epic',
+        'PointsAmount',
         6,
         13
       )
@@ -145,8 +145,8 @@ export class CardsService {
       new Card(
         '50% Passive Points (E)',
         '50% Passive Points!',
-        "Epic",
-        "PassivePointsPercentage",
+        'Epic',
+        'PassivePointsPercentage',
         1.5,
         14
       )
@@ -155,8 +155,8 @@ export class CardsService {
       new Card(
         '+10 Passive Points (E)',
         '+10 Passive Points Per Word!',
-        "Epic",
-        "PassivePointsAmount",
+        'Epic',
+        'PassivePointsAmount',
         10,
         15
       )
@@ -165,8 +165,8 @@ export class CardsService {
       new Card(
         'Fasterer Passive Words (E)',
         'Generate Passive Words 10% Faster',
-        "Epic",
-        "PassivePointsSpeed",
+        'Epic',
+        'PassivePointsSpeed',
         1.1,
         16
       )
@@ -175,8 +175,8 @@ export class CardsService {
       new Card(
         'Longerer Passive Words (E)',
         '+2 Letters Per Passive Word',
-        "Epic",
-        "PassivePointsLength",
+        'Epic',
+        'PassivePointsLength',
         2,
         17
       )
@@ -186,8 +186,8 @@ export class CardsService {
       new Card(
         'Fastest Progress (L)',
         '+100% Points',
-        "Legendary",
-        "PointsPercentage",
+        'Legendary',
+        'PointsPercentage',
         2,
         18
       )
@@ -196,8 +196,8 @@ export class CardsService {
       new Card(
         '+10 Points (L)',
         '+10 Points Per Word',
-        "Legendary",
-        "PointsAmount",
+        'Legendary',
+        'PointsAmount',
         10,
         19
       )
@@ -206,8 +206,8 @@ export class CardsService {
       new Card(
         'x2 Passive Points (L)',
         'Double Passive Points!',
-        "Legendary",
-        "PassivePointsPercentage",
+        'Legendary',
+        'PassivePointsPercentage',
         2,
         20
       )
@@ -216,8 +216,8 @@ export class CardsService {
       new Card(
         '+25 Passive Points (L)',
         '+25 Passive Points Per Word!',
-        "Legendary",
-        "PassivePointsAmount",
+        'Legendary',
+        'PassivePointsAmount',
         25,
         21
       )
@@ -226,8 +226,8 @@ export class CardsService {
       new Card(
         'Fastest Passive Words (L)',
         'Generate Passive Words 20% Faster',
-        "Legendary",
-        "PassivePointsSpeed",
+        'Legendary',
+        'PassivePointsSpeed',
         1.2,
         22
       )
@@ -236,8 +236,8 @@ export class CardsService {
       new Card(
         'Longest Passive Words (L)',
         '+5 Letters Per Passive Word',
-        "Legendary",
-        "PassivePointsLength",
+        'Legendary',
+        'PassivePointsLength',
         5,
         23
       )
@@ -336,36 +336,33 @@ export class CardsService {
   }
 
   GetCommonCard(): Card {
-    return this.cards.filter((x) => x.type == "Common")[
+    return this.cards.filter((x) => x.type == 'Common')[
       Math.floor(
-        Math.random() *
-          this.cards.filter((x) => x.type == "Common").length
+        Math.random() * this.cards.filter((x) => x.type == 'Common').length
       )
     ];
   }
 
   GetUncommonCard(): Card {
-    return this.cards.filter((x) => x.type == "Uncommon")[
+    return this.cards.filter((x) => x.type == 'Uncommon')[
       Math.floor(
-        Math.random() *
-          this.cards.filter((x) => x.type == "Uncommon").length
+        Math.random() * this.cards.filter((x) => x.type == 'Uncommon').length
       )
     ];
   }
 
   GetEpicCard(): Card {
-    return this.cards.filter((x) => x.type == "Epic")[
+    return this.cards.filter((x) => x.type == 'Epic')[
       Math.floor(
-        Math.random() * this.cards.filter((x) => x.type == "Epic").length
+        Math.random() * this.cards.filter((x) => x.type == 'Epic').length
       )
     ];
   }
 
   GetLegendaryCard(): Card {
-    return this.cards.filter((x) => x.type == "Legendary")[
+    return this.cards.filter((x) => x.type == 'Legendary')[
       Math.floor(
-        Math.random() *
-          this.cards.filter((x) => x.type == "Legendary").length
+        Math.random() * this.cards.filter((x) => x.type == 'Legendary').length
       )
     ];
   }
@@ -385,11 +382,11 @@ export class CardsService {
         );
 
       const cardsTiersMap: { [key in CardType]: CardType } = {
-        ["Common"]: "Uncommon",
-        ["Uncommon"]: "Epic",
-        ["Epic"]: "Legendary",
-        ["Legendary"]: "Ultimate",
-        ["Ultimate"]: "Ultimate",
+        ['Common']: 'Uncommon',
+        ['Uncommon']: 'Epic',
+        ['Epic']: 'Legendary',
+        ['Legendary']: 'Ultimate',
+        ['Ultimate']: 'Ultimate',
       };
 
       this.gameService.addCard(

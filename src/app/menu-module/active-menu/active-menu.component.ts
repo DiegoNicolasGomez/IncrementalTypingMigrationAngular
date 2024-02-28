@@ -29,18 +29,13 @@ export class ActiveMenuComponent implements OnDestroy {
   }
 
   AddMultiUpgrade(upgradeNumber: eIdUpgrade) {
-    const upgrade = this.multiUpgrades.find((x) => x.id == upgradeNumber);
-    if (!upgrade) return;
-    if (this.gameService.game.value.points >= upgrade.cost) {
-      this.gameService.updatePoints(-upgrade.cost);
-
-      const upgradeBought = this.gameService.game.value.multiUpgrades.find(
-        (x) => x.id == upgradeNumber
-      );
-      if (!upgradeBought) return;
-
+    const multiUpgrade = this.gameService.game.value.multiUpgrades.find(
+      (x) => x.id == upgradeNumber
+    );
+    if(!multiUpgrade) return;
+    if (this.gameService.game.value.points >= multiUpgrade.cost) {
+      this.gameService.updatePoints(-multiUpgrade.cost);
       this.gameService.buyMultiUpgrade(upgradeNumber);
-
       this.gameService.setMultiUpgradeCost(
         upgradeNumber,
         this.gameUtils.IsPurchasedPrestigeUpgrade('PrestigeBetterScaling')

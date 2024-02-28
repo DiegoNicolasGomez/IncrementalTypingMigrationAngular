@@ -2,7 +2,7 @@
     <p id="WordLeft" class="wordLeft">{{ wordLeft }}</p>
     <p id="WordLeft2" class="wordLeft">{{ wordLeft2 }}</p>
     <div id="WordToGuessWrapper" class="wordToGuessWrapper">
-        <p id="WordToGuess" class="wordToGuess">{{ wordToGuess }}</p>
+        <p #WordToGuess class="wordToGuess">{{ wordToGuess }}</p>
         <mat-icon [matTooltip]="getWordBonus()" matTooltipPosition="right" matTooltipDelay="500">info</mat-icon>
     </div>
     <p id="WordRight" class="wordRight">{{ wordRight }}</p>
