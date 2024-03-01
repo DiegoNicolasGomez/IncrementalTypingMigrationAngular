@@ -37,10 +37,13 @@ export class WordsToGuessComponent implements OnInit, AfterViewInit {
         const wordList = response.split('\n');
         this.wordService.wordList = wordList;
         this.setWords();
+        for (let index = 1; index < 40; index++) {
+          console.log(wordList.filter(x => x.length === index));
+          console.log(index) 
+        }
       });
 
     this.wordService.getCritical().subscribe((value) => {
-      console.log(value);
       this.critical = value;
     });
   }
@@ -57,7 +60,6 @@ export class WordsToGuessComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.wordService.getCritical().subscribe((value) => {
-      console.log(value);
       if (this.critical) {
         const nativeElement = this.wordToGuessElement.nativeElement;
         this.renderer.setStyle(nativeElement, 'text-shadow', '0 0 0.1em red');

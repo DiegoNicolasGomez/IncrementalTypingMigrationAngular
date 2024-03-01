@@ -13,10 +13,12 @@ import { MessageService } from 'primeng/api';
 })
 export class WordboxComponent implements OnInit, OnDestroy {
   lettersPerSecond = 0;
+  comboCounter = 0;
   startTime = Date.now();
   letters = 0;
   inputValue = '';
   LPSVisibility = false;
+  ComboCounterVisibility = false;
   critical = false;
   private currentWord: string = '';
   private intervalSubscription: Subscription = new Subscription();
@@ -31,6 +33,8 @@ export class WordboxComponent implements OnInit, OnDestroy {
     this.wordService
       .getCurrentWord()
       .subscribe((value) => (this.currentWord = value));
+
+      this.gameService.getGame().subscribe((game) => (this.comboCounter = game.wordCounterPerfection))
   }
 
   ngOnInit() {
@@ -41,14 +45,18 @@ export class WordboxComponent implements OnInit, OnDestroy {
     this.layoutService.getLettersPerSecondVisibility().subscribe((visible) => {
       this.LPSVisibility = visible;
     });
+
+    this.layoutService.getComboCounterVisibility().subscribe((visible) => {
+      this.ComboCounterVisibility = visible;
+    });
   }
 
   ngOnDestroy() {
     this.intervalSubscription.unsubscribe();
   }
+  //this.wordService.checkWordMatch(this.inputValue)
 
   checkWord() {
-    console.log("You pressed a key!")
     this.gameService.updateLetterCounter();
     this.gameService.updateLetterCounterPerfection();
     if (this.wordService.checkWordMatch(this.inputValue)) {
@@ -57,13 +65,9 @@ export class WordboxComponent implements OnInit, OnDestroy {
         this.currentWord.length
       ) {
         this.gameService.updateWordCounterPerfection();
-        console.log("Perfect!")
       } else {
         this.gameService.setWordCounterPerfection(0);
-        console.log("Not Perfect!")
       }
-      console.log(this.gameService.game.value.wordCounterPerfection);
-      console.log(this.gameService.game.value.letterCounterPerfection);
       this.gameService.setLetterCounterPerfection(0);
       this.wordService.wordShifted.next();
       this.wordService.guessedWord(this.inputValue);
@@ -86,6 +90,10 @@ export class WordboxComponent implements OnInit, OnDestroy {
 
   isCounterVisible() {
     return this.LPSVisibility;
+  }
+
+  isComboCounterVisible() {
+    return this.ComboCounterVisibility;
   }
 
   saveGame() {

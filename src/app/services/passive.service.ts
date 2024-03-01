@@ -54,6 +54,7 @@ export class PassiveService {
     this.passiveWord$.next(word);
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;
+    console.log(points);
     if (this.gameUtils.IsPurchasedUpgrade("WordPassiveEnhancer"))
       this.gameService.updatePassivePoints(points);
   }

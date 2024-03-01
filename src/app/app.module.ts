@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -10,6 +10,11 @@ import { HeaderModuleModule } from './header-module/header-module.module';
 import { OverlayComponent } from './overlay/overlay.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TimerService } from './services/timer.service';
+
+export function initializeApp(timerService: TimerService): () => Promise<any> {
+  return () => timerService.initialize();
+}
 
 @NgModule({
   declarations: [
@@ -25,7 +30,7 @@ import { MessageService } from 'primeng/api';
     HttpClientModule,
     ToastModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, TimerService, {provide: APP_INITIALIZER, useFactory: initializeApp, deps: [TimerService], multi:true,}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,7 +18,7 @@ export class AchievementsService implements OnDestroy {
   ) {
     this.createAchievement(
       new Achievement(
-        'First Word',
+        'First Scribble',
         'Write your first word. Congratulations! You know how to write!',
         1,
         1,
@@ -27,58 +27,136 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        'Ten Words',
-        'Write 10 words. Pay attention, it seems that you are close to your first upgrade.',
+        'Decalexicographer',
+        'Write 10 words. Pay attention, it seems that you are close to your first upgrade',
         2,
         10,
         'wordsAmount'
       )
     );
     this.createAchievement(
-      new Achievement('Fifty Words', 'Write 50 words.', 3, 50, 'wordsAmount')
+      new Achievement(
+        'Quinquagenarian Scribe',
+        'Write 50 words',
+        3,
+        50,
+        'wordsAmount'
+      )
     );
     this.createAchievement(
       new Achievement(
-        'One Hundred Words',
-        'Write 100 words.',
+        'Epic 69er',
+        'Write 69 words. Nice',
+        37,
+        69,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Centennial Lexiconist',
+        'Write 100 words',
         4,
         100,
         'wordsAmount'
       )
     );
     this.createAchievement(
-      new Achievement('250 Words', 'Write 250 words.', 5, 250, 'wordsAmount')
-    );
-    this.createAchievement(
-      new Achievement('500 Words', 'Write 500 words.', 6, 500, 'wordsAmount')
-    );
-    this.createAchievement(
-      new Achievement('1000 Words', 'Write 1000 words.', 7, 1000, 'wordsAmount')
-    );
-    this.createAchievement(
-      new Achievement('100 Points', 'Save 100 points', 8, 100, 'points')
-    );
-    this.createAchievement(
-      new Achievement('500 Points', 'Save 500 points', 9, 500, 'points')
-    );
-    this.createAchievement(
-      new Achievement('2000 Points', 'Save 2000 points', 10, 2000, 'points')
-    );
-    this.createAchievement(
-      new Achievement('8000 Points', 'Save 8000 points', 11, 8000, 'points')
-    );
-    this.createAchievement(
-      new Achievement('15000 Points', 'Save 15000 points', 12, 15000, 'points')
-    );
-    this.createAchievement(
-      new Achievement('40000 Points', 'Save 40000 points', 13, 40000, 'points')
-    );
-    this.createAchievement(
-      new Achievement('80000 Points', 'Save 80000 points', 14, 80000, 'points')
+      new Achievement(
+        'Palindrome Prodigy',
+        'Write 121 words',
+        41,
+        121,
+        'wordsAmount'
+      )
     );
     this.createAchievement(
       new Achievement(
-        '125000 Points',
+        'Quadratopus Scribe',
+        'Write 250 words',
+        5,
+        250,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Blaze It Bard',
+        'Write 420 words',
+        38,
+        420,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Quingentenary Scriptor',
+        'Write 500 words',
+        6,
+        500,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Demonic Scribe',
+        'Write 666 words',
+        42,
+        666,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Lucky Seven Lexicographer',
+        'Write 777 words',
+        39,
+        777,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Millenium Maestro',
+        'Write 1000 words',
+        7,
+        1000,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Golden Ratio Scribe',
+        'Write 1618 words',
+        40,
+        1618,
+        'wordsAmount'
+      )
+    );
+    this.createAchievement(
+      new Achievement('Initiate Explorer', 'Save 100 points', 8, 100, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Exemplary Attainer', 'Save 500 points', 9, 500, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Milestone Achiever', 'Save 2000 points', 10, 2000, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Ascendant Achiever', 'Save 8000 points', 11, 8000, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Pinnacle Reacher', 'Save 15000 points', 12, 15000, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Epic Conqueror', 'Save 40000 points', 13, 40000, 'points')
+    );
+    this.createAchievement(
+      new Achievement('Illustrious Achiever', 'Save 80000 points', 14, 80000, 'points')
+    );
+    this.createAchievement(
+      new Achievement(
+        'Prestigious Attainer',
         'Save 125000 points',
         15,
         125000,
@@ -87,7 +165,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '250000 Points',
+        'Zenith Attainer',
         'Save 250000 points',
         16,
         250000,
@@ -96,7 +174,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '500000 Points',
+        'Distinguished Master',
         'Save 500000 points',
         17,
         500000,
@@ -105,7 +183,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '1000000 Points',
+        'Apex Achiever',
         'Save 1000000 points',
         18,
         1000000,
@@ -114,7 +192,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '3000000 Points',
+        'Eminent Attainer',
         'Save 3000000 points',
         19,
         3000000,
@@ -123,7 +201,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '10000000 Points',
+        'Legacy Builder',
         'Save 10000000 points',
         20,
         10000000,
@@ -132,7 +210,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '50000000 Points',
+        'Venerable Attainer',
         'Save 50000000 points',
         21,
         50000000,
@@ -141,7 +219,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '10000 Passive Points',
+        'Currency Collector',
         'Reach 10000 Passive Points',
         22,
         10000,
@@ -150,7 +228,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '200000 Passive Points',
+        'Wealth Accumulator',
         'Reach 200000 Passive Points',
         23,
         200000,
@@ -159,7 +237,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '5000000 Passive Points',
+        'Millionaire Aspirant',
         'Reach 5000000 Passive Points',
         24,
         5000000,
@@ -168,7 +246,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '100000000 Passive Points',
+        'Tycoon Trailblazer',
         'Reach 100000000 Passive Points',
         25,
         100000000,
@@ -177,7 +255,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '10 Cards',
+        'Card Initiate',
         'You bought your first pack!',
         26,
         10,
@@ -185,14 +263,32 @@ export class AchievementsService implements OnDestroy {
       )
     );
     this.createAchievement(
-      new Achievement('50 Cards', 'Have 50 Cards', 27, 50, 'cardsAmount')
+      new Achievement('Card Enthusiast', 'Have 50 Cards', 27, 50, 'cardsAmount')
     );
     this.createAchievement(
-      new Achievement('100 Cards', 'Have 100 Cards', 28, 100, 'cardsAmount')
+      new Achievement('Strategic Scholar', 'Have 100 Cards', 28, 100, 'cardsAmount')
+    );
+    this.createAchievement(
+      new Achievement('Deck Diversifier', 'Collect cards from 4 different categories', 46, 1, 'Other')
+    );
+    this.createAchievement(
+      new Achievement('Epic Card Hoarder', 'Collect cards from 4 different categories', 47, 500, 'cardsAmount')
+    );
+    this.createAchievement(
+      new Achievement('Legendary Card Archivist', 'Collect 10 legendary cards', 48, 1, 'Other')
+    );
+    this.createAchievement(
+      new Achievement('Card Fusion Alchemist', 'Merge cards 10 times', 49, 1, 'Other')
+    );
+    this.createAchievement(
+      new Achievement('Card Fusion Maestro', 'Merge cards 50 times', 51, 1, 'Other')
+    );
+    this.createAchievement(
+      new Achievement('Divine Interventionist', 'Obtain a Divine Card', 50, 1, 'Other')
     );
     this.createAchievement(
       new Achievement(
-        '1 Challenge',
+        'Challenge Novice',
         'Complete your first challenge',
         29,
         1,
@@ -201,7 +297,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '5 Challenges',
+        'Challenge Conqueror',
         'Complete 5 challenges',
         30,
         5,
@@ -210,7 +306,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        'Reach Prestige!',
+        'Prestige Pioneer',
         'Prestige for the first time',
         31,
         1,
@@ -219,7 +315,25 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '100 Prestige Points',
+        'Rebirth Recruit',
+        'Prestige 5 times',
+        52,
+        5,
+        'prestigeCount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Quantum Resetter',
+        'Prestige 10 times',
+        53,
+        10,
+        'prestigeCount'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Point Purveyor',
         'Have 100 Prestige Points',
         32,
         100,
@@ -228,7 +342,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '250 Prestige Points',
+        'Quantum Quantumizer',
         'Have 250 Prestige Points',
         33,
         250,
@@ -237,7 +351,7 @@ export class AchievementsService implements OnDestroy {
     );
     this.createAchievement(
       new Achievement(
-        '500 Prestige Points',
+        'Eternal Point Maven',
         'Have 500 Prestige Points',
         34,
         500,
@@ -250,7 +364,7 @@ export class AchievementsService implements OnDestroy {
         'Write a 10-letter word',
         35,
         1,
-        "Other"
+        'Other'
       )
     );
     this.createAchievement(
@@ -259,7 +373,34 @@ export class AchievementsService implements OnDestroy {
         'Write the best word possible',
         36,
         1,
-        "Other"
+        'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Consonant Collector',
+        'Write a word that contains 5 consecutive consonants',
+        43,
+        1,
+        'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Vowel Voyager',
+        'Write a word that contains 4 consecutive vowels',
+        44,
+        1,
+        'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Palindrome Searcher',
+        'Write a palindrome word',
+        45,
+        1,
+        'Other'
       )
     );
 

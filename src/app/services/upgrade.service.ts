@@ -336,6 +336,7 @@ export class UpgradeService {
         }
         this.gameService.buyGenerator(1);
       }
+      
     }
   }
 
@@ -352,6 +353,9 @@ export class UpgradeService {
     ) {
       this.gameService.updatePoints(-upgrade.cost);
       this.gameService.addUpgrade(upgrade);
+      if(upgradeType === "PrecisionKey") {
+        this.layoutService.setComboCounterVisibility(true);
+      }
     }
   }
 

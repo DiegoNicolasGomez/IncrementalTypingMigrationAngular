@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LayoutService {
   lettersPerSecondVisible = new BehaviorSubject<boolean>(false);
+  comboCounterVisible = new BehaviorSubject<boolean>(false);
   challengeTimerVisible = new BehaviorSubject<boolean>(false);
   challengeTimerValue = new BehaviorSubject<string>('');
   private intervalId: any;
@@ -18,6 +19,14 @@ export class LayoutService {
 
   setLettersPerSecondVisibility(visible: boolean) {
     this.lettersPerSecondVisible.next(visible);
+  }
+
+  getComboCounterVisibility() {
+    return this.comboCounterVisible.asObservable();
+  }
+
+  setComboCounterVisibility(visible: boolean) {
+    this.comboCounterVisible.next(visible);
   }
 
   getChallengeTimerVisibility() {

@@ -99,15 +99,35 @@ export class WordsService {
     this.gameService.updateAllTimePoints(result[0]);
     this.gameService.updateWordsAmount();
 
-    //CHECK
-    if(word === "Jack-go-to-bed-at-noon" && this.gameUtils.IsUnlockedAchievement("Best Word")) {
+
+    if(word === "Jack-go-to-bed-at-noon" && !this.gameUtils.IsUnlockedAchievement("Best Word")) {
       this.achievementService.unlockAchievement("Best Word");
       this.achievementService.showAchievement("Best Word");
     }
-    if(word.length == 10 && this.gameUtils.IsUnlockedAchievement("10-letter Word")) {
+
+    if(word.length == 10 && !this.gameUtils.IsUnlockedAchievement("10-letter Word")) {
       this.achievementService.unlockAchievement("10-letter Word");
       this.achievementService.showAchievement("10-letter Word");
     }
+
+    const consConsRegex = /[bcdfghjklmnpqrstvwxyz]{5}/i;
+    
+    if(consConsRegex.test(word) && !this.gameUtils.IsUnlockedAchievement("Consonant Collector")) {
+      this.achievementService.unlockAchievement("Consonant Collector");
+      this.achievementService.showAchievement("Consonant Collector");
+    } 
+
+    const consVowelRegex = /[aeiou]{4}/i;
+    
+    if(consVowelRegex.test(word) && !this.gameUtils.IsUnlockedAchievement("Vowel Voyager")) {
+      this.achievementService.unlockAchievement("Vowel Voyager");
+      this.achievementService.showAchievement("Vowel Voyager");
+    } 
+
+    if(word === word.split('').reverse().join('') && !this.gameUtils.IsUnlockedAchievement("Palindrome Searcher")) {
+      this.achievementService.unlockAchievement("Palindrome Searcher");
+      this.achievementService.showAchievement("Palindrome Searcher");
+    } 
 
     if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
       const initialLetter = word[0];

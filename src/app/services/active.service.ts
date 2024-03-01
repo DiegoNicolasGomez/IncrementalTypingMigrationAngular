@@ -129,8 +129,8 @@ export class ActiveService {
     if (this.gameUtils.IsPurchasedUpgrade('PrecisionKey')) {
       const wordCounter = this.gameService.game.value.wordCounterPerfection;
 
-      if(wordCounter < 100) {
-        totalPoints *= Math.sqrt(this.gameService.game.value.wordCounterPerfection);
+      if(wordCounter + 1 < 100) {
+        totalPoints *= Math.sqrt(wordCounter + 1);
         bonus += 'xMath.sqrt(perfectWords)'
       }
       else {

@@ -14,9 +14,9 @@ import { masteryTier } from '../classes/mastery';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(10000000000000, "Current"));
-  challengeGame = new BehaviorSubject<Game>(new Game(0, "Challenge"));
-  activeGame = new BehaviorSubject<Game>(new Game(0, "Active"));
+  game = new BehaviorSubject<Game>(new Game(100000000000000000009, 'Current'));
+  challengeGame = new BehaviorSubject<Game>(new Game(0, 'Challenge'));
+  activeGame = new BehaviorSubject<Game>(new Game(0, 'Active'));
 
   constructor() {}
 
@@ -153,6 +153,7 @@ export class GameService {
     const generatorGained = game.passiveGenerators.find((x) => x.id == id - 1);
     const generatorGainer = game.passiveGenerators.find((x) => x.id == id);
     generatorGained!.amountGained += generatorGainer!.amountGained;
+    console.log(generatorGained!.amountGained);
     this.game.next(game);
   }
 
@@ -163,6 +164,7 @@ export class GameService {
     generatorGained!.amountGained +=
       generatorGainer!.amountGained *
       game.passiveGenerators.reduce((acc, val) => acc + val.amountBought, 0);
+    console.log(generatorGained!.amountGained);
     this.game.next(game);
   }
 
@@ -189,6 +191,7 @@ export class GameService {
       multiUpgrade.cost = MUcosts[index];
     });
     game.wordsAmount = 0;
+    game.packsBought = 0;
     game.passiveUpgrades = [];
     game.passiveLength = 4;
     game.passivePoints = 0;
@@ -211,7 +214,7 @@ export class GameService {
     game.achievements.push(achievement);
     this.game.next(game);
   }
-  
+
   updateAchievements() {
     const game = this.challengeGame.value;
     game.achievements = this.gameUtils.deepCopy(this.game.value.achievements);
@@ -255,8 +258,8 @@ export class GameService {
     const game = this.game.value;
     const upgrade = game.multiUpgrades.find((x) => x.id == id);
     upgrade!.cost *=
-    ((upgrade!.amountBought + 1) / bonus) **
-    Math.log10((upgrade!.amountBought + 1) / bonus);
+      ((upgrade!.amountBought + 1) / bonus) **
+      Math.log10((upgrade!.amountBought + 1) / bonus);
     this.game.next(game);
   }
 
@@ -286,13 +289,13 @@ export class GameService {
     this.game.next(game);
   }
 
-  addCardsAmount() { 
+  addCardsAmount() {
     const game = this.game.value;
     game.cardsAmount++;
     this.game.next(game);
   }
 
-  addPacksBought() { 
+  addPacksBought() {
     const game = this.game.value;
     game.packsBought++;
     this.game.next(game);
@@ -360,7 +363,9 @@ export class GameService {
 
   addSynergyValue(generatorNumber: number) {
     const game = this.game.value;
-    const generator = game.passiveGenerators.find(x => x.id === generatorNumber)!;
+    const generator = game.passiveGenerators.find(
+      (x) => x.id === generatorNumber
+    )!;
     generator.synergyValue++;
     generator.synergyCost = generator.synergyCost * 2 ** generator.synergyValue;
     this.game.next(game);
@@ -370,15 +375,13 @@ export class GameService {
 
   updateMasteryValue(masteryTier: masteryTier) {
     const game = this.game.value;
-    const mastery = game.masteryLevels.find(x => x.tier === masteryTier)!;
+    const mastery = game.masteryLevels.find((x) => x.tier === masteryTier)!;
     mastery.amount++;
-    if(mastery.amount === mastery.amountToLevel) {
+    if (mastery.amount === mastery.amountToLevel) {
       mastery.amount = 0;
       mastery.amountToLevel *= 2;
       mastery.value *= 2;
       mastery.level++;
     }
-
   }
-
 }

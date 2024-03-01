@@ -2,11 +2,12 @@
 
 .achievementContainer {
   margin: 1rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   font-size: var(--small-custom-text);
   text-align: center;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  padding: 1rem 1rem;
 }
 
 .achievement {
@@ -16,6 +17,9 @@
   align-items: center;
   padding-block: 0.75rem;
   padding-inline: 0.5rem;
+  background: var(--primary-700);
+  border-radius: 1rem;
+  aspect-ratio: 3/2;
 }
 
 .achievement.unlocked {
