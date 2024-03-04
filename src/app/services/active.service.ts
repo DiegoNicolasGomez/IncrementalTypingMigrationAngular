@@ -57,6 +57,9 @@ export class ActiveService {
       totalPoints += 25;
       bonus += ' + 25 (Upgrade 18)';
     }
+
+    if(totalPoints < 1) totalPoints = 1;
+
     if (this.gameUtils.IsPurchasedUpgrade('SecondUpgradePoints')) {
       totalPoints *= 1.5;
       bonus += ' x 1.5 (Upgrade 5)';

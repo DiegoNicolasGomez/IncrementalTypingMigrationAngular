@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BonusType, Card, CardType } from '../classes/card';
+import { BonusType, Card, CardType, PackTier } from '../classes/card';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
 
@@ -11,235 +11,581 @@ export class CardsService {
   constructor(private gameService: GameService) {
     this.createCard(
       new Card(
-        'Fast+ Progress (C)',
-        '+5% Points',
+        'Percentage Points Booster',
         'Common',
         'PointsPercentage',
-        1.05,
         1
       )
     );
     this.createCard(
       new Card(
-        '+1 Points (C)',
-        '+1 Point Per Word',
+        'Nominal Points Booster',
         'Common',
         'PointsAmount',
-        1,
         2
       )
     );
     this.createCard(
       new Card(
-        '10% Passive Points (C)',
-        '10% Passive Points!',
+        'Percentage Passive Points Improver',
         'Common',
         'PassivePointsPercentage',
-        1.1,
         3
       )
     );
     this.createCard(
       new Card(
-        '+2 Passive Points (C)',
-        '+2 Passive Points Per Word!',
+        'Nominal Passive Points Improver',
         'Common',
         'PassivePointsAmount',
-        2,
         4
       )
     );
 
     this.createCard(
       new Card(
-        'Faster Progress (UC)',
-        '+25% Points',
+        'Percentage Points Augmentor',
         'Uncommon',
         'PointsPercentage',
-        1.25,
         5
       )
     );
     this.createCard(
       new Card(
-        '+3 Points (UC)',
-        '+3 Points Per Word',
+        'Nominal Points Augmentor',
         'Uncommon',
         'PointsAmount',
-        3,
         6
       )
     );
     this.createCard(
       new Card(
-        '25% Passive Points (UC)',
-        '25% Passive Points!',
+        'Percentage Passive Points Infuser',
         'Uncommon',
         'PassivePointsPercentage',
-        1.25,
         7
       )
     );
     this.createCard(
       new Card(
-        '+5 Passive Points (UC)',
-        '+5 Passive Points Per Word!',
+        'Nominal Passive Points Infuser',
         'Uncommon',
         'PassivePointsAmount',
-        5,
         8
       )
     );
     this.createCard(
       new Card(
-        'Faster Passive Words (UC)',
-        'Generate Passive Words 5% Faster',
+        'Passive Points Accelerator',
         'Uncommon',
         'PassivePointsSpeed',
-        1.05,
         9
       )
     );
     this.createCard(
       new Card(
-        'Longer Passive Words (UC)',
-        '+1 Letter Per Passive Word',
+        'Word Length Extender',
         'Uncommon',
         'PassivePointsLength',
-        1,
         10
       )
     );
 
     this.createCard(
       new Card(
-        'Fasterer Progress (E)',
-        '+50% Points',
-        'Epic',
+        'Income Impairer',
+        'Broken',
         'PointsPercentage',
-        1.5,
+        24
+      )
+    );
+    this.createCard(
+      new Card(
+        'Detrimental Debt',
+        'Broken',
+        'PointsAmount',
+        25
+      )
+    );
+    this.createCard(
+      new Card(
+        'Debilitating Discount',
+        'Broken',
+        'PassivePointsPercentage',
+        26
+      )
+    );
+    this.createCard(
+      new Card(
+        'Shrinking Stash',
+        'Broken',
+        'PassivePointsAmount',
+        27
+      )
+    );
+    this.createCard(
+      new Card(
+        'Lethargic Generator',
+        'Broken',
+        'PassivePointsSpeed',
+        28
+      )
+    );
+    this.createCard(
+      new Card(
+        'Diminished Diction',
+        'Broken',
+        'PassivePointsLength',
+        29
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Percentage Points Magnifier',
+        'Rare',
+        'PointsPercentage',
         11
       )
     );
     this.createCard(
       new Card(
         'All Lowercase (E)',
-        'From now on, every word is lowercase',
-        'Epic',
+        'Rare',
         'Lowercase',
-        0,
         12
       )
     );
     this.createCard(
       new Card(
-        '+6 Points (E)',
-        '+6 Points Per Word',
-        'Epic',
+        'Nominal Points Magnifier',
+        'Rare',
         'PointsAmount',
-        6,
         13
       )
     );
     this.createCard(
       new Card(
-        '50% Passive Points (E)',
-        '50% Passive Points!',
-        'Epic',
+        'Percentage Passive Points Energizer',
+        'Rare',
         'PassivePointsPercentage',
-        1.5,
         14
       )
     );
     this.createCard(
       new Card(
-        '+10 Passive Points (E)',
-        '+10 Passive Points Per Word!',
-        'Epic',
+        'Nominal Passive Points Energizer',
+        'Rare',
         'PassivePointsAmount',
-        10,
         15
       )
     );
     this.createCard(
       new Card(
-        'Fasterer Passive Words (E)',
-        'Generate Passive Words 10% Faster',
-        'Epic',
+        'Passive Points Turbocharger',
+        'Rare',
         'PassivePointsSpeed',
-        1.1,
         16
       )
     );
     this.createCard(
       new Card(
-        'Longerer Passive Words (E)',
-        '+2 Letters Per Passive Word',
-        'Epic',
+        'Word Length Expander',
+        'Rare',
         'PassivePointsLength',
-        2,
         17
       )
     );
 
     this.createCard(
       new Card(
-        'Fastest Progress (L)',
-        '+100% Points',
-        'Legendary',
+        'Percentage Points Empowerer',
+        'Epic',
         'PointsPercentage',
-        2,
         18
       )
     );
     this.createCard(
       new Card(
-        '+10 Points (L)',
-        '+10 Points Per Word',
-        'Legendary',
+        'Nominal Points Empowerer',
+        'Epic',
         'PointsAmount',
-        10,
         19
       )
     );
     this.createCard(
       new Card(
-        'x2 Passive Points (L)',
-        'Double Passive Points!',
-        'Legendary',
+        'Percentage Passive Points Dynamo',
+        'Epic',
         'PassivePointsPercentage',
-        2,
         20
       )
     );
     this.createCard(
       new Card(
-        '+25 Passive Points (L)',
-        '+25 Passive Points Per Word!',
-        'Legendary',
+        'Nominal Passive Points Dynamo',
+        'Epic',
         'PassivePointsAmount',
-        25,
         21
       )
     );
     this.createCard(
       new Card(
-        'Fastest Passive Words (L)',
-        'Generate Passive Words 20% Faster',
-        'Legendary',
+        'Passive Points Booster',
+        'Epic',
         'PassivePointsSpeed',
-        1.2,
         22
       )
     );
     this.createCard(
       new Card(
-        'Longest Passive Words (L)',
-        '+5 Letters Per Passive Word',
+        'Word Length Enhancer',
+        'Epic',
+        'PassivePointsLength',
+        23
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Significant Surge',
+        'Legendary',
+        'PointsPercentage',
+        30
+      )
+    );
+    this.createCard(
+      new Card(
+        'Masterful Magnification',
+        'Legendary',
+        'PointsAmount',
+        31
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Legendary',
+        'PassivePointsPercentage',
+        32
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Legendary',
+        'PassivePointsAmount',
+        33
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Legendary',
+        'PassivePointsSpeed',
+        34
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
         'Legendary',
         'PassivePointsLength',
-        5,
-        23
+        35
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Pronounced Percentage',
+        'Mythical',
+        'PointsPercentage',
+        36
+      )
+    );
+    this.createCard(
+      new Card(
+        'Grandiose Gain',
+        'Mythical',
+        'PointsAmount',
+        37
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Mythical',
+        'PassivePointsPercentage',
+        38
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Mythical',
+        'PassivePointsAmount',
+        39
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Mythical',
+        'PassivePointsSpeed',
+        40
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Mythical',
+        'PassivePointsLength',
+        41
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Elevated Expansion',
+        'Celestial',
+        'PointsPercentage',
+        42
+      )
+    );
+    this.createCard(
+      new Card(
+        'Illustrious Increase',
+        'Celestial',
+        'PointsAmount',
+        43
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Celestial',
+        'PassivePointsPercentage',
+        44
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Celestial',
+        'PassivePointsAmount',
+        45
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Celestial',
+        'PassivePointsSpeed',
+        46
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Celestial',
+        'PassivePointsLength',
+        47
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Substantial Spike',
+        'Divine',
+        'PointsPercentage',
+        48
+      )
+    );
+    this.createCard(
+      new Card(
+        'Prodigious Profit',
+        'Divine',
+        'PointsAmount',
+        49
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Divine',
+        'PassivePointsPercentage',
+        50
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Divine',
+        'PassivePointsAmount',
+        51
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Divine',
+        'PassivePointsSpeed',
+        52
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Divine',
+        'PassivePointsLength',
+        53
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Momentous Multiplicity',
+        'Ultimate',
+        'PointsPercentage',
+        54
+      )
+    );
+    this.createCard(
+      new Card(
+        'Monumental Multiplication',
+        'Ultimate',
+        'PointsAmount',
+        55
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Ultimate',
+        'PassivePointsPercentage',
+        56
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Ultimate',
+        'PassivePointsAmount',
+        57
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Ultimate',
+        'PassivePointsSpeed',
+        58
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Ultimate',
+        'PassivePointsLength',
+        59
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Mythic Magnitude',
+        'Infinite',
+        'PointsPercentage',
+        60
+      )
+    );
+    this.createCard(
+      new Card(
+        'Legendary Lucre',
+        'Infinite',
+        'PointsAmount',
+        61
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Infinite',
+        'PassivePointsPercentage',
+        62
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Infinite',
+        'PassivePointsAmount',
+        63
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Infinite',
+        'PassivePointsSpeed',
+        64
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Infinite',
+        'PassivePointsLength',
+        65
+      )
+    );
+
+    this.createCard(
+      new Card(
+        'Supreme Surplus',
+        'Omnipotent',
+        'PointsPercentage',
+        66
+      )
+    );
+    this.createCard(
+      new Card(
+        'Transcendent Treasury',
+        'Omnipotent',
+        'PointsAmount',
+        67
+      )
+    );
+    this.createCard(
+      new Card(
+        'Percentage Passive Points Dynamo',
+        'Omnipotent',
+        'PassivePointsPercentage',
+        68
+      )
+    );
+    this.createCard(
+      new Card(
+        'Nominal Passive Points Dynamo',
+        'Omnipotent',
+        'PassivePointsAmount',
+        69
+      )
+    );
+    this.createCard(
+      new Card(
+        'Passive Points Booster',
+        'Omnipotent',
+        'PassivePointsSpeed',
+        70
+      )
+    );
+    this.createCard(
+      new Card(
+        'Word Length Enhancer',
+        'Omnipotent',
+        'PassivePointsLength',
+        71
       )
     );
   }
@@ -254,24 +600,48 @@ export class CardsService {
     return this.cards;
   }
 
-  getPack(): Card[] {
+  getPack(packTier: PackTier): Card[] {
     var cards: Card[] = [];
+
+    let cardPercentages: number[] =
+      this.gameUtils.getPercentagesValues(packTier);
     for (
       let index = 0;
       index < this.gameService.game.value.rollsAmount;
       index++
     ) {
-      var randomNumber = Math.floor(Math.random() * 100);
+      var randomNumber = Math.random() * 100;
       var card: Card;
-      if (randomNumber >= 47) {
-        card = this.GetCommonCard();
-      } else if (randomNumber >= 20) {
-        card = this.GetUncommonCard();
-      } else if (randomNumber >= 7) {
-        card = this.GetEpicCard();
-      } else {
-        card = this.GetLegendaryCard();
+      let selectedTier = cardPercentages.length + 1;
+      for (let tier = 0; tier < cardPercentages.length; tier++) {
+        const condition = cardPercentages
+          .slice(0, tier + 1)
+          .reduce((sum, threshold) => sum + threshold, 0);
+
+        if (randomNumber >= 100 - condition) {
+          selectedTier = tier + 1;
+          break;
+        }
       }
+      const cardMap: Record<number, CardType> = {
+        [1]: 'Common',
+        [2]: 'Uncommon',
+        [3]: 'Broken',
+        [4]: 'Rare',
+        [5]: 'Epic',
+        [6]: 'Legendary',
+        [7]: 'Mythical',
+        [8]: 'Celestial',
+        [9]: 'Divine',
+        [10]: 'Ultimate',
+        [11]: 'Infinite',
+        [12]: 'Omnipotent',
+      };
+
+      card = this.GetCard(cardMap[selectedTier]);
+
+      console.log(card);
+
       if (card.id == 12 && this.gameUtils.HasCard(12)) {
         index--;
         continue;
@@ -335,34 +705,10 @@ export class CardsService {
     )} faster and ${bonusPassiveLength} letters longer ${extraBonus}`;
   }
 
-  GetCommonCard(): Card {
-    return this.cards.filter((x) => x.type == 'Common')[
+  GetCard(type: CardType): Card {
+    return this.cards.filter((x) => x.type == type)[
       Math.floor(
-        Math.random() * this.cards.filter((x) => x.type == 'Common').length
-      )
-    ];
-  }
-
-  GetUncommonCard(): Card {
-    return this.cards.filter((x) => x.type == 'Uncommon')[
-      Math.floor(
-        Math.random() * this.cards.filter((x) => x.type == 'Uncommon').length
-      )
-    ];
-  }
-
-  GetEpicCard(): Card {
-    return this.cards.filter((x) => x.type == 'Epic')[
-      Math.floor(
-        Math.random() * this.cards.filter((x) => x.type == 'Epic').length
-      )
-    ];
-  }
-
-  GetLegendaryCard(): Card {
-    return this.cards.filter((x) => x.type == 'Legendary')[
-      Math.floor(
-        Math.random() * this.cards.filter((x) => x.type == 'Legendary').length
+        Math.random() * this.cards.filter((x) => x.type == type).length
       )
     ];
   }
@@ -382,11 +728,18 @@ export class CardsService {
         );
 
       const cardsTiersMap: { [key in CardType]: CardType } = {
+        ['Broken']: 'Common',
         ['Common']: 'Uncommon',
-        ['Uncommon']: 'Epic',
+        ['Uncommon']: 'Rare',
+        ['Rare']: 'Epic',
         ['Epic']: 'Legendary',
-        ['Legendary']: 'Ultimate',
-        ['Ultimate']: 'Ultimate',
+        ['Legendary']: 'Mythical',
+        ['Mythical']: 'Celestial',
+        ['Celestial']: 'Divine',
+        ['Divine']: 'Ultimate',
+        ['Ultimate']: 'Infinite',
+        ['Infinite']: 'Omnipotent',
+        ['Omnipotent']: 'Broken',
       };
 
       this.gameService.addCard(

@@ -18,12 +18,24 @@
 }
 
 .commonCard {
+  border: 5px solid whitesmoke;
+  background: whitesmoke;
+  color: var(--black-900);
+}
+
+.uncommonCard {
   border: 5px solid var(--green);
   background: var(--green);
   color: var(--black-900);
 }
 
-.uncommonCard {
+.brokenCard {
+  border: 5px solid black;
+  background: black;
+  color: white;
+}
+
+.rareCard {
   border: 5px solid var(--primary-400);
   background: var(--primary-400);
   color: var(--black-900);
@@ -45,7 +57,7 @@
 
 .ultimateCard {
   animation: background-pan-y 2s linear infinite;
-  border: 5px solid var(--acent-600);
+  border: 5px solid var(--accent-600);
   background: linear-gradient(to bottom, var(--accent-600), var(--black-900), var(--accent-600));
   background-size: 200%;
   color: rgb(240, 240, 240);

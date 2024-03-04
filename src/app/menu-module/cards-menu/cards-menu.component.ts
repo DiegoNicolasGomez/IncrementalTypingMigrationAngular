@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Card } from 'src/app/classes/card';
+import { Card, PackTier } from 'src/app/classes/card';
 import { CardsService } from 'src/app/services/cards.service';
 import { GameService } from 'src/app/services/game.service';
 import { OverlayService } from 'src/app/services/overlay.service';
@@ -37,12 +37,12 @@ export class CardsMenuComponent {
     return this.gameUtils.getCardType(card);
   }
 
-  getPack() {
+  getPack(packTier: PackTier) {
     if (
       this.gameService.game.value.points >= this.gameService.game.value.cardCost
     ) {
       this.gameService.updatePoints(-this.gameService.game.value.cardCost);
-      var cards = this.cardService.getPack();
+      var cards = this.cardService.getPack(packTier);
       this.timerService.logGameTimer("Purchased Cards");
       this.gameService.updateCardsCost();
       this.overlayService.appendCards(cards);
