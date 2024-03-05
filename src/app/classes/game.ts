@@ -16,7 +16,7 @@ export class Game {
     new Upgrade('Point Booster', '+1 Point per Word', 50, 'MultiUpgradePoints'),
     new Upgrade(
       "Long Word Expertise",
-      '+1 letter per word',
+      '+1 Letter per Word',
       100,
       'MultiUpgradeWords'
     ),

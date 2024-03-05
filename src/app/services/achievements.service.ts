@@ -140,19 +140,49 @@ export class AchievementsService implements OnDestroy {
       new Achievement('Exemplary Attainer', 'Save 500 points', 9, 500, 'points')
     );
     this.createAchievement(
-      new Achievement('Milestone Achiever', 'Save 2000 points', 10, 2000, 'points')
+      new Achievement(
+        'Milestone Achiever',
+        'Save 2000 points',
+        10,
+        2000,
+        'points'
+      )
     );
     this.createAchievement(
-      new Achievement('Ascendant Achiever', 'Save 8000 points', 11, 8000, 'points')
+      new Achievement(
+        'Ascendant Achiever',
+        'Save 8000 points',
+        11,
+        8000,
+        'points'
+      )
     );
     this.createAchievement(
-      new Achievement('Pinnacle Reacher', 'Save 15000 points', 12, 15000, 'points')
+      new Achievement(
+        'Pinnacle Reacher',
+        'Save 15000 points',
+        12,
+        15000,
+        'points'
+      )
     );
     this.createAchievement(
-      new Achievement('Epic Conqueror', 'Save 40000 points', 13, 40000, 'points')
+      new Achievement(
+        'Epic Conqueror',
+        'Save 40000 points',
+        13,
+        40000,
+        'points'
+      )
     );
     this.createAchievement(
-      new Achievement('Illustrious Achiever', 'Save 80000 points', 14, 80000, 'points')
+      new Achievement(
+        'Illustrious Achiever',
+        'Save 80000 points',
+        14,
+        80000,
+        'points'
+      )
     );
     this.createAchievement(
       new Achievement(
@@ -266,25 +296,67 @@ export class AchievementsService implements OnDestroy {
       new Achievement('Card Enthusiast', 'Have 50 Cards', 27, 50, 'cardsAmount')
     );
     this.createAchievement(
-      new Achievement('Strategic Scholar', 'Have 100 Cards', 28, 100, 'cardsAmount')
+      new Achievement(
+        'Strategic Scholar',
+        'Have 100 Cards',
+        28,
+        100,
+        'cardsAmount'
+      )
     );
     this.createAchievement(
-      new Achievement('Deck Diversifier', 'Collect cards from 4 different categories', 46, 1, 'Other')
+      new Achievement(
+        'Epic Card Hoarder',
+        'Have 500 Cards',
+        47,
+        500,
+        'cardsAmount'
+      )
     );
     this.createAchievement(
-      new Achievement('Epic Card Hoarder', 'Collect cards from 4 different categories', 47, 500, 'cardsAmount')
+      new Achievement(
+        'Deck Diversifier',
+        'Collect cards from 4 different categories',
+        46,
+        1,
+        'Other'
+      )
     );
     this.createAchievement(
-      new Achievement('Legendary Card Archivist', 'Collect 10 legendary cards', 48, 1, 'Other')
+      new Achievement(
+        'Legendary Card Archivist',
+        'Collect 10 legendary cards',
+        48,
+        1,
+        'Other'
+      )
     );
     this.createAchievement(
-      new Achievement('Card Fusion Alchemist', 'Merge cards 10 times', 49, 1, 'Other')
+      new Achievement(
+        'Card Fusion Alchemist',
+        'Merge cards 10 times',
+        49,
+        1,
+        'Other'
+      )
     );
     this.createAchievement(
-      new Achievement('Card Fusion Maestro', 'Merge cards 50 times', 51, 1, 'Other')
+      new Achievement(
+        'Card Fusion Maestro',
+        'Merge cards 50 times',
+        51,
+        1,
+        'Other'
+      )
     );
     this.createAchievement(
-      new Achievement('Divine Interventionist', 'Obtain a Divine Card', 50, 1, 'Other')
+      new Achievement(
+        'Divine Interventionist',
+        'Obtain a Divine Card',
+        50,
+        1,
+        'Other'
+      )
     );
     this.createAchievement(
       new Achievement(
@@ -446,9 +518,13 @@ export class AchievementsService implements OnDestroy {
     }
 
     if (target >= achievement.target) {
-      this.unlockAchievement(achievement.name);
-      this.showAchievement(achievement.name);
+      this.completeAchievement(achievement.name);
     }
+  }
+
+  completeAchievement(achievementName: string) {
+    this.unlockAchievement(achievementName);
+    this.showAchievement(achievementName);
   }
 
   getAchievementProgress(achievement: Achievement): number {

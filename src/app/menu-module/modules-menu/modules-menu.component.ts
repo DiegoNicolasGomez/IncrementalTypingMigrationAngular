@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  keyframes,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Card } from 'src/app/classes/card';
 import { ActiveService } from 'src/app/services/active.service';
 import { CardsService } from 'src/app/services/cards.service';
 import { GameService } from 'src/app/services/game.service';
 import { GameUtils } from 'src/app/utils/utils';
 import { Generator } from 'src/app/classes/generator';
+import { AchievementsService } from 'src/app/services/achievements.service';
 
 @Component({
   selector: 'app-modules-menu',
@@ -36,7 +44,8 @@ export class ModulesMenuComponent {
   constructor(
     private gameService: GameService,
     private cardService: CardsService,
-    private activeService: ActiveService
+    private activeService: ActiveService,
+    private achievementService: AchievementsService
   ) {
     this.gameService.getGame().subscribe((game) => {
       const seenIds: { [id: string]: boolean } = {};
@@ -78,6 +87,11 @@ export class ModulesMenuComponent {
   }
 
   mergeCard(card: Card) {
+    if (
+      card.type === 'Omnipotent' &&
+      !this.gameUtils.IsUnlockedAchievement('The Cycle Continues')
+    )
+      this.achievementService.completeAchievement('The Cycle Continues');
     this.cardService.mergeCards(card);
   }
 
@@ -123,7 +137,7 @@ export class ModulesMenuComponent {
   }
 
   buySynergyValue(generator: Generator) {
-    if(this.gameService.game.value.passivePoints >= generator.synergyCost) {
+    if (this.gameService.game.value.passivePoints >= generator.synergyCost) {
       this.gameService.updatePassivePoints(-generator.synergyCost);
       this.gameService.addSynergyValue(generator.id);
     }

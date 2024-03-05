@@ -10,18 +10,24 @@ import { ActiveService } from './active.service';
 import { MasteryService } from './mastery.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WordsService {
-   wordList: string[] = [];
-   private currentWord = new BehaviorSubject<string>('');
-   wordShifted = new Subject<void>();
-   wordBonus: string = '';
-   private critical = new BehaviorSubject<boolean>(false);
-   
-   constructor(private gameService: GameService, private http: HttpClient, private activeService: ActiveService, private achievementService: AchievementsService, private masteryService: MasteryService) {}
+  wordList: string[] = [];
+  private currentWord = new BehaviorSubject<string>('');
+  wordShifted = new Subject<void>();
+  wordBonus: string = '';
+  private critical = new BehaviorSubject<boolean>(false);
 
-   gameUtils = new GameUtils(this.gameService);
+  constructor(
+    private gameService: GameService,
+    private http: HttpClient,
+    private activeService: ActiveService,
+    private achievementService: AchievementsService,
+    private masteryService: MasteryService
+  ) {}
+
+  gameUtils = new GameUtils(this.gameService);
 
   // loadingElement = document.createElement("div");
   // loadingElement.innerText = "Loading...";
@@ -34,8 +40,8 @@ export class WordsService {
     );
     var generatedWord =
       filteredWordList[Math.floor(Math.random() * filteredWordList.length)];
-  
-    if (this.gameUtils.HasCard(12) || this.gameUtils.IsInChallenge("Accuracy"))
+
+    if (this.gameUtils.HasCard(12) || this.gameUtils.IsInChallenge('Accuracy'))
       generatedWord = generatedWord.toLowerCase();
 
     return generatedWord;
@@ -64,74 +70,98 @@ export class WordsService {
   guessedWord(word: string) {
     this.wordBonus = '';
     var pointsLetters = word.length;
-    this.wordBonus += '[WordLength] '
-    if (this.gameUtils.IsPurchasedUpgrade("ScrabbleModule")) {
+    this.wordBonus += '[WordLength] ';
+    if (this.gameUtils.IsPurchasedUpgrade('ScrabbleModule')) {
       var lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
-      if (lettersValue > this.activeService.GetPointsLetters(this.gameService.game.value.bestWord))
-      {
+      if (
+        lettersValue >
+        this.activeService.GetPointsLetters(
+          this.gameService.game.value.bestWord
+        )
+      ) {
         this.gameService.setBestWord(word);
       }
     }
 
-    if(this.gameUtils.IsPurchasedUpgrade("SameLetterBonus")) {
-      pointsLetters += Math.pow(1.25, this.activeService.getRepeatedLetters(word));
+    if (this.gameUtils.IsPurchasedUpgrade('SameLetterBonus')) {
+      pointsLetters += Math.pow(
+        1.25,
+        this.activeService.getRepeatedLetters(word)
+      );
       this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
     }
 
-    if(this.gameUtils.IsPurchasedUpgrade("DifferentLetterBonus")) {
-      pointsLetters += Math.pow(1.1, this.activeService.getDifferentLetters(word));
+    if (this.gameUtils.IsPurchasedUpgrade('DifferentLetterBonus')) {
+      pointsLetters += Math.pow(
+        1.1,
+        this.activeService.getDifferentLetters(word)
+      );
       this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
     }
 
     var result = this.activeService.CalculatePoints(pointsLetters);
     this.wordBonus += result[1];
 
-    if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
-      const mastery = this.gameService.game.value.masteryLevels.find(x => x.letters.includes(word[0].toLowerCase()))!
+    if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
+      const mastery = this.gameService.game.value.masteryLevels.find((x) =>
+        x.letters.includes(word[0].toLowerCase())
+      )!;
       result[0] *= mastery.value;
     }
 
-    if(this.critical.value === true) result[0] *= 5;
+    if (this.critical.value === true) result[0] *= 5;
 
     this.gameService.updatePoints(result[0]);
     this.gameService.updateAllTimePoints(result[0]);
     this.gameService.updateWordsAmount();
 
-
-    if(word === "Jack-go-to-bed-at-noon" && !this.gameUtils.IsUnlockedAchievement("Best Word")) {
-      this.achievementService.unlockAchievement("Best Word");
-      this.achievementService.showAchievement("Best Word");
+    if (
+      word === 'Jack-go-to-bed-at-noon' &&
+      !this.gameUtils.IsUnlockedAchievement('Best Word')
+    ) {
+      this.achievementService.completeAchievement('Best Word');
+      this.achievementService.showAchievement('Best Word');
     }
 
-    if(word.length == 10 && !this.gameUtils.IsUnlockedAchievement("10-letter Word")) {
-      this.achievementService.unlockAchievement("10-letter Word");
-      this.achievementService.showAchievement("10-letter Word");
+    if (
+      word.length == 10 &&
+      !this.gameUtils.IsUnlockedAchievement('10-letter Word')
+    ) {
+      this.achievementService.completeAchievement('10-letter Word');
     }
 
     const consConsRegex = /[bcdfghjklmnpqrstvwxyz]{5}/i;
-    
-    if(consConsRegex.test(word) && !this.gameUtils.IsUnlockedAchievement("Consonant Collector")) {
-      this.achievementService.unlockAchievement("Consonant Collector");
-      this.achievementService.showAchievement("Consonant Collector");
-    } 
+
+    if (
+      consConsRegex.test(word) &&
+      !this.gameUtils.IsUnlockedAchievement('Consonant Collector')
+    ) {
+      this.achievementService.completeAchievement('Consonant Collector');
+    }
 
     const consVowelRegex = /[aeiou]{4}/i;
-    
-    if(consVowelRegex.test(word) && !this.gameUtils.IsUnlockedAchievement("Vowel Voyager")) {
-      this.achievementService.unlockAchievement("Vowel Voyager");
-      this.achievementService.showAchievement("Vowel Voyager");
-    } 
 
-    if(word === word.split('').reverse().join('') && !this.gameUtils.IsUnlockedAchievement("Palindrome Searcher")) {
-      this.achievementService.unlockAchievement("Palindrome Searcher");
-      this.achievementService.showAchievement("Palindrome Searcher");
-    } 
+    if (
+      consVowelRegex.test(word) &&
+      !this.gameUtils.IsUnlockedAchievement('Vowel Voyager')
+    ) {
+      this.achievementService.completeAchievement('Vowel Voyager');
+    }
 
-    if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
+    if (
+      word === word.split('').reverse().join('') &&
+      !this.gameUtils.IsUnlockedAchievement('Palindrome Searcher')
+    ) {
+      this.achievementService.completeAchievement('Palindrome Searcher');
+    }
+
+    if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
       const initialLetter = word[0];
-      const mastery = this.gameService.game.value.masteryLevels.find(x => x.letters.includes(initialLetter.toLowerCase()))!
+      const mastery = this.gameService.game.value.masteryLevels.find((x) =>
+        x.letters.includes(initialLetter.toLowerCase())
+      )!;
       this.masteryService.updateMasteryValue(mastery.tier);
     }
   }
@@ -140,7 +170,3 @@ export class WordsService {
     return this.wordBonus;
   }
 }
-
-
-
-
