@@ -9,6 +9,7 @@ import { GameUtils } from '../utils/utils';
 import { UpgradeService } from './upgrade.service';
 import { challengeType } from '../classes/challenge';
 import { masteryTier } from '../classes/mastery';
+import { Pack, PackTier } from '../classes/pack';
 
 @Injectable({
   providedIn: 'root',
@@ -153,7 +154,6 @@ export class GameService {
     const generatorGained = game.passiveGenerators.find((x) => x.id == id - 1);
     const generatorGainer = game.passiveGenerators.find((x) => x.id == id);
     generatorGained!.amountGained += generatorGainer!.amountGained;
-    console.log(generatorGained!.amountGained);
     this.game.next(game);
   }
 
@@ -164,7 +164,6 @@ export class GameService {
     generatorGained!.amountGained +=
       generatorGainer!.amountGained *
       game.passiveGenerators.reduce((acc, val) => acc + val.amountBought, 0);
-    console.log(generatorGained!.amountGained);
     this.game.next(game);
   }
 
@@ -191,7 +190,7 @@ export class GameService {
       multiUpgrade.cost = MUcosts[index];
     });
     game.wordsAmount = 0;
-    game.packsBought = 0;
+    game.packs.length = 0;
     game.passiveUpgrades = [];
     game.passiveLength = 4;
     game.passivePoints = 0;
@@ -279,7 +278,7 @@ export class GameService {
 
   updateCardsCost() {
     const game = this.game.value;
-    game.cardCost = 100000 * 2 ** game.packsBought;
+    game.cardCost = 100000 * 2 ** game.packs.filter((pack) => pack.type === "Starter").length;
     this.game.next(game);
   }
 
@@ -289,15 +288,15 @@ export class GameService {
     this.game.next(game);
   }
 
-  addCardsAmount() {
+  addPack(pack: Pack) {
     const game = this.game.value;
-    game.cardsAmount++;
+    game.packs.push(pack);
     this.game.next(game);
   }
 
-  addPacksBought() {
+  addCardsAmount() {
     const game = this.game.value;
-    game.packsBought++;
+    game.cardsAmount++;
     this.game.next(game);
   }
 

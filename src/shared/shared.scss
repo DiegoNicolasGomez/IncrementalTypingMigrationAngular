@@ -18,8 +18,8 @@
 }
 
 .commonCard {
-  border: 5px solid whitesmoke;
-  background: whitesmoke;
+  border: 5px solid gray;
+  background: gray;
   color: var(--black-900);
 }
 
@@ -53,6 +53,14 @@
   background: linear-gradient(to bottom, var(--golden), var(--black-900), var(--golden));
   background-size: 200%;
   color: rgb(240, 240, 240);
+}
+
+.celestialCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--primary-200);
+  background: linear-gradient(to bottom, var(--primary-700), var(--primary-400), var(--primary-700));
+  background-size: 200%;
+  color: var(--primary-200);
 }
 
 .ultimateCard {

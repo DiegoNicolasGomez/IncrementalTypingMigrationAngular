@@ -1,6 +1,10 @@
 <section id="cardsMenu" class="menu">
-    <div id="cardsHeaderContainer" class="cardsHeaderContainer">
-        <button id="cardsButton" class="cardsButton" (click)="getPack('Starter')">Get a Pack! | Cost: {{(cardsCost$ | async) ?? 0 | exponentialNumber}}</button>
+    <div id="cardsHeaderContainer">
+        <div *ngFor="let pack of packs" class="cardsButton" (click)="getPack(pack.type)">
+            <div class="cardsHeaderContainer">
+                <button class="cardsButton">Get a Pack! | Cost: {{pack.cost | exponentialNumber}}</button>
+            </div>
+        </div>
     </div>
     <p id="cardBonus" class="cardBonus"> {{ getBonus() }}</p>
     <div id="cardsContainer" class="cardsContainer">

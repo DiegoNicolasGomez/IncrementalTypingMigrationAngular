@@ -403,6 +403,15 @@ export class AchievementsService implements OnDestroy {
         'Other'
       )
     );
+    this.createAchievement(
+      new Achievement(
+        'The Cycle Continues',
+        'Merge Omnipotent Cards',
+        54,
+        1,
+        'Other'
+      )
+    );
 
     this.intervalId = setInterval(() => {
       this.checkAchievements();

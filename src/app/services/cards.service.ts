@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BonusType, Card, CardType, PackTier } from '../classes/card';
+import { Injectable, OnInit } from '@angular/core';
+import { BonusType, Card, CardType } from '../classes/card';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
+import { Pack, PackTier } from '../classes/pack';
+import { PackService } from './pack.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CardsService {
+export class CardsService{
   cards: Card[] = [];
-  constructor(private gameService: GameService) {
+  packs: Pack[] = [];
+  constructor(private gameService: GameService, private packService: PackService) {
     this.createCard(
       new Card(
         'Percentage Points Booster',
@@ -151,7 +154,7 @@ export class CardsService {
     this.createCard(
       new Card(
         'All Lowercase (E)',
-        'Rare',
+        'Legendary',
         'Lowercase',
         12
       )
@@ -264,7 +267,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Measured Momentum',
         'Legendary',
         'PassivePointsPercentage',
         32
@@ -272,7 +275,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Incremental Impact',
         'Legendary',
         'PassivePointsAmount',
         33
@@ -280,7 +283,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Speedy Scripting',
         'Legendary',
         'PassivePointsSpeed',
         34
@@ -288,7 +291,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Longevity Linguistics',
         'Legendary',
         'PassivePointsLength',
         35
@@ -313,7 +316,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Exponential Enhancement',
         'Mythical',
         'PassivePointsPercentage',
         38
@@ -321,7 +324,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Steady Stream',
         'Mythical',
         'PassivePointsAmount',
         39
@@ -329,7 +332,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Hustle Harmony',
         'Mythical',
         'PassivePointsSpeed',
         40
@@ -362,7 +365,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Amplified Ascendance',
         'Celestial',
         'PassivePointsPercentage',
         44
@@ -370,7 +373,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Amplified Accumulation',
         'Celestial',
         'PassivePointsAmount',
         45
@@ -378,7 +381,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Velocity Versification',
         'Celestial',
         'PassivePointsSpeed',
         46
@@ -386,7 +389,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Extended Enunciation',
         'Celestial',
         'PassivePointsLength',
         47
@@ -411,7 +414,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Magnitude Multiplicity',
         'Divine',
         'PassivePointsPercentage',
         50
@@ -419,7 +422,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Significant Surplus',
         'Divine',
         'PassivePointsAmount',
         51
@@ -427,7 +430,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Supersonic Script',
         'Divine',
         'PassivePointsSpeed',
         52
@@ -435,7 +438,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Enduring Expression',
         'Divine',
         'PassivePointsLength',
         53
@@ -460,7 +463,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Grandiose Gargantua',
         'Ultimate',
         'PassivePointsPercentage',
         56
@@ -468,7 +471,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Elevated Endowment',
         'Ultimate',
         'PassivePointsAmount',
         57
@@ -476,7 +479,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Majestic Manuscript',
         'Ultimate',
         'PassivePointsSpeed',
         58
@@ -484,7 +487,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Celestial Composition',
         'Ultimate',
         'PassivePointsLength',
         59
@@ -509,7 +512,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Ultimate Uplift',
         'Infinite',
         'PassivePointsPercentage',
         62
@@ -517,7 +520,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Paramount Proliferation',
         'Infinite',
         'PassivePointsAmount',
         63
@@ -525,7 +528,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Grandiloquent Gyrator',
         'Infinite',
         'PassivePointsSpeed',
         64
@@ -533,7 +536,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Majestic Manifestation',
         'Infinite',
         'PassivePointsLength',
         65
@@ -558,7 +561,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Percentage Passive Points Dynamo',
+        'Celestial Sovereignty',
         'Omnipotent',
         'PassivePointsPercentage',
         68
@@ -566,7 +569,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Nominal Passive Points Dynamo',
+        'Ultimate Ubiquity',
         'Omnipotent',
         'PassivePointsAmount',
         69
@@ -574,7 +577,7 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Passive Points Booster',
+        'Celestial Celerity',
         'Omnipotent',
         'PassivePointsSpeed',
         70
@@ -582,12 +585,14 @@ export class CardsService {
     );
     this.createCard(
       new Card(
-        'Word Length Enhancer',
+        'Supreme Syllabication',
         'Omnipotent',
         'PassivePointsLength',
         71
       )
     );
+
+    this.packService.getPacks().subscribe((packs) => this.packs = packs);
   }
 
   gameUtils = new GameUtils(this.gameService);
@@ -602,7 +607,7 @@ export class CardsService {
 
   getPack(packTier: PackTier): Card[] {
     var cards: Card[] = [];
-
+    const pack = this.packs.find(x => x.type === packTier)!
     let cardPercentages: number[] =
       this.gameUtils.getPercentagesValues(packTier);
     for (
@@ -649,15 +654,20 @@ export class CardsService {
       this.gameService.addCard(card);
       this.gameService.addCardsAmount();
 
-      if (card.id == 10) this.gameService.updatePassiveLength(1);
-      if (card.id == 17) this.gameService.updatePassiveLength(2);
-      if (card.id == 23) this.gameService.updatePassiveLength(5);
-      if (card.id == 9) this.gameService.updatePassiveRate(5);
-      if (card.id == 16) this.gameService.updatePassiveRate(10);
-      if (card.id == 22) this.gameService.updatePassiveRate(20);
+      switch (card.bonusType) {
+        case 'PassivePointsSpeed':
+          this.gameService.updatePassiveRate(card.bonusAmount);
+          break;
+        case 'PassivePointsLength':
+          this.gameService.updatePassiveLength(card.bonusAmount);
+          break;
+        default:
+          break;
+      }
+
       cards.push(card);
     }
-    this.gameService.addPacksBought();
+    this.gameService.addPack(pack);
     return cards;
   }
 
@@ -672,19 +682,19 @@ export class CardsService {
     this.gameService.game.value.cards.forEach((x) => {
       switch (x.bonusType) {
         case 'PointsPercentage':
-          bonusPercentage *= x.bonusAmount;
+          bonusPercentage *= 1 + x.bonusAmount / 100;
           break;
         case 'PointsAmount':
           bonusPointAmount += x.bonusAmount;
           break;
         case 'PassivePointsPercentage':
-          bonusPassivePercentage *= x.bonusAmount;
+          bonusPassivePercentage *= 1 + x.bonusAmount / 100;
           break;
         case 'PassivePointsAmount':
           bonusPassiveAmount += x.bonusAmount;
           break;
         case 'PassivePointsSpeed':
-          bonusPassiveSpeed *= x.bonusAmount;
+          bonusPassiveSpeed *= 1 + x.bonusAmount / 100;
           break;
         case 'PassivePointsLength':
           bonusPassiveLength += x.bonusAmount;

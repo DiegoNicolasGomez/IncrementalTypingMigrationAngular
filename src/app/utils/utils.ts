@@ -1,7 +1,8 @@
 import { GameService } from 'src/app/services/game.service';
-import { Card, CardType, PackTier } from '../classes/card';
+import { Card, CardType } from '../classes/card';
 import { eIdUpgrade } from '../classes/upgrade';
 import { challengeType } from '../classes/challenge';
+import { PackTier } from '../classes/pack';
 
 export class GameUtils {
   constructor(private gameService: GameService) {}
@@ -111,7 +112,7 @@ export class GameUtils {
   }
 
   getPercentagesValues(packTier: PackTier): number[] {
-    const cardPackDecayMap = {
+    const cardPackDecayMap: Record<PackTier, number> = {
       ["Starter"]: 1.1,
       ["Explorer"]: 0.7,
       ["Master"]: 0.5,

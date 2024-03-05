@@ -37,10 +37,6 @@ export class WordsToGuessComponent implements OnInit, AfterViewInit {
         const wordList = response.split('\n');
         this.wordService.wordList = wordList;
         this.setWords();
-        for (let index = 1; index < 40; index++) {
-          console.log(wordList.filter(x => x.length === index));
-          console.log(index) 
-        }
       });
 
     this.wordService.getCritical().subscribe((value) => {

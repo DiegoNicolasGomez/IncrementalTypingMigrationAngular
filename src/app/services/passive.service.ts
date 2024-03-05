@@ -54,7 +54,6 @@ export class PassiveService {
     this.passiveWord$.next(word);
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;
-    console.log(points);
     if (this.gameUtils.IsPurchasedUpgrade("WordPassiveEnhancer"))
       this.gameService.updatePassivePoints(points);
   }
@@ -70,60 +69,11 @@ export class PassiveService {
     totalPoints += passiveWord.length;
     if (this.gameUtils.IsPurchasedPassiveUpgrade('PassiveScrabbleModule'))
       totalPoints += this.activeService.GetPointsLetters(passiveWord);
-    if (this.gameUtils.HasCard(4))
-      totalPoints +=
-        2 *
-        this.gameService.game.value.cards.filter((x) => x.name === '+2 Passive Points (C)')
-          .length;
-    if (this.gameUtils.HasCard(8))
-      totalPoints +=
-        5 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+5 Passive Points (UC)'
-        ).length;
-    if (this.gameUtils.HasCard(15))
-      totalPoints +=
-        10 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+10 Passive Points (E)'
-        ).length;
-    if (this.gameUtils.HasCard(21))
-      totalPoints +=
-        25 *
-        this.gameService.game.value.cards.filter(
-          (x) => x.name === '+25 Passive Points (L)'
-        ).length;
+    totalPoints += this.gameService.game.value.cards.filter(x => x.bonusType === 'PassivePointsAmount').reduce((total, card) => total + card.bonusAmount, 0);
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveLittleBonus")) totalPoints += 5;
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveEnhancerEnhancerer")) totalPoints *= 1.25;
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveDontKnow")) totalPoints *= 1.5;
-    if (this.gameUtils.HasCard(3))
-      totalPoints *=
-        1 +
-        0.1 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '10% Passive Points (C)'
-          ).length;
-    if (this.gameUtils.HasCard(7))
-      totalPoints *=
-        1 +
-        0.25 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '25% Passive Points (UC)'
-          ).length;
-    if (this.gameUtils.HasCard(14))
-      totalPoints *=
-        1 +
-        0.5 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === '50% Passive Points (E)'
-          ).length;
-    if (this.gameUtils.HasCard(20))
-      totalPoints *=
-        1 +
-        1 *
-          this.gameService.game.value.cards.filter(
-            (x) => x.name === 'x2 Passive Points (L)'
-          ).length;
+    totalPoints *= this.gameService.game.value.cards.filter(x => x.bonusType === 'PassivePointsPercentage').reduce((total, card) => total * (1 + card.bonusAmount / 100), 1)
     return totalPoints;
   }
 

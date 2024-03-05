@@ -33,21 +33,7 @@ export class ActiveService {
       bonus += ' + 20 (Upgrade 12)';
     }
 
-    const cardsPointsMap: { [key: number]: number } = {
-      [2]: 1,
-      [6]: 3,
-      [13]: 6,
-      [19]: 10,
-    };
-
-    var cardsPointsBonus = this.gameService.game.value.cards.map(
-      (x) => cardsPointsMap[x.id] || 0
-    );
-    totalPoints += cardsPointsBonus.reduce((a, b) => a + b, 0);
-
-    if (cardsPointsBonus.some((x) => x > 0)) {
-      bonus += ' + [Cards+Points]';
-    }
+    totalPoints += this.gameService.game.value.cards.filter(x => x.bonusType === 'PointsAmount').reduce((total, card) => total + card.bonusAmount, 0);
 
     if (this.gameUtils.IsPurchasedUpgrade('WordsValueBitMoreMore')) {
       totalPoints += 10;
@@ -100,21 +86,7 @@ export class ActiveService {
       bonus += ' x ln([CardsBonus] (Upgrade 19 & 20))';
     }
 
-    const cardsPercentageMap: { [key: number]: number } = {
-      [1]: 0.05,
-      [5]: 0.25,
-      [11]: 0.5,
-      [18]: 1,
-    };
-
-    var cardsPercentageBonus = this.gameService.game.value.cards.map(
-      (x) => cardsPercentageMap[x.id] || 0
-    );
-    totalPoints *= 1 + cardsPointsBonus.reduce((a, b) => a + b, 0);
-
-    if (cardsPercentageBonus.some((x) => x > 0)) {
-      bonus += ' x 1 + [CardsPercentage]';
-    }
+    totalPoints *= this.gameService.game.value.cards.filter((x) => x.bonusType === 'PointsPercentage').reduce((total, card) => total * (1 + card.bonusAmount / 100), 1)
 
     const multiUpgrade2 = this.gameService.game.value.multiUpgrades.find(
       (x) => x.id == 'MultiUpgradePointsMult'

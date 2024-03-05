@@ -3,6 +3,7 @@ import { Card } from './card';
 import { Challenge } from './challenge';
 import { Generator } from './generator';
 import { Mastery } from './mastery';
+import { Pack } from './pack';
 import { Upgrade } from './upgrade';
 
 export class Game {
@@ -31,8 +32,8 @@ export class Game {
   cards: Card[] = [];
   cardsAmount: number = 0;
   cardCost: number = 0;
+  packs: Pack[] = [];
   rollsAmount: number = 10;
-  packsBought: number = 0;
   challenges: Challenge[] = [];
   challengesAmount: number = 0;
   letterCounter: number = 0;
