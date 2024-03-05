@@ -167,7 +167,7 @@ export class Card {
                             this.cardProgressionformulaOptions.midpoint)
                       )))
               ) * 5
-            }`;
+            }% Points Per Word`;
       case 'PassivePointsAmount':
         return this.type === 'Broken'
           ? '-25 Passive Points Per Word'
@@ -203,7 +203,7 @@ export class Card {
       case 'PassivePointsSpeed':
         return this.type === 'Broken'
           ? 'Generate Passive Words -10% Faster'
-          : `Generate Passive Words -${Math.floor(
+          : `Generate Passive Words +${Math.floor(
               this.cardProgressionformulaOptions.upperbound *
                 (1 /
                   (1 +

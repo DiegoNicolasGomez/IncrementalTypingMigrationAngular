@@ -55,6 +55,14 @@
   color: rgb(240, 240, 240);
 }
 
+.mythicalCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--silver);
+  background: linear-gradient(to bottom, var(--silver), var(--black-900), var(--silver));
+  background-size: 200%;
+  color: white;
+}
+
 .celestialCard {
   animation: background-pan-y 2s linear infinite;
   border: 5px solid var(--primary-200);
@@ -63,11 +71,36 @@
   color: var(--primary-200);
 }
 
+.divineCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--black-900);
+  background: linear-gradient(to bottom, var(--light-yellow), var(--goldenrod), var(--dark-brown), var(--black-900), var(--dark-brown), var(--goldenrod), var(--light-yellow));
+  background-size: 200%;
+  color: white;
+}
+
+.infiniteCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--black-900);
+  background: linear-gradient(to bottom right, var(--green), var(--primary-400), var(--golden), var(--fucsia), var(--green));
+  background-size: 200%;
+  color: var(--black-900);
+}
+
 .ultimateCard {
   animation: background-pan-y 2s linear infinite;
   border: 5px solid var(--accent-600);
   background: linear-gradient(to bottom, var(--accent-600), var(--black-900), var(--accent-600));
   background-size: 200%;
+  color: rgb(240, 240, 240);
+}
+
+.omnipotentCard {
+  animation: background-pan-y 2s linear infinite;
+  border: 5px solid var(--black-900);
+  background: linear-gradient(to bottom right, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.1));
+  background-size: 200%;
+  background-blend-mode: multiply;
   color: rgb(240, 240, 240);
 }
 

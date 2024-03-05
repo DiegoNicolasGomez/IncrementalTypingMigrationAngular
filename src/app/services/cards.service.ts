@@ -153,7 +153,7 @@ export class CardsService{
     );
     this.createCard(
       new Card(
-        'All Lowercase (E)',
+        'All Lowercase',
         'Legendary',
         'Lowercase',
         12

@@ -163,7 +163,7 @@ export class GameService {
     const generatorGainer = game.passiveGenerators.find((x) => x.id == id);
     generatorGained!.amountGained +=
       generatorGainer!.amountGained *
-      game.passiveGenerators.reduce((acc, val) => acc + val.amountBought, 0);
+      game.passiveGenerators.reduce((acc, val) => acc + val.amountBought * val.synergyValue, 0);
     this.game.next(game);
   }
 
