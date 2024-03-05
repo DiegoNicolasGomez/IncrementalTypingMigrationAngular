@@ -79,14 +79,6 @@
   color: white;
 }
 
-.infiniteCard {
-  animation: background-pan-y 2s linear infinite;
-  border: 5px solid var(--black-900);
-  background: linear-gradient(to bottom right, var(--green), var(--primary-400), var(--golden), var(--fucsia), var(--green));
-  background-size: 200%;
-  color: var(--black-900);
-}
-
 .ultimateCard {
   animation: background-pan-y 2s linear infinite;
   border: 5px solid var(--accent-600);
@@ -95,13 +87,20 @@
   color: rgb(240, 240, 240);
 }
 
-.omnipotentCard {
+.infiniteCard {
   animation: background-pan-y 2s linear infinite;
   border: 5px solid var(--black-900);
-  background: linear-gradient(to bottom right, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.1));
+  background: linear-gradient(to bottom right, transparent, rgba(255, 255, 255, 0.05), transparent);
   background-size: 200%;
-  background-blend-mode: multiply;
-  color: rgb(240, 240, 240);
+  color: white;
+}
+
+.omnipotentCard {
+  animation: background-pan 2s linear infinite;
+  border: 5px solid var(--black-900);
+  background: linear-gradient(to right, var(--green), var(--primary-400), var(--golden), var(--fucsia), var(--green));
+  background-size: 200%;
+  color: black;
 }
 
 @keyframes background-pan {

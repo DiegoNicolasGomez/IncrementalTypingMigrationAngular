@@ -15,7 +15,7 @@ import { Pack, PackTier } from '../classes/pack';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(100000000000000000009, 'Current'));
+  game = new BehaviorSubject<Game>(new Game(1E80, 'Current'));
   challengeGame = new BehaviorSubject<Game>(new Game(0, 'Challenge'));
   activeGame = new BehaviorSubject<Game>(new Game(0, 'Active'));
 

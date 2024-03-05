@@ -8,7 +8,7 @@
     </div>
     <p id="cardBonus" class="cardBonus"> {{ getBonus() }}</p>
     <div id="cardsContainer" class="cardsContainer">
-        <div *ngFor="let card of (cardsDisplayed$ | async)" [ngClass]="getCardType(card)" class="normalCard">
+        <div *ngFor="let card of (cardsDisplayed$ | async)" [ngClass]="getCardType(card)" class="normalCard" [attr.data-tooltip]="card.description">
             {{card.name}}
         </div>
     </div>

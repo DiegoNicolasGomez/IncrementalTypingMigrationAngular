@@ -19,7 +19,7 @@
                 </p>
             </div>
         </div>
-        <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="isEveryBasicUpgradePurchased()">
+        <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !isEveryBasicUpgradePurchased()}"> 
             <h2 id="intermediateUpgradeHeading" [ngClass]="{'all-bought': hasAllIntermediateUpgrades()}">Intermediate Upgrades</h2>
             <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of intermediateUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getIntermediateUpgrade(upgrade.id)" (mouseenter)="ChangeIntermediateUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
@@ -38,7 +38,7 @@
                 </p>
             </div>
         </div>
-        <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="isPassiveUpgradePurchased()">
+        <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !isPassiveUpgradePurchased()}">
             <h2 id="passiveUpgradeHeading">Passive Upgrades</h2>
             <div id="passiveUpgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of passiveUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getPassiveUpgrade(upgrade.id)" (mouseenter)="ChangePassiveUpgradesText(upgrade.id)" [style.color]="isPassiveUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
@@ -57,7 +57,7 @@
                 </p>
             </div>
         </div>
-        <div id="PrestigeUpgradesWrapper" class="upgradeTypeWrapper" *ngIf="hasPrestigePoints()">
+        <div id="PrestigeUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !hasPrestigePoints()}">
             <h2 id="prestigeUpgradeHeading">Prestige Upgrades</h2>
             <div id="prestigeUpgradesTable" class="upgradesTable hoverEffectContainer">
                 <button *ngFor="let upgrade of prestigeUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getPrestigeUpgrade(upgrade.id)" (mouseenter)="ChangePrestigeUpgradesText(upgrade.id)" [style.color]="isPrestigeUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">

@@ -46,10 +46,11 @@ export class CardsMenuComponent{
   }
 
   getPack(packTier: PackTier) {
+    const pack = this.packs.find(x => x.type === packTier)!;
     if (
-      this.gameService.game.value.points >= this.gameService.game.value.cardCost
+      this.gameService.game.value.points >= pack.cost
     ) {
-      this.gameService.updatePoints(-this.gameService.game.value.cardCost);
+      this.gameService.updatePoints(-pack.cost);
       var cards = this.cardService.getPack(packTier);
       this.timerService.logGameTimer("Purchased Cards");
       this.gameService.updateCardsCost();

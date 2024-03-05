@@ -230,6 +230,8 @@ export class Card {
                     ))) *
                 0.4
             )} Passive Word Length`;
+            case "Lowercase":
+              return 'All Words are Lowercase'
       default:
         return '';
         break;

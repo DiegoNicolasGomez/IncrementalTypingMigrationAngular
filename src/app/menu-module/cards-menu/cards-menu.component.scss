@@ -6,6 +6,7 @@
     justify-content: center;
     position: relative;
     text-align: center;
+    margin-top: 2rem;
   }
   
   .cardsHeaderContainer > button {
@@ -60,6 +61,34 @@
     border-radius: 1vmin;
     font-size: var(--small-custom-text);
     text-align: center;
+    position: relative;
+  }
+
+  .normalCard:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: white;
+    border: black;
+    padding: 2rem;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    z-index: 1;
+    color: black;
+    background: var(--primary-400);
+    border-radius: 2rem;
+    border: 2px solid black;
+    transition: opacity 250ms ease, width 100ms ease;
+    width: 0%;
+    opacity: 0;
+    text-align: center;
+  }
+
+  .normalCard:hover::before {
+    visibility: visible;
+    opacity: 1;
+    width: 80%;
   }
   
   .cardBonus {
@@ -67,4 +96,6 @@
     text-align: center;
     font-size: var(--small-custom-text);
   }
+
+
   
