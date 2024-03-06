@@ -187,9 +187,18 @@ export class UpgradeService {
 
     this.createIntermediateUpgrade(
       new Upgrade(
+        `Tax Evasion`,
+        'Broken Cards effects are halved',
+        500_000_000_000,
+        'TaxEvasion'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
         `Last Intermediate Upgrade! Now the quality of the cards provides a better bonus!`,
         'Bonus: Every card counts as x*Math.pow(2, [Tier])',
-        500_000_000_000,
+        1_500_000_000_000,
         'QualityCardsBonus'
       )
     );
@@ -355,6 +364,9 @@ export class UpgradeService {
       this.gameService.addUpgrade(upgrade);
       if(upgradeType === "PrecisionKey") {
         this.layoutService.setComboCounterVisibility(true);
+      }
+      if(upgradeType === "TaxEvasion") {
+        this.gameService.updateTaxEvasion();
       }
     }
   }

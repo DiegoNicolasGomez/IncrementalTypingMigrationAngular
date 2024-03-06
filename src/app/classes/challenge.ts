@@ -25,4 +25,4 @@ export class Challenge {
   }
 }
 
-export type challengeType = 'Accuracy' | 'Speed';
+export type challengeType = 'Accuracy' | 'Speed' | 'Language';

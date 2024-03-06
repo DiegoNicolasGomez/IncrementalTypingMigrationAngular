@@ -5,13 +5,16 @@ import { GameService } from './game.service';
 import { LayoutService } from './layout.service';
 import { OverlayService } from './overlay.service';
 import { PrestigeService } from './prestige.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChallengesService {
   challenges: Challenge[] = [];
-
+  language: BehaviorSubject<language> = new BehaviorSubject<language>(
+    'English'
+  );
   intervalId: any;
 
   constructor(
@@ -40,6 +43,16 @@ export class ChallengesService {
         0
       )
     );
+    this.createChallenge(
+      new Challenge(
+        'Language',
+        'Complete 50 words in another language!',
+        '50% more Points! (Check)',
+        100,
+        50,
+        0
+      )
+    );
   }
 
   gameUtils = new GameUtils(this.gameService);
@@ -61,31 +74,54 @@ export class ChallengesService {
     );
     if (!challenge) return;
     this.intervalId = setInterval(() => {
-      if (this.gameService.game.value.wordsAmount >= challenge.objective) {
-        this.layoutService.challengeCompleted();
-        this.overlayService.challengeCompleted();
-        this.gameService.completeChallenge(challengeType);
-        if (challengeType == "Accuracy")
-          this.gameService.updateRollsAmountActive(
-            this.gameService.activeGame.value.challenges.find(
-              (x) => x.type == challengeType
-            )!.amount
-          );
-        clearInterval(this.intervalId);
-        this.exitChallenge(challengeType);
-      } else if (
-        challenge.restriction <= this.gameService.game.value.letterCounter ||
-        secondsChallenge <= 0
-      ) {
-        clearInterval(this.intervalId);
-        this.exitChallenge(challengeType, false);
+      switch (challengeType) {
+        case 'Accuracy':
+          if (this.gameService.game.value.wordsAmount >= challenge.objective) {
+            this.layoutService.challengeCompleted();
+            this.overlayService.challengeCompleted();
+            this.gameService.completeChallenge(challengeType);
+            this.gameService.updateRollsAmountActive(
+              this.gameService.activeGame.value.challenges.find(
+                (x) => x.type == challengeType
+              )!.amount
+            );
+            clearInterval(this.intervalId);
+            this.exitChallenge(challengeType);
+          } else if (
+            challenge.restriction <=
+              this.gameService.game.value.letterCounter ||
+            secondsChallenge <= 0
+          ) {
+            clearInterval(this.intervalId);
+            this.exitChallenge(challengeType, false);
+          }
+          break;
+        case 'Language':
+          if (this.gameService.game.value.wordsAmount >= challenge.objective) {
+            this.layoutService.challengeCompleted();
+            this.overlayService.challengeCompleted();
+            this.gameService.completeChallenge(challengeType);
+            this.gameService.updateRollsAmountActive(
+              this.gameService.activeGame.value.challenges.find(
+                (x) => x.type == challengeType
+              )!.amount
+            );
+            clearInterval(this.intervalId);
+            this.exitChallenge(challengeType);
+          } else if (secondsChallenge <= 0) {
+            clearInterval(this.intervalId);
+            this.exitChallenge(challengeType, false);
+          }
+          break;
+        default:
+          break;
       }
       secondsChallenge--;
     }, 1000);
   }
 
   startChallenge(challengeType: challengeType) {
-    if (this.gameService.game.value.gameType === "Challenge")
+    if (this.gameService.game.value.gameType === 'Challenge')
       return alert('You are already in a Challenge');
     if (
       !this.gameService.game.value.challenges.some(
@@ -101,6 +137,7 @@ export class ChallengesService {
     if (!challenge) return;
     this.prestigeService.prestigeStats();
     setTimeout(() => {
+      if (challenge.type === 'Language') this.language.next('Amharic');
       this.gameService.saveToActiveGame();
       this.loadAchievements();
       this.loadChallenges();
@@ -110,14 +147,17 @@ export class ChallengesService {
     }, 500);
   }
 
-  exitChallenge(challengeType: challengeType, challengeCompleted: boolean = true) {
+  exitChallenge(
+    challengeType: challengeType,
+    challengeCompleted: boolean = true
+  ) {
+    if (challengeType === 'Language') this.language.next('English');
     this.gameService.loadActiveGame();
     this.gameService.updateChallengeState(false, challengeType);
     this.gameService.resetLetterCounter();
     clearInterval(this.intervalId);
-    if(!challengeCompleted)
-    {
-      this.layoutService.challengeFailed(); 
+    if (!challengeCompleted) {
+      this.layoutService.challengeFailed();
       this.overlayService.challengeFailed();
     }
   }
@@ -129,4 +169,25 @@ export class ChallengesService {
   loadChallenges() {
     this.gameService.updateChallenges();
   }
+
+  setLanguageChallenge(language: language) {
+    switch (language) {
+      case 'Japanese':
+        this.language.next('Japanese');
+        break;
+    }
+  }
+  getLanguage() {
+    return this.language.asObservable();
+  }
 }
+
+export type language =
+  | 'English'
+  | 'Spanish'
+  | 'French'
+  | 'German'
+  | 'Russian'
+  | 'Japanese'
+  | 'Arabic'
+  | 'Amharic';

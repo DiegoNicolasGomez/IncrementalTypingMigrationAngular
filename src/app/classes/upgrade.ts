@@ -39,6 +39,7 @@ export type eIdUpgrade =
   | 'IntermediateBasicsTwo'
   | 'CardsAmountBonus'
   | 'UnlockMastery'
+  | 'TaxEvasion'
   | 'PrecisionKey'
   | 'QualityCardsBonus'
 	| 'PassiveEnhancerEnhancerer'

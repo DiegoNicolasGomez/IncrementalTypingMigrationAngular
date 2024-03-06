@@ -73,7 +73,7 @@ export class PassiveService {
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveLittleBonus")) totalPoints += 5;
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveEnhancerEnhancerer")) totalPoints *= 1.25;
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveDontKnow")) totalPoints *= 1.5;
-    totalPoints *= this.gameService.game.value.cards.filter(x => x.bonusType === 'PassivePointsPercentage').reduce((total, card) => total * (1 + card.bonusAmount / 100), 1)
+    totalPoints *= 1 + this.gameService.game.value.cards.filter(x => x.bonusType === 'PassivePointsPercentage').reduce((total, card) => total + card.bonusAmount, 0) / 100
     return totalPoints;
   }
 

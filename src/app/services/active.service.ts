@@ -86,7 +86,7 @@ export class ActiveService {
       bonus += ' x ln([CardsBonus] (Upgrade 19 & 20))';
     }
 
-    totalPoints *= this.gameService.game.value.cards.filter((x) => x.bonusType === 'PointsPercentage').reduce((total, card) => total * (1 + card.bonusAmount / 100), 1)
+    totalPoints *= 1 + (this.gameService.game.value.cards.filter((x) => x.bonusType === 'PointsPercentage').reduce((total, card) => total + card.bonusAmount, 0) / 100)
 
     const multiUpgrade2 = this.gameService.game.value.multiUpgrades.find(
       (x) => x.id == 'MultiUpgradePointsMult'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { Achievement } from '../classes/achievement';
 import { Game } from '../classes/game';
 import { Upgrade, eIdUpgrade } from '../classes/upgrade';
@@ -15,11 +15,16 @@ import { Pack, PackTier } from '../classes/pack';
   providedIn: 'root',
 })
 export class GameService {
-  game = new BehaviorSubject<Game>(new Game(1E80, 'Current'));
+  game = new BehaviorSubject<Game>(new Game(1e80, 'Current'));
   challengeGame = new BehaviorSubject<Game>(new Game(0, 'Challenge'));
   activeGame = new BehaviorSubject<Game>(new Game(0, 'Active'));
 
-  constructor() {}
+  constructor() {
+    interval(1000).subscribe((x) => {
+      if (this.game.value.upgrades.find((x) => x.id === 'TaxEvasion'))
+        this.updateTaxEvasion();
+    });
+  }
 
   gameUtils = new GameUtils(this);
 
@@ -163,7 +168,10 @@ export class GameService {
     const generatorGainer = game.passiveGenerators.find((x) => x.id == id);
     generatorGained!.amountGained +=
       generatorGainer!.amountGained *
-      game.passiveGenerators.reduce((acc, val) => acc + val.amountBought * val.synergyValue, 0);
+      game.passiveGenerators.reduce(
+        (acc, val) => acc + val.amountBought * val.synergyValue,
+        0
+      );
     this.game.next(game);
   }
 
@@ -262,6 +270,39 @@ export class GameService {
     this.game.next(game);
   }
 
+  updateTaxEvasion() {
+    const game = this.game.value;
+    const brokenCards = game.cards.filter((x) => x.type === 'Broken' && !x.description.includes('Halved'));
+    brokenCards.forEach((card) => {
+
+      let savedCard = game.cards.find((x) => x === card)!;
+      savedCard.bonusAmount = Math.floor(savedCard.bonusAmount / 2);
+      switch (savedCard.bonusType) {
+        case 'PointsPercentage':
+          savedCard.description = `${savedCard.bonusAmount}% Points Per Word (Halved)`;
+          break;
+        case 'PassivePointsPercentage':
+          savedCard.description = `${savedCard.bonusAmount}% Passive Points Per Word (Halved)`;
+          break;
+        case 'PointsAmount':
+          savedCard.description = `${savedCard.bonusAmount} Points Per Word (Halved)`;
+          break;
+        case 'PassivePointsAmount':
+          savedCard.description = `${savedCard.bonusAmount} Passive Points Per Word (Halved)`;
+          break;
+        case 'PassivePointsSpeed':
+          savedCard.description = `Generate Passive Words ${savedCard.bonusAmount}% Faster (Halved)`;
+          break;
+        case 'PassivePointsLength':
+          savedCard.description = `${savedCard.bonusAmount} Passive Word Length (Halved)`;
+          break;
+        default:
+          break;
+      }
+    });
+    this.game.next(game);
+  }
+
   //Cards
 
   updateRollsAmount(amount: number) {
@@ -278,7 +319,8 @@ export class GameService {
 
   updateCardsCost() {
     const game = this.game.value;
-    game.cardCost = 100000 * 2 ** game.packs.filter((pack) => pack.type === "Starter").length;
+    game.cardCost =
+      100000 * 2 ** game.packs.filter((pack) => pack.type === 'Starter').length;
     this.game.next(game);
   }
 

@@ -682,13 +682,13 @@ export class CardsService{
     this.gameService.game.value.cards.forEach((x) => {
       switch (x.bonusType) {
         case 'PointsPercentage':
-          bonusPercentage *= 1 + x.bonusAmount / 100;
+          bonusPercentage += x.bonusAmount;
           break;
         case 'PointsAmount':
           bonusPointAmount += x.bonusAmount;
           break;
         case 'PassivePointsPercentage':
-          bonusPassivePercentage *= 1 + x.bonusAmount / 100;
+          bonusPassivePercentage += x.bonusAmount;
           break;
         case 'PassivePointsAmount':
           bonusPassiveAmount += x.bonusAmount;
@@ -706,9 +706,9 @@ export class CardsService{
           break;
       }
     });
-    return `You have x${bonusPercentage.toFixed(
+    return `You have x${(1 + (bonusPercentage / 100)).toFixed(
       2
-    )} + ${bonusPointAmount} Bonus Points, x${bonusPassivePercentage.toFixed(
+    )} + ${bonusPointAmount} Bonus Points, x${(1 + (bonusPassivePercentage / 100)).toFixed(
       2
     )} + ${bonusPassiveAmount} Bonus Passive Points, x${bonusPassiveSpeed.toFixed(
       2

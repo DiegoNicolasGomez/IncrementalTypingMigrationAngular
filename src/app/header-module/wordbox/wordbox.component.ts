@@ -5,6 +5,11 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { SaveService } from 'src/app/services/save.service';
 import { WordsService } from 'src/app/services/words.service';
 import { MessageService } from 'primeng/api';
+import {
+  ChallengesService,
+  language,
+} from 'src/app/services/challenges.service';
+import { GameUtils } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-wordbox',
@@ -20,6 +25,7 @@ export class WordboxComponent implements OnInit, OnDestroy {
   LPSVisibility = false;
   ComboCounterVisibility = false;
   critical = false;
+  language: language = 'English';
   private currentWord: string = '';
   private intervalSubscription: Subscription = new Subscription();
 
@@ -28,14 +34,23 @@ export class WordboxComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private gameService: GameService,
     private saveService: SaveService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private challengeService: ChallengesService
   ) {
     this.wordService
       .getCurrentWord()
       .subscribe((value) => (this.currentWord = value));
 
-      this.gameService.getGame().subscribe((game) => (this.comboCounter = game.wordCounterPerfection))
+    this.gameService
+      .getGame()
+      .subscribe((game) => (this.comboCounter = game.wordCounterPerfection));
+
+    this.challengeService
+      .getLanguage()
+      .subscribe((language) => (this.language = language));
   }
+
+  gameUtils = new GameUtils(this.gameService);
 
   ngOnInit() {
     this.intervalSubscription = interval(1000).subscribe(() => {
@@ -54,9 +69,24 @@ export class WordboxComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.intervalSubscription.unsubscribe();
   }
-  //this.wordService.checkWordMatch(this.inputValue)
 
   checkWord() {
+    console.log(this.language);
+    if (this.language === 'Japanese') {
+      const japaneseMap = this.gameUtils.getJapaneseMap();
+      const regex = new RegExp(Object.keys(japaneseMap).join('|'), 'g');
+      this.inputValue = this.inputValue.replace(regex, (x) => japaneseMap[x]);
+    }
+    if (this.language === 'Russian') {
+      const russianMap = this.gameUtils.getRussianCyrillicMap();
+      const regex = new RegExp(Object.keys(russianMap).join('|'), 'g');
+      this.inputValue = this.inputValue.replace(regex, (x) => russianMap[x]);
+    }
+    if (this.language === 'Amharic') {
+      const amharicMap = this.gameUtils.getAmharicMap();
+      const regex = new RegExp(Object.keys(amharicMap).join('|'), 'g');
+      this.inputValue = this.inputValue.replace(regex, (x) => amharicMap[x]);
+    }
     this.gameService.updateLetterCounter();
     this.gameService.updateLetterCounterPerfection();
     if (this.wordService.checkWordMatch(this.inputValue)) {

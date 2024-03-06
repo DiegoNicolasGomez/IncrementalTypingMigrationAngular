@@ -9,6 +9,7 @@ import {
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { WordsService } from 'src/app/services/words.service';
 import { HttpClient } from '@angular/common/http';
+import { ChallengesService, language } from 'src/app/services/challenges.service';
 
 @Component({
   selector: 'app-words-to-guess',
@@ -25,11 +26,13 @@ export class WordsToGuessComponent implements OnInit, AfterViewInit {
   wordRight: string = '';
   wordRight2: string = '';
   private critical: boolean = false;
+  language: language = "English";
 
   constructor(
     private wordService: WordsService,
     private http: HttpClient,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private challengeService: ChallengesService
   ) {
     this.http
       .get(this.wordListUrl, { responseType: 'text' })
@@ -42,6 +45,14 @@ export class WordsToGuessComponent implements OnInit, AfterViewInit {
     this.wordService.getCritical().subscribe((value) => {
       this.critical = value;
     });
+
+    this.challengeService.getLanguage().subscribe(language => {
+      this.language = language
+      this.shiftWords();
+      this.shiftWords();
+      this.shiftWords();
+    } )
+
   }
 
   ngOnInit(): void {
