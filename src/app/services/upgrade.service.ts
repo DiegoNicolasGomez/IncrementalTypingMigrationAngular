@@ -74,7 +74,7 @@ export class UpgradeService {
     );
     this.createBasicUpgrade(
       new Upgrade(
-        'You found a Scrabble module!',
+        'You found a Scrabble <span class="highlight">module</span>!',
         'Every letter gets a value',
         40_000,
         'ScrabbleModule'
@@ -106,8 +106,8 @@ export class UpgradeService {
     //Intermediate Upgrade
     this.createIntermediateUpgrade(
       new Upgrade(
-        `Screw it, now you can upgrade all those modules you've been collecting`,
-        'Unlock Modules Tab!',
+        `Screw it, now you can upgrade all those <span class="highlight">modules</span> you've been collecting`,
+        'Unlock <span class="highlight">Modules</span> Tab!',
         100_000_000,
         'UnlockModules'
       )
@@ -230,7 +230,7 @@ export class UpgradeService {
     );
     this.createPassiveUpgrade(
       new Upgrade(
-        'Wow, it seems that they made a Scrabble module for the enhancer too. Interesting',
+        'Wow, it seems that they made a Scrabble <span class="highlight">module</span> for the enhancer too. Interesting',
         'Every letter gets a value',
         5_000_000,
         'PassiveScrabbleModule'
@@ -246,7 +246,7 @@ export class UpgradeService {
     );
     this.createPassiveUpgrade(
       new Upgrade(
-        'More modules! This time you found a synergy module.',
+        'More <span class="highlight">modules</span>! This time you found a synergy <span class="highlight">module</span>.',
         'Every Generator Bought gives a Bonus to the other Generators!',
         500_000_000,
         'PassiveMoreModules'

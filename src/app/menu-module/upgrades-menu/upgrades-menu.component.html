@@ -8,11 +8,9 @@
                 </button>
             </div>
             <div class="upgradeText">
-                <p id="basicUpgradesTitle" class="upgradesTitle">
-                    {{currentBasicUpgradeName}}
+                <p id="basicUpgradesTitle" class="upgradesTitle" [innerHTML]="currentBasicUpgradeName">
                 </p>
-                <p id="basicUpgradesDesc" class="upgradesDesc">
-                    {{currentBasicUpgradeDesc}}
+                <p id="basicUpgradesDesc" class="upgradesDesc" [innerHTML]="currentBasicUpgradeDesc">
                 </p>
                 <p id="basicUpgradesCost" class="upgradesDesc">
                     Cost: {{currentBasicUpgradeCost | exponentialNumber}}
@@ -27,11 +25,9 @@
                 </button>
             </div>
             <div class="upgradeText">
-                <p id="intermediateUpgradesTitle" class="upgradesTitle">
-                    {{currentIntermediateUpgradeName}}
+                <p id="intermediateUpgradesTitle" class="upgradesTitle" [innerHTML]="currentIntermediateUpgradeName">
                 </p>
-                <p id="intermediateUpgradesDesc" class="upgradesDesc">
-                    {{currentIntermediateUpgradeDesc}}
+                <p id="intermediateUpgradesDesc" class="upgradesDesc" [innerHTML]="currentIntermediateUpgradeDesc">
                 </p>
                 <p id="intermediateUpgradesCost" class="upgradesDesc">
                     Cost: {{currentIntermediateUpgradeCost | exponentialNumber}}
@@ -46,10 +42,10 @@
                 </button>
             </div>
             <div class="upgradeText">
-                <p id="passiveUpgradesTitle" class="upgradesTitle">
+                <p id="passiveUpgradesTitle" class="upgradesTitle" [innerHTML]="currentPassiveUpgradeName">
                     {{ currentPassiveUpgradeName }}
                 </p>
-                <p id="passiveUpgradesDesc" class="upgradesDesc">
+                <p id="passiveUpgradesDesc" class="upgradesDesc" [innerHTML]="currentPassiveUpgradeDesc">
                     {{ currentPassiveUpgradeDesc }}
                 </p>
                 <p id="passiveUpgradesCost" class="upgradesDesc">
@@ -65,10 +61,10 @@
                 </button>
             </div>
             <div class="upgradeText">
-                <p id="prestigeUpgradesTitle" class="upgradesTitle">
+                <p id="prestigeUpgradesTitle" class="upgradesTitle" [innerHTML]="currentPrestigeUpgradeName">
                     {{ currentPrestigeUpgradeName }}
                 </p>
-                <p id="prestigeUpgradesDesc" class="upgradesDesc">
+                <p id="prestigeUpgradesDesc" class="upgradesDesc" [innerHTML]="currentPrestigeUpgradeDesc">
                     {{ currentPrestigeUpgradeDesc }}
                 </p>
                 <p id="prestigeUpgradesCost" class="upgradesDesc">

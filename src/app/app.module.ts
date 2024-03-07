@@ -20,7 +20,7 @@ export function initializeApp(timerService: TimerService): () => Promise<any> {
   declarations: [
     AppComponent,
     NavbarComponent,
-    OverlayComponent
+    OverlayComponent,
   ],
   imports: [
     BrowserModule,
