@@ -170,7 +170,7 @@ export class UpgradeService {
     this.createIntermediateUpgrade(
       new Upgrade(
         `More mechanics!`,
-        'Unlock Mastery!',
+        'Unlock Mastery! The word gets an increasing bonus based on its initial',
         50_000_000_000,
         'UnlockMastery'
       )
@@ -196,10 +196,19 @@ export class UpgradeService {
 
     this.createIntermediateUpgrade(
       new Upgrade(
-        `Last Intermediate Upgrade! Now the quality of the cards provides a better bonus!`,
+        `Now the quality of the cards provides a better bonus!`,
         'Bonus: Every card counts as x*Math.pow(2, [Tier])',
         1_500_000_000_000,
         'QualityCardsBonus'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Last Intermediate Upgrade! Unlock the Market`,
+        'Now the letters values increases and decreases over time',
+        10_000_000_000_000,
+        'UnlockMarket'
       )
     );
 

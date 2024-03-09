@@ -645,8 +645,6 @@ export class CardsService{
 
       card = this.GetCard(cardMap[selectedTier]);
 
-      console.log(card);
-
       if (card.id == 12 && this.gameUtils.HasCard(12)) {
         index--;
         continue;

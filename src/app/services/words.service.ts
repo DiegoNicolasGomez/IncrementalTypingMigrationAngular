@@ -573,7 +573,8 @@ export class WordsService {
     var pointsLetters = word.length;
     this.wordBonus += '[WordLength] ';
     if (this.gameUtils.IsPurchasedUpgrade('ScrabbleModule')) {
-      var lettersValue = this.activeService.GetPointsLetters(word);
+      var lettersValue = 0;
+      lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
       if (

@@ -1,0 +1,11 @@
+@import '../../../shared/shared.scss';
+
+.market-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 2rem;
+    margin-inline: 5rem;
+    background: rgba(147, 174, 210, 0.9);
+    border-radius: 1rem;
+}

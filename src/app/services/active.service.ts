@@ -3,13 +3,14 @@ import { eIdUpgrade } from '../classes/upgrade';
 import { GameUtils } from '../utils/utils';
 import { GameService } from './game.service';
 import { WordsService } from './words.service';
+import { MarketService } from './market.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ActiveService {
   private critical: boolean = false;
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private marketService: MarketService) {}
 
   gameUtils = new GameUtils(this.gameService);
 
@@ -126,6 +127,10 @@ export class ActiveService {
     const lettersBonus = this.gameService.game.value.lettersBonus;
     var letters = word.toLowerCase().split('');
     var points = 0;
+    let marketBonus = [1, 1, 1, 1, 1, 1, 1, 1]
+    if(this.gameUtils.IsPurchasedUpgrade('UnlockMarket')) {
+      marketBonus = this.marketService.letterBonus.value;
+    }
     letters.forEach((element) => {
       if (
         element === 'a' ||
@@ -139,16 +144,31 @@ export class ActiveService {
         element === 't' ||
         element === 'r'
       ) {
-        points += lettersBonus[0];
+        if(marketBonus[0] <= -100) return;
+        if(marketBonus[0] < 0) {
+          points += lettersBonus[0] * Math.abs(marketBonus[0]) / 100;
+        } else {
+          points += lettersBonus[0] * (1 + Math.abs(marketBonus[0]) / 100);
+        }
       } else if (element === 'd' || element === 'g') {
-        points += lettersBonus[1];
+        if(marketBonus[1] <= -100) return;
+        if(marketBonus[1] < 0) {
+          points += lettersBonus[1] * Math.abs(marketBonus[1]) / 100;
+        } else {
+          points += lettersBonus[1] * (1 + Math.abs(marketBonus[1]) / 100);
+        }
       } else if (
         element === 'b' ||
         element === 'c' ||
         element === 'm' ||
         element === 'p'
       ) {
-        points += lettersBonus[2];
+        if(marketBonus[2] <= -100) return;
+        if(marketBonus[2] < 0) {
+          points += lettersBonus[2] * Math.abs(marketBonus[2]) / 100;
+        } else {
+          points += lettersBonus[2] * (1 + Math.abs(marketBonus[2]) / 100);
+        }
       } else if (
         element === 'f' ||
         element === 'h' ||
@@ -156,15 +176,40 @@ export class ActiveService {
         element === 'w' ||
         element === 'y'
       ) {
-        points += lettersBonus[3];
+        if(marketBonus[3] <= -100) return;
+        if(marketBonus[3] < 0) {
+          points += lettersBonus[3] * Math.abs(marketBonus[3]) / 100;
+        } else {
+          points += lettersBonus[3] * (1 + Math.abs(marketBonus[3]) / 100);
+        }
       } else if (element === 'k') {
-        points += lettersBonus[4];
+        if(marketBonus[4] <= -100) return;
+        if(marketBonus[4] < 0) {
+          points += lettersBonus[4] * Math.abs(marketBonus[4]) / 100;
+        } else {
+          points += lettersBonus[4] * (1 + Math.abs(marketBonus[4]) / 100);
+        }
       } else if (element === 'j' || element === 'x') {
-        points += lettersBonus[5];
+        if(marketBonus[5] <= -100) return;
+        if(marketBonus[5] < 0) {
+          points += lettersBonus[5] * Math.abs(marketBonus[5]) / 100;
+        } else {
+          points += lettersBonus[5] * (1 + Math.abs(marketBonus[5]) / 100);
+        }
       } else if (element === 'q' || element === 'z') {
-        points += lettersBonus[6];
+        if(marketBonus[6] <= -100) return;
+        if(marketBonus[6] < 0) {
+          points += lettersBonus[6] * Math.abs(marketBonus[6]) / 100;
+        } else {
+          points += lettersBonus[6] * (1 + Math.abs(marketBonus[6]) / 100);
+        }
       } else {
-        points += lettersBonus[7];
+        if(marketBonus[7] <= -100) return;
+        if(marketBonus[7] < 0) {
+          points += lettersBonus[7] * Math.abs(marketBonus[7]) / 100;
+        } else {
+          points += lettersBonus[7] * (1 + Math.abs(marketBonus[7]) / 100);
+        }
       }
     });
     return points;

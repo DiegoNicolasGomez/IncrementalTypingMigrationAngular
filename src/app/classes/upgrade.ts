@@ -42,6 +42,7 @@ export type eIdUpgrade =
   | 'TaxEvasion'
   | 'PrecisionKey'
   | 'QualityCardsBonus'
+  | 'UnlockMarket'
 	| 'PassiveEnhancerEnhancerer'
 	| 'PassiveLittleBonus'
 	| 'PassiveDontKnow'

@@ -593,4 +593,8 @@ export class GameUtils {
 
   }
 
+  random(min: number, max: number): number {
+    let random = min + Math.random() * (max - min);
+    return random;
+  }
 }
