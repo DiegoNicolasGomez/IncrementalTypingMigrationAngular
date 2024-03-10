@@ -1,7 +1,7 @@
 <section id="cardsMenu" class="menu">
     <div id="cardsHeaderContainer">
-        <div *ngFor="let pack of packs" class="cardsButton" (click)="getPack(pack.type)">
-            <div class="cardsHeaderContainer">
+        <div *ngFor="let pack of packs" class="cardsButton" (click)="getPack(pack.type)" >
+            <div class="cardsHeaderContainer" *ngIf="isCardPackUnlocked(pack)">
                 <button class="cardsButton">Get a Pack! | Cost: {{pack.cost | exponentialNumber}}</button>
             </div>
         </div>

@@ -7,6 +7,10 @@
     gap: 1rem;
   }
   
+  .intermediateTable{
+    grid-template-columns: repeat(5, 1fr);
+  }
+
   .upgradesTable > Button {
     font-size: var(--small-custom-text);
   }

@@ -3,6 +3,7 @@
     <div
       *ngFor="let multiUpgrade of multiUpgrades"
       class="multiUpgrade"
+      [class.disabled]="lengthUpgradeBlocked && multiUpgrade.name === 'Long Word Expertise'"
       (click)="AddMultiUpgrade(multiUpgrade.id)"
     >
       <p class="multiUpgradeName">{{ multiUpgrade.name }}</p>

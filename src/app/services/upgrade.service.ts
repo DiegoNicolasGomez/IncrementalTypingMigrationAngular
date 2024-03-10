@@ -4,6 +4,8 @@ import { GameService } from './game.service';
 import { LayoutService } from './layout.service';
 import { PassiveService } from './passive.service';
 import { TimerService } from './timer.service';
+import { BehaviorSubject } from 'rxjs';
+import { GameUtils } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,7 @@ export class UpgradeService {
   private intermediateUpgrades: Upgrade[] = [];
   private passiveUpgrades: Upgrade[] = [];
   private prestigeUpgrades: Upgrade[] = [];
+  lengthUpgradeBlocked: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private gameService: GameService,
@@ -84,7 +87,7 @@ export class UpgradeService {
       new Upgrade('Gacha. Yes, gacha', 'Unlocks Cards!', 100_000, 'Gacha')
     );
     this.createBasicUpgrade(
-      new Upgrade('3rd time', 'x2 points', 200_000, 'ThirdUpgradePoints')
+      new Upgrade('Time to get longer', 'You can keep buying the Word Length Multiupgrade', 200_000, 'WordLengthMultiOne')
     );
     this.createBasicUpgrade(
       new Upgrade(
@@ -205,10 +208,37 @@ export class UpgradeService {
 
     this.createIntermediateUpgrade(
       new Upgrade(
-        `Last Intermediate Upgrade! Unlock the Market`,
+        `Unlock the Market`,
         'Now the letters values increases and decreases over time',
         10_000_000_000_000,
         'UnlockMarket'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Unlock the Second Card Pack!`,
+        'You can access it on the Cards Menu',
+        20_000_000_000_000,
+        'SecondCardPack'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `You found the Merge Module!`,
+        'Now you can merge the cards to be better!',
+        50_000_000_000_000,
+        'MergeModule'
+      )
+    );
+
+    this.createIntermediateUpgrade(
+      new Upgrade(
+        `Bull Market!`,
+        'There is a chance that the market cannot fall',
+        100_000_000_000_000,
+        'BullMarket'
       )
     );
 
@@ -262,6 +292,15 @@ export class UpgradeService {
       )
     );
 
+    this.createPassiveUpgrade(
+      new Upgrade(
+        'Passive Market',
+        'Now Passive Points are affected by the Market',
+        100_000_000_000_000_000,
+        'PassiveMarket'
+      )
+    );
+
     //Prestige Upgrade
     this.createPrestigeUpgrade(
       new Upgrade(
@@ -297,6 +336,8 @@ export class UpgradeService {
     );
   }
 
+  gameUtils = new GameUtils(this.gameService);
+
   createBasicUpgrade(upgrade: Upgrade) {
     this.basicUpgrades.push(upgrade);
   }
@@ -329,6 +370,10 @@ export class UpgradeService {
     return this.prestigeUpgrades;
   }
 
+  getLengthUpgradeBlocked() {
+    return this.lengthUpgradeBlocked.asObservable();
+  }
+
   getUpgrade(upgradeType: eIdUpgrade) {
     const upgrade = this.basicUpgrades.find((x) => x.id === upgradeType);
     if (!upgrade) return;
@@ -354,7 +399,32 @@ export class UpgradeService {
         }
         this.gameService.buyGenerator(1);
       }
-      
+      if(upgradeType === "WordLengthMultiOne") this.lengthUpgradeBlocked.next(false);
+    }
+  }
+
+  getMultiUpgrade(upgradeType: eIdUpgrade) {
+    const multiUpgrade = this.gameService.game.value.multiUpgrades.find(
+      (x) => x.id === upgradeType
+    );
+    if (!multiUpgrade) return;
+    if (upgradeType === 'MultiUpgradeWords' && this.lengthUpgradeBlocked.value)
+      return;
+    if (this.gameService.game.value.points >= multiUpgrade.cost) {
+      this.gameService.updatePoints(-multiUpgrade.cost);
+      this.gameService.buyMultiUpgrade(upgradeType);
+      this.gameService.setMultiUpgradeCost(
+        upgradeType,
+        this.gameUtils.IsPurchasedPrestigeUpgrade('PrestigeBetterScaling')
+          ? 2
+          : 1
+      );
+      if (upgradeType === 'MultiUpgradeWords') {
+        this.gameService.updateMaxLength();
+        let maxAmount = 3;
+        if(this.gameUtils.IsPurchasedUpgrade('WordLengthMultiOne')) maxAmount += 3
+        this.lengthUpgradeBlocked.next(maxAmount <= multiUpgrade.amountBought)
+      }
     }
   }
 

@@ -19,7 +19,7 @@
         </div>
         <div id="IntermediateUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !isEveryBasicUpgradePurchased()}"> 
             <h2 id="intermediateUpgradeHeading" [ngClass]="{'all-bought': hasAllIntermediateUpgrades()}">Intermediate Upgrades</h2>
-            <div id="upgradesTable" class="upgradesTable hoverEffectContainer">
+            <div id="upgradesTable" class="upgradesTable intermediateTable hoverEffectContainer">
                 <button *ngFor="let upgrade of intermediateUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getIntermediateUpgrade(upgrade.id)" (mouseenter)="ChangeIntermediateUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
                     <span>{{ getNumberToChar(i) }}</span>
                 </button>

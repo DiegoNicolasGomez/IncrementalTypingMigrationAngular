@@ -56,10 +56,6 @@ export class ActiveService {
       totalPoints *= 1.3;
       bonus += ' x 1.3 (Upgrade 1)';
     }
-    if (this.gameUtils.IsPurchasedUpgrade('ThirdUpgradePoints')) {
-      totalPoints *= 2;
-      bonus += ' x 2 (Upgrade 10)';
-    }
     if (this.gameUtils.IsPurchasedUpgrade('IntermediateBasicsOne')) {
       totalPoints *= 3;
       bonus += ' x 3 (Upgrade 15)';
@@ -123,13 +119,16 @@ export class ActiveService {
     return [totalPoints, bonus];
   }
 
-  GetPointsLetters(word: string) {
+  GetPointsLetters(word: string, passive: boolean = false) {
     const lettersBonus = this.gameService.game.value.lettersBonus;
     var letters = word.toLowerCase().split('');
     var points = 0;
     let marketBonus = [1, 1, 1, 1, 1, 1, 1, 1]
     if(this.gameUtils.IsPurchasedUpgrade('UnlockMarket')) {
       marketBonus = this.marketService.letterBonus.value;
+    }
+    if(passive && !this.gameUtils.IsPurchasedPassiveUpgrade('PassiveMarket')) {
+      marketBonus = [1, 1, 1, 1, 1, 1, 1, 1];
     }
     letters.forEach((element) => {
       if (

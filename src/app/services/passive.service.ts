@@ -68,7 +68,7 @@ export class PassiveService {
     var totalPoints = 0;
     totalPoints += passiveWord.length;
     if (this.gameUtils.IsPurchasedPassiveUpgrade('PassiveScrabbleModule'))
-      totalPoints += this.activeService.GetPointsLetters(passiveWord);
+      totalPoints += this.activeService.GetPointsLetters(passiveWord, true);
     totalPoints += this.gameService.game.value.cards.filter(x => x.bonusType === 'PassivePointsAmount').reduce((total, card) => total + card.bonusAmount, 0);
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveLittleBonus")) totalPoints += 5;
     if (this.gameUtils.IsPurchasedPassiveUpgrade("PassiveEnhancerEnhancerer")) totalPoints *= 1.25;

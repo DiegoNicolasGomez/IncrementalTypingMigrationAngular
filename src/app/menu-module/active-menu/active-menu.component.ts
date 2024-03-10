@@ -13,13 +13,18 @@ import { Subscription } from 'rxjs';
 export class ActiveMenuComponent implements OnDestroy {
   multiUpgrades: Upgrade[] = [];
   private multiUpgradesSubscription = new Subscription();
+  lengthUpgradeBlocked: boolean = false;
 
-  constructor(public gameService: GameService) {
+  constructor(public gameService: GameService, public upgradeService: UpgradeService) {
     this.multiUpgradesSubscription = this.gameService
       .getGame()
       .subscribe((game) => {
         this.multiUpgrades = game.multiUpgrades;
       });
+
+      this.upgradeService.getLengthUpgradeBlocked().subscribe((prop) => {
+        this.lengthUpgradeBlocked = prop;
+      })
   }
 
   gameUtils = new GameUtils(this.gameService);
@@ -29,21 +34,6 @@ export class ActiveMenuComponent implements OnDestroy {
   }
 
   AddMultiUpgrade(upgradeNumber: eIdUpgrade) {
-    const multiUpgrade = this.gameService.game.value.multiUpgrades.find(
-      (x) => x.id == upgradeNumber
-    );
-    if(!multiUpgrade) return;
-    if (this.gameService.game.value.points >= multiUpgrade.cost) {
-      this.gameService.updatePoints(-multiUpgrade.cost);
-      this.gameService.buyMultiUpgrade(upgradeNumber);
-      this.gameService.setMultiUpgradeCost(
-        upgradeNumber,
-        this.gameUtils.IsPurchasedPrestigeUpgrade('PrestigeBetterScaling')
-          ? 2
-          : 1
-      );
-      if (upgradeNumber == 'MultiUpgradeWords')
-        this.gameService.updateMaxLength();
-    }
+   this.upgradeService.getMultiUpgrade(upgradeNumber);
   }
 }

@@ -55,4 +55,9 @@
     background-position: 100%;
     transform: rotate(180deg);
   }
+
+  .disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
   

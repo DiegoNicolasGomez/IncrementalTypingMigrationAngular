@@ -71,7 +71,6 @@ export class WordboxComponent implements OnInit, OnDestroy {
   }
 
   checkWord() {
-    console.log(this.language);
     if (this.language === 'Japanese') {
       const japaneseMap = this.gameUtils.getJapaneseMap();
       const regex = new RegExp(Object.keys(japaneseMap).join('|'), 'g');

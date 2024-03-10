@@ -14,7 +14,7 @@ import { GameUtils } from 'src/app/utils/utils';
   templateUrl: './cards-menu.component.html',
   styleUrls: ['./cards-menu.component.scss'],
 })
-export class CardsMenuComponent{
+export class CardsMenuComponent {
   cards: Card[] = [];
   cardsCost$: Observable<number>;
   cardsDisplayed$: Observable<Card[]>;
@@ -32,11 +32,11 @@ export class CardsMenuComponent{
       .pipe(map((game) => game.cardCost));
 
     this.cards = this.cardService.getCards();
-    this.cardsDisplayed$ = this.gameService.getGame().pipe(map((game) => game.cards))
+    this.cardsDisplayed$ = this.gameService
+      .getGame()
+      .pipe(map((game) => game.cards));
 
-    this.packService.getPacks().subscribe((packs) => 
-    this.packs = packs)
-
+    this.packService.getPacks().subscribe((packs) => (this.packs = packs));
   }
 
   gameUtils = new GameUtils(this.gameService);
@@ -46,13 +46,11 @@ export class CardsMenuComponent{
   }
 
   getPack(packTier: PackTier) {
-    const pack = this.packs.find(x => x.type === packTier)!;
-    if (
-      this.gameService.game.value.points >= pack.cost
-    ) {
+    const pack = this.packs.find((x) => x.type === packTier)!;
+    if (this.gameService.game.value.points >= pack.cost) {
       this.gameService.updatePoints(-pack.cost);
       var cards = this.cardService.getPack(packTier);
-      this.timerService.logGameTimer("Purchased Cards");
+      this.timerService.logGameTimer('Purchased Cards');
       this.gameService.updateCardsCost();
       this.overlayService.appendCards(cards);
     }
@@ -60,5 +58,29 @@ export class CardsMenuComponent{
 
   getBonus(): string {
     return this.cardService.getBonus();
+  }
+
+  isCardPackUnlocked(pack: Pack) {
+    switch (pack.type) {
+      case 'Explorer':
+        return this.gameUtils.IsPurchasedUpgrade('SecondCardPack');
+        break;
+      case 'Master':
+        return false;
+        break;
+      case 'Grandmaster':
+        return false;
+        break;
+      case 'Mighty':
+        return false;
+        break;
+      case 'Ethereal':
+        return false;
+        break;
+
+      default:
+        return true;
+        break;
+    }
   }
 }

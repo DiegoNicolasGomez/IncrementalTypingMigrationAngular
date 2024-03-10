@@ -11,6 +11,7 @@ export class MarketService {
     []
   );
   private readonly DATASETSCOUNT = 8;
+  private bullMarket: boolean = false;
 
   constructor(private gameService: GameService) {
     this.initLetterBonus();
@@ -18,6 +19,17 @@ export class MarketService {
     interval(17).subscribe(() => {
       this.changeLetterBonus();
     });
+
+    interval(1000).subscribe(() => {
+      if(this.gameUtils.IsPurchasedUpgrade('BullMarket')) {
+        if(Math.floor(Math.random() * 10) === 1 && this.bullMarket === false) {
+          this.bullMarket = true;
+          setTimeout(() => {
+            this.bullMarket = false;
+          }, 5000)
+        }
+      }
+    })
   }
   gameUtils = new GameUtils(this.gameService);
 
@@ -33,6 +45,9 @@ export class MarketService {
     const datasets = this.letterBonus.value;
     for (let index = 0; index < datasets.length; index++) {
 
+      if(this.bullMarket) {
+        datasets[index] += this.gameUtils.random(0, 5);
+      }
       if(Math.floor(Math.random() * 100) == 1) {
         datasets[index] += 100;
         break; 

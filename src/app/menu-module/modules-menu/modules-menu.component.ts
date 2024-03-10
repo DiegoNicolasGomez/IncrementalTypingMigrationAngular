@@ -116,21 +116,21 @@ export class ModulesMenuComponent {
   }
 
   buyMergeModule() {
-    if (this.gameService.game.value.points >= 1_000_000_000_000_000) {
+    if (this.gameService.game.value.points >= 1_000_000_000_000_000 && this.gameUtils.IsPurchasedUpgrade('MergeModule')) {
       this.gameService.updatePoints(-1_000_000_000_000_000);
       this.gameService.unlockModule(2);
     }
   }
 
   buySynergyModule() {
-    if (this.gameService.game.value.points >= 1_000_000_000_000) {
+    if (this.gameService.game.value.points >= 1_000_000_000_000 && this.gameUtils.IsPurchasedUpgrade('PassiveMoreModules')) {
       this.gameService.updatePoints(-1_000_000_000_000);
       this.gameService.unlockModule(1);
     }
   }
 
   buyScrabbleModule() {
-    if (this.gameService.game.value.points >= 1_000_000_000) {
+    if (this.gameService.game.value.points >= 1_000_000_000 && this.gameUtils.IsPurchasedUpgrade('ScrabbleModule')) {
       this.gameService.updatePoints(-1_000_000_000);
       this.gameService.unlockModule(0);
     }
