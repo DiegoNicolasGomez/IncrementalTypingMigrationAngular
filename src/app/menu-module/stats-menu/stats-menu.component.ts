@@ -27,8 +27,10 @@ export class StatsMenuComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(){
-    const ctx = document.getElementById('pieBonusChart') as HTMLCanvasElement;
-    this.chartService.initializeStatsCharts(ctx)
+    const ctxMulti = document.getElementById('pieBonusChart') as HTMLCanvasElement;
+    this.chartService.initializeStatsMultiChart(ctxMulti);
+    const ctxSums = document.getElementById('pieSumsBonusChart') as HTMLCanvasElement;
+    this.chartService.initializeStatsSumsChart(ctxSums);
   }
 
   getMultiUpgradesStat(): string {

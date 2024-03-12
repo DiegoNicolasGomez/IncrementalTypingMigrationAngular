@@ -585,7 +585,9 @@ export class WordsService {
     var pointsLetters = word.length;
     let pointsBonus = word.length;
     let bonusValues = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    let bonusSumsValues = [0, 0, 0, 0]
     this.wordBonus += '[WordLength] ';
+    bonusSumsValues[0] += word.length;
 
     if (this.gameUtils.IsPurchasedUpgrade('ScrabbleModule')) {
       var lettersValue = 0;
@@ -593,6 +595,7 @@ export class WordsService {
       pointsLetters += lettersValue;
       pointsBonus += lettersValue
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
+      bonusSumsValues[1] += lettersValue;
       if (
         lettersValue >
         this.activeService.GetPointsLetters(
@@ -611,6 +614,7 @@ export class WordsService {
       pointsLetters += repeatedLettersBonus
       this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
       pointsBonus += repeatedLettersBonus
+      bonusSumsValues[2] += repeatedLettersBonus;
     }
 
     if (this.gameUtils.IsPurchasedUpgrade('DifferentLetterBonus')) {
@@ -621,6 +625,7 @@ export class WordsService {
       pointsLetters += differentLettersBonus
       this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
       pointsBonus += differentLettersBonus
+      bonusSumsValues[3] += differentLettersBonus;
     }
 
     var result = this.activeService.CalculatePoints(pointsLetters);
@@ -628,6 +633,7 @@ export class WordsService {
     bonusValues = result[2];
 
     bonusValues[0] += pointsBonus;
+    bonusSumsValues = bonusSumsValues.concat(result[3]);
 
     if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
       const mastery = this.gameService.game.value.masteryLevels.find((x) =>
@@ -696,6 +702,7 @@ export class WordsService {
       this.masteryService.updateMasteryValue(mastery.tier);
     }
     this.gameService.updateBonusValues(bonusValues);
+    this.gameService.updateBonusSumsValues(bonusSumsValues);
     console.log(bonusValues)
   }
 

@@ -12,13 +12,15 @@ import { WordsService } from './words.service';
   providedIn: 'root',
 })
 export class ChartService {
-  marketChart: Chart | undefined;
   private letterBonus: number[] = [];
   private componentMarketActive: boolean = false;
   private componentStatsActive: boolean = false;
-  private bonusValues: number[] = [];
-
+  private bonusMultiValues: number[] = [];
+  private bonusSumsValues: number[] = [];
+  
+  marketChart: Chart | undefined;
   pieBonusChart: Chart | undefined;
+  pieBonusSumsChart: Chart | undefined;
 
   chartUtils = new ChartUtils();
 
@@ -64,17 +66,29 @@ export class ChartService {
     });
 
     this.statsService.getBonusValues().subscribe((bonusValues) => {
-      this.bonusValues = bonusValues;
-      console.log(this.bonusValues);
+      this.bonusMultiValues = bonusValues;
 
       if (!this.componentStatsActive) return;
 
       // Update the chart data
 
-      this.pieBonusChart!.data.datasets[0].data = this.bonusValues;
+      this.pieBonusChart!.data.datasets[0].data = this.bonusMultiValues;
 
       // Update the chart
       this.pieBonusChart!.update();
+    });
+
+    this.statsService.getBonusSumsValues().subscribe((bonusValues) => {
+      this.bonusMultiValues = bonusValues;
+
+      if (!this.componentStatsActive) return;
+
+      // Update the chart data
+
+      this.pieBonusSumsChart!.data.datasets[0].data = this.bonusMultiValues;
+
+      // Update the chart
+      this.pieBonusSumsChart!.update();
     });
   }
 
@@ -210,7 +224,7 @@ export class ChartService {
     this.marketChart = new Chart(ctx, config);
   }
 
-  initializeStatsCharts(ctx: HTMLCanvasElement) {
+  initializeStatsMultiChart(ctx: HTMLCanvasElement) {
 
     const data = {
       labels: [
@@ -229,7 +243,7 @@ export class ChartService {
       datasets: [
         {
           label: 'Dataset 1',
-          data: this.bonusValues,
+          data: this.bonusMultiValues,
           backgroundColor: [this.chartUtils.CHART_COLORS.blue, this.chartUtils.CHART_COLORS.lightblue, this.chartUtils.CHART_COLORS.purple] 
         },
       ],
@@ -258,5 +272,51 @@ export class ChartService {
     };
 
     this.pieBonusChart = new Chart(ctx, config);
+  }
+
+  initializeStatsSumsChart(ctx: HTMLCanvasElement) {
+
+    const data = {
+      labels: [
+        'Word Length',
+        'Letters Value',
+        'Repeated Letters Bonus',
+        'Different Letters Bonus',
+        'MultiUpgrade Points',
+        'Flat Sums',
+        'Card Points Bonus',
+      ],
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: this.bonusMultiValues,
+          backgroundColor: [this.chartUtils.CHART_COLORS.blue, this.chartUtils.CHART_COLORS.lightblue, this.chartUtils.CHART_COLORS.purple] 
+        },
+      ],
+    };
+
+    const config: ChartConfiguration = {
+      type: 'pie',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Sums Bonuses',
+            font: {
+              size: 30,
+              family: 'Montserrat',
+            },
+          },
+        },
+      },
+    };
+
+    this.pieBonusSumsChart = new Chart(ctx, config);
   }
 }

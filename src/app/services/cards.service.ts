@@ -373,6 +373,13 @@ export class CardsService {
       }
 
       cards.push(card);
+
+      if (
+        card.type === 'Divine' &&
+        !this.gameUtils.IsUnlockedAchievement('Divine Interventionist')
+      ) {
+        this.achievementService.completeAchievement('Divine Interventionist');
+      }
     }
 
     const gameCards = this.gameService.game.value.cards;
@@ -394,6 +401,14 @@ export class CardsService {
       !this.gameUtils.IsUnlockedAchievement('Master of All Trades')
     )
       this.achievementService.completeAchievement('Master of All Trades');
+
+    if (
+      this.gameService.game.value.cards.filter((x) => x.type === 'Legendary')
+        .length >= 10 &&
+      !this.gameUtils.IsUnlockedAchievement('Legendary Card Archivist')
+    ) {
+      this.achievementService.completeAchievement('Legendary Card Archivist');
+    }
 
     this.gameService.addPack(pack);
     return cards;
@@ -490,6 +505,8 @@ export class CardsService {
             x.type === cardsTiersMap[card.type]
         )!
       );
+
+      this.gameService.addMergeCount();
     }
   }
 

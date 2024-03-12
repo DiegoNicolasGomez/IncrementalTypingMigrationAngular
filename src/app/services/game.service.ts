@@ -111,6 +111,12 @@ export class GameService {
     game.bonusValues = values;
     this.game.next(game);
   }
+
+  updateBonusSumsValues(values: number[]) {
+    const game = this.game.value;
+    game.bonusSumsValues = values;
+    this.game.next(game);
+  }
   //Passive
 
   updatePassivePoints(points: number) {
@@ -341,6 +347,12 @@ export class GameService {
   addCardsAmount() {
     const game = this.game.value;
     game.cardsAmount++;
+    this.game.next(game);
+  }
+
+  addMergeCount() {
+    const game = this.game.value;
+    game.mergeCount++;
     this.game.next(game);
   }
 

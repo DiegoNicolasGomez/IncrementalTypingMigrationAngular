@@ -11,16 +11,21 @@ export class Game {
   allTimePoints: number;
   upgrades: Upgrade[] = [];
   maxLength: number = 4;
-  bestWord: string = "";
+  bestWord: string = '';
   multiUpgrades: Upgrade[] = [
     new Upgrade('Point Booster', '+1 Point per Word', 50, 'MultiUpgradePoints'),
     new Upgrade(
-      "Long Word Expertise",
+      'Long Word Expertise',
       '+1 Letter per Word',
       100,
       'MultiUpgradeWords'
     ),
-    new Upgrade('Multiplier Mastery', 'x1.25 Points', 500, 'MultiUpgradePointsMult'),
+    new Upgrade(
+      'Multiplier Mastery',
+      'x1.25 Points',
+      500,
+      'MultiUpgradePointsMult'
+    ),
   ];
   achievements: Achievement[] = [];
   wordsAmount: number = 0;
@@ -43,19 +48,48 @@ export class Game {
   modulesUnlocked: boolean[] = [];
   mergeAmount: number = 10;
   mergeCardsCost: number = 200;
+  mergeCount: number = 0;
   lettersBonus: number[] = [1, 2, 3, 4, 5, 8, 10, 20];
-  gameType: GameType; 
+  gameType: GameType;
   masteryLevels: Mastery[] = [
     new Mastery('Alpha', 1, ['s', 'p'], 10),
     new Mastery('Beta', 1.25, ['c', 'a', 't', 'm'], 20),
     new Mastery('Gamma', 1.5, ['b', 'u', 'd', 'r', 'h'], 30),
     new Mastery('Delta', 1.75, ['e', 'n', 'f', 'i', 'o', 'g'], 40),
-    new Mastery('Epsilon', 2, ['l', 'w', 'v', 'k', 'j', 'q', 'z', 'y', 'x', '\'', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '&'], 50)
+    new Mastery(
+      'Epsilon',
+      2,
+      [
+        'l',
+        'w',
+        'v',
+        'k',
+        'j',
+        'q',
+        'z',
+        'y',
+        'x',
+        "'",
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '-',
+        '&',
+      ],
+      50
+    ),
   ];
   letterCounterPerfection: number = 0;
   wordCounterPerfection: number = 0;
   marketBonus: number[] = [];
   bonusValues: number[] = [];
+  bonusSumsValues: number[] = [];
 
   constructor(pointsAmount: number, gameType: GameType) {
     this.points = pointsAmount;
@@ -64,4 +98,4 @@ export class Game {
   }
 }
 
-export type GameType = "Challenge" | "Active" | "Current"
+export type GameType = 'Challenge' | 'Active' | 'Current';

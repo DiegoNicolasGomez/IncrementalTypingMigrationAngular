@@ -354,8 +354,8 @@ export class AchievementsService implements OnDestroy {
         'Card Fusion Alchemist',
         'Merge cards 10 times',
         49,
-        1,
-        'Other'
+        10,
+        'mergeCount'
       )
     );
     this.createAchievement(
@@ -363,8 +363,8 @@ export class AchievementsService implements OnDestroy {
         'Card Fusion Maestro',
         'Merge cards 50 times',
         51,
-        1,
-        'Other'
+        50,
+        'mergeCount'
       )
     );
     this.createAchievement(
@@ -464,6 +464,42 @@ export class AchievementsService implements OnDestroy {
         36,
         1,
         'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Word Virtuoso',
+        'Write 10 words without any errors',
+        57,
+        10,
+        'wordCounterPerfection'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Linguistic Maestro',
+        'Write 30 words without any errors',
+        58,
+        30,
+        'wordCounterPerfection'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Supreme Scribbler',
+        'Write 60 words without any errors',
+        59,
+        60,
+        'wordCounterPerfection'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Word Ascendant',
+        'Write 100 words without any errors',
+        60,
+        100,
+        'wordCounterPerfection'
       )
     );
     this.createAchievement(

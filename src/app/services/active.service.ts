@@ -18,11 +18,12 @@ export class ActiveService {
 
   gameUtils = new GameUtils(this.gameService);
 
-  CalculatePoints(pointsLetters: number): [number, string, number[]] {
+  CalculatePoints(pointsLetters: number): [number, string, number[], number[]] {
     var bonus = '';
     var totalPoints: number = 0;
     totalPoints += pointsLetters;
     let bonusesValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].fill(1);
+    let bonusesSumsValues = [0, 0, 0];
     const multiUpgrade1 = this.gameService.game.value.multiUpgrades.find(
       (x) => x.id === 'MultiUpgradePoints'
     )!;
@@ -30,16 +31,19 @@ export class ActiveService {
       totalPoints += multiUpgrade1.amountBought;
       bonus += ' + [MultiUpgrade1]';
       bonusesValues[0] += multiUpgrade1.amountBought;
+      bonusesSumsValues[0] += multiUpgrade1.amountBought;
     }
     if (this.gameUtils.IsPurchasedUpgrade('WordsValueBitMore')) {
       totalPoints += 4;
       bonus += ' + 4 (Upgrade 2)';
       bonusesValues[0] += 4;
+      bonusesSumsValues[1] += 4;
     }
     if (this.gameUtils.IsPurchasedUpgrade('LastBasic')) {
       totalPoints += 20;
       bonus += ' + 20 (Upgrade 12)';
       bonusesValues[0] += 20;
+      bonusesSumsValues[1] += 20;
     }
 
     let pointsAmountCards = this.gameService.game.value.cards
@@ -47,16 +51,19 @@ export class ActiveService {
       .reduce((total, card) => total + card.bonusAmount, 0);
     totalPoints += pointsAmountCards;
     bonusesValues[0] += pointsAmountCards;
+    bonusesSumsValues[2] += pointsAmountCards;
 
     if (this.gameUtils.IsPurchasedUpgrade('WordsValueBitMoreMore')) {
       totalPoints += 10;
       bonus += ' + 10 (Upgrade 7)';
       bonusesValues[0] += 10;
+      bonusesSumsValues[1] += 10;
     }
     if (this.gameUtils.IsPurchasedUpgrade('IntermediateBasicsTwo')) {
       totalPoints += 25;
       bonus += ' + 25 (Upgrade 18)';
       bonusesValues[0] += 25;
+      bonusesSumsValues[1] += 25;
     }
 
     if (totalPoints < 1) totalPoints = 1;
@@ -143,7 +150,7 @@ export class ActiveService {
         bonusesValues[8] *= 10;
       }
     }
-    return [totalPoints, bonus, bonusesValues];
+    return [totalPoints, bonus, bonusesValues, bonusesSumsValues];
   }
 
   GetPointsLetters(word: string, passive: boolean = false) {
