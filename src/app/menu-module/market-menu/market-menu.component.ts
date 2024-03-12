@@ -37,6 +37,6 @@ export class MarketMenuComponent implements OnInit, OnDestroy {
   }
 
   private initializeChart() {
-    this.chartDataService.initializeChart();
+    this.chartDataService.initializeMarketChart();
   }
 }

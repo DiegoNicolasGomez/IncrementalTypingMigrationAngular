@@ -55,6 +55,7 @@ export class Game {
   letterCounterPerfection: number = 0;
   wordCounterPerfection: number = 0;
   marketBonus: number[] = [];
+  bonusValues: number[] = [];
 
   constructor(pointsAmount: number, gameType: GameType) {
     this.points = pointsAmount;

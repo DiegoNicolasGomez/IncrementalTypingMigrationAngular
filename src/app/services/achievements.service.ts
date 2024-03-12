@@ -316,8 +316,26 @@ export class AchievementsService implements OnDestroy {
     this.createAchievement(
       new Achievement(
         'Deck Diversifier',
-        'Collect cards from 4 different categories',
+        'Collect cards from 4 different Tiers',
         46,
+        1,
+        'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Octo-Collector Maestro',
+        'Collect cards from 8 different Tiers',
+        55,
+        1,
+        'Other'
+      )
+    );
+    this.createAchievement(
+      new Achievement(
+        'Master of All Trades',
+        'Collect cards from every Tier',
+        56,
         1,
         'Other'
       )

@@ -5,6 +5,8 @@ import { Chart, ChartConfiguration } from 'chart.js';
 import { DateTime } from 'luxon';
 import { MarketService } from './market.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { StatsService } from './stats.service';
+import { WordsService } from './words.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +14,32 @@ import { NavigationEnd, Router } from '@angular/router';
 export class ChartService {
   marketChart: Chart | undefined;
   private letterBonus: number[] = [];
-  private componentActive: boolean = false;
+  private componentMarketActive: boolean = false;
+  private componentStatsActive: boolean = false;
+  private bonusValues: number[] = [];
+
+  pieBonusChart: Chart | undefined;
 
   chartUtils = new ChartUtils();
 
-  constructor(private marketService: MarketService, private router: Router) {
-    this.initializeChart();
+  constructor(
+    private marketService: MarketService,
+    private router: Router,
+    private statsService: StatsService
+  ) {
+    this.initializeMarketChart();
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.componentActive = event.url.includes('marketMenu');
+        this.componentMarketActive = event.url.includes('marketMenu');
+        this.componentStatsActive = event.url.includes('statsMenu');
       }
     });
 
     this.marketService.getLettersBonus().subscribe((letterBonus) => {
       this.letterBonus = letterBonus;
 
-      if(!this.componentActive) return
+      if (!this.componentMarketActive) return;
       // Update the chart data
       this.marketChart!.data.labels!.push(
         `${DateTime.now().toLocaleString(DateTime.TIME_WITH_SECONDS)}`
@@ -51,16 +62,28 @@ export class ChartService {
       // Update the chart
       this.marketChart!.update();
     });
+
+    this.statsService.getBonusValues().subscribe((bonusValues) => {
+      this.bonusValues = bonusValues;
+      console.log(this.bonusValues);
+
+      if (!this.componentStatsActive) return;
+
+      // Update the chart data
+
+      this.pieBonusChart!.data.datasets[0].data = this.bonusValues;
+
+      // Update the chart
+      this.pieBonusChart!.update();
+    });
   }
 
-  initializeChart() {
+  initializeMarketChart() {
     const ctx = document.getElementById('marketChart') as HTMLCanvasElement;
-    //"ctx" hace referencia al id del componente canvas
 
     const DATA_COUNT = 1;
     const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
 
-    const chartConfig: ChartUtilsConfig = {};
     const labels: string[] = [];
     const data = {
       labels: labels,
@@ -74,7 +97,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'd-g',
@@ -85,7 +108,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'b-c-m-p',
@@ -96,7 +119,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'f-h-v-w-y',
@@ -107,7 +130,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'k',
@@ -118,7 +141,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'j-x',
@@ -129,7 +152,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'q-z',
@@ -140,7 +163,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
         {
           label: 'Special Characters',
@@ -151,7 +174,7 @@ export class ChartService {
             0.5
           ),
           fill: true,
-          color: "rgb(20, 20, 20)"
+          color: 'rgb(20, 20, 20)',
         },
       ],
     };
@@ -168,22 +191,72 @@ export class ChartService {
             labels: {
               font: {
                 size: 20,
-                family: "Montserrat", 
-              }
-            }
+                family: 'Montserrat',
+              },
+            },
           },
           title: {
             display: true,
             text: 'The Word Market',
             font: {
               size: 30,
-              family: "Montserrat",
-            }
+              family: 'Montserrat',
+            },
           },
         },
       },
     };
 
     this.marketChart = new Chart(ctx, config);
+  }
+
+  initializeStatsCharts(ctx: HTMLCanvasElement) {
+
+    const data = {
+      labels: [
+        'Sums',
+        'Flat Multiplier',
+        'Word Length Multi',
+        'Achievements',
+        'Passive Points Multi',
+        'Card Amount Bonus',
+        'Points Percentage Cards Multi',
+        'Percentage Multiupgrade',
+        'Perfection Combo',
+        'Critical',
+        'Mastery Bonus',
+      ],
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: this.bonusValues,
+          backgroundColor: [this.chartUtils.CHART_COLORS.blue, this.chartUtils.CHART_COLORS.lightblue, this.chartUtils.CHART_COLORS.purple] 
+        },
+      ],
+    };
+
+    const config: ChartConfiguration = {
+      type: 'pie',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Multiplier Bonuses',
+            font: {
+              size: 30,
+              family: 'Montserrat',
+            },
+          },
+        },
+      },
+    };
+
+    this.pieBonusChart = new Chart(ctx, config);
   }
 }

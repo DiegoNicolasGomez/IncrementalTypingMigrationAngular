@@ -497,10 +497,22 @@ export class WordsService {
     'አንደኛውንዋንው',
   ];
   language: language = 'English';
+     /*
+  0 - Sums 
+  1 - Flat multiplier
+  2 - Word Length Multi
+  3 - Achievements
+  4 - Passive Points Multi
+  5 - Card Amount Bonus
+  6 - Points Percentage Cards Multi
+  7 - Percentage MultiUpgrade 
+  8 - Perfection Combo
+  9 - Critical
+  10 - Mastery Bonus
+  */
 
   constructor(
     private gameService: GameService,
-    private http: HttpClient,
     private activeService: ActiveService,
     private achievementService: AchievementsService,
     private masteryService: MasteryService,
@@ -571,11 +583,15 @@ export class WordsService {
   guessedWord(word: string) {
     this.wordBonus = '';
     var pointsLetters = word.length;
+    let pointsBonus = word.length;
+    let bonusValues = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     this.wordBonus += '[WordLength] ';
+
     if (this.gameUtils.IsPurchasedUpgrade('ScrabbleModule')) {
       var lettersValue = 0;
       lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
+      pointsBonus += lettersValue
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
       if (
         lettersValue >
@@ -588,32 +604,45 @@ export class WordsService {
     }
 
     if (this.gameUtils.IsPurchasedUpgrade('SameLetterBonus')) {
-      pointsLetters += Math.pow(
+      let repeatedLettersBonus = Math.pow(
         1.25,
         this.activeService.getRepeatedLetters(word)
       );
+      pointsLetters += repeatedLettersBonus
       this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
+      pointsBonus += repeatedLettersBonus
     }
 
     if (this.gameUtils.IsPurchasedUpgrade('DifferentLetterBonus')) {
-      pointsLetters += Math.pow(
+      let differentLettersBonus = Math.pow(
         1.1,
         this.activeService.getDifferentLetters(word)
       );
+      pointsLetters += differentLettersBonus
       this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
+      pointsBonus += differentLettersBonus
     }
 
     var result = this.activeService.CalculatePoints(pointsLetters);
     this.wordBonus += result[1];
+    bonusValues = result[2];
+
+    bonusValues[0] += pointsBonus;
 
     if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
       const mastery = this.gameService.game.value.masteryLevels.find((x) =>
         x.letters.includes(word[0].toLowerCase())
       )!;
       result[0] *= mastery.value;
+      this.wordBonus += 'x[MasteryBonus]'
+      bonusValues[10] *= mastery.value;
     }
 
-    if (this.critical.value === true) result[0] *= 5;
+    if (this.critical.value === true) {
+      result[0] *= 5;
+      this.wordBonus += 'x5 (CRITICAL)';
+      bonusValues[9] *= 5;
+    }
 
     this.gameService.updatePoints(result[0]);
     this.gameService.updateAllTimePoints(result[0]);
@@ -666,6 +695,8 @@ export class WordsService {
       )!;
       this.masteryService.updateMasteryValue(mastery.tier);
     }
+    this.gameService.updateBonusValues(bonusValues);
+    console.log(bonusValues)
   }
 
   getWordBonus(): string {

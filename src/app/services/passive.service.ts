@@ -47,10 +47,10 @@ export class PassiveService {
 
   createWord() {
     const portableGenerator = this.gameService.game.value.passiveGenerators.find(
-      (x) => x.name == 'Portable Generator'
+      (x) => x.name === 'Portable Generator'
     );
     if (!portableGenerator) return;
-    const word = this.GetRandomString(this.gameService.game.value.passiveLength)
+    const word = this.GetRandomString(this.gameService.game.value.passiveLength);
     this.passiveWord$.next(word);
     var points = this.GetPassivePoints(word);
     points *= portableGenerator.amountGained;

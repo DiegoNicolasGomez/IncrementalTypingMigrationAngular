@@ -20,10 +20,6 @@ export class GameService {
   activeGame = new BehaviorSubject<Game>(new Game(0, 'Active'));
 
   constructor() {
-    interval(1000).subscribe((x) => {
-      if (this.game.value.upgrades.find((x) => x.id === 'TaxEvasion'))
-        this.updateTaxEvasion();
-    });
   }
 
   gameUtils = new GameUtils(this);
@@ -110,6 +106,11 @@ export class GameService {
     this.game.next(game);
   }
 
+  updateBonusValues(values: number[]) {
+    const game = this.game.value;
+    game.bonusValues = values;
+    this.game.next(game);
+  }
   //Passive
 
   updatePassivePoints(points: number) {
@@ -328,6 +329,7 @@ export class GameService {
     const game = this.game.value;
     game.cards.push(card);
     this.game.next(game);
+    this.updateTaxEvasion();
   }
 
   addPack(pack: Pack) {
