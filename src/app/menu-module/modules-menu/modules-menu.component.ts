@@ -123,7 +123,7 @@ export class ModulesMenuComponent {
   }
 
   buySynergyModule() {
-    if (this.gameService.game.value.points >= 1_000_000_000_000 && this.gameUtils.IsPurchasedUpgrade('PassiveMoreModules')) {
+    if (this.gameService.game.value.points >= 1_000_000_000_000 && this.gameUtils.IsPurchasedPassiveUpgrade('PassiveMoreModules')) {
       this.gameService.updatePoints(-1_000_000_000_000);
       this.gameService.unlockModule(1);
     }
