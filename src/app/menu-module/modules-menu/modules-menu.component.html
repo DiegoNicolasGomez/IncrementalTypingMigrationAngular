@@ -1,6 +1,9 @@
 <section>
   <div class="module-wrapper">
-    <div class="module">
+    <div
+      class="module"
+      [ngClass]="{ 'hidden-module': !isScrabbleModuleAvailable() }"
+    >
       <div
         class="module-overlay"
         [@fadeOut]="!scrabbleModuleBought ? 'visible' : 'hidden'"
@@ -36,7 +39,10 @@
         </button> -->
       </div>
     </div>
-    <div class="module">
+    <div
+      class="module"
+      [ngClass]="{ 'hidden-module': !isSynergyModuleAvailable() }"
+    >
       <div
         class="module-overlay"
         [@fadeOut]="!synergyModuleBought ? 'visible' : 'hidden'"
@@ -53,9 +59,14 @@
           <p>Costs Passive Points</p>
         </div>
         <div class="buttonTierWrapper">
-            <button *ngFor="let generator of generators; let i = index;" (click)="buySynergyValue(generator)">
-                G{{i + 1}} | Cost: {{generator.synergyCost | exponentialNumber}} | SV: {{generator.synergyValue}} 
-            </button>
+          <button
+            *ngFor="let generator of generators; let i = index"
+            (click)="buySynergyValue(generator)"
+          >
+            G{{ i + 1 }} | Cost:
+            {{ generator.synergyCost | exponentialNumber }} | SV:
+            {{ generator.synergyValue }}
+          </button>
         </div>
       </div>
       <hr />
@@ -64,7 +75,10 @@
         <p>Cost: 100</p>
       </button> -->
     </div>
-    <div class="module-two">
+    <div
+      class="module-two"
+      [ngClass]="{ 'hidden-module': !isMergeModuleAvailable() }"
+    >
       <div
         class="module-overlay"
         [@fadeOut]="!mergeModuleBought ? 'visible' : 'hidden'"

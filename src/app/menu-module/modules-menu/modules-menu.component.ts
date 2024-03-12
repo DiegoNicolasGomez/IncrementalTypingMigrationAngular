@@ -33,6 +33,9 @@ export class ModulesMenuComponent {
   scrabbleModuleBought: boolean = false;
   synergyModuleBought: boolean = false;
   mergeModuleBought: boolean = false;
+  scrabbleModuleAvailable: boolean = false;
+  synergyModuleAvailable: boolean = false;
+  mergeModuleAvailable: boolean = false;
 
   cards: Card[] = [];
   mergeAmount: number = 10;
@@ -64,10 +67,19 @@ export class ModulesMenuComponent {
       this.mergeCardsCost = game.mergeCardsCost;
       this.totalCards = game.cards.length;
       this.lettersBonus = game.lettersBonus;
+      this.generators = game.passiveGenerators;
       this.scrabbleModuleBought = game.modulesUnlocked[0];
       this.synergyModuleBought = game.modulesUnlocked[1];
       this.mergeModuleBought = game.modulesUnlocked[2];
-      this.generators = game.passiveGenerators;
+      this.scrabbleModuleAvailable = game.upgrades.some(
+        (x) => x.id === 'ScrabbleModule'
+      );
+      this.synergyModuleAvailable = game.upgrades.some(
+        (x) => x.id === 'PassiveMoreModules'
+      );;
+      this.mergeModuleAvailable = game.upgrades.some(
+        (x) => x.id === 'MergeModule'
+      );
     });
   }
 
@@ -113,6 +125,18 @@ export class ModulesMenuComponent {
 
   isMergeModulePurchased() {
     return this.mergeModuleBought;
+  }
+
+  isScrabbleModuleAvailable() {
+    return this.scrabbleModuleAvailable;
+  }
+
+  isSynergyModuleAvailable() {
+    return this.synergyModuleAvailable;
+  }
+
+  isMergeModuleAvailable() {
+    return this.mergeModuleAvailable;
   }
 
   buyMergeModule() {
