@@ -15,6 +15,7 @@ export class MenuService {
     {id: 'modules', visible: false},
     {id: 'mastery', visible: false},
     {id: 'challenges', visible: false},
+    {id: 'minigames', visible: false},
     {id: 'market', visible: false},
     {id: 'prestige', visible: false},
     {id: 'achievements', visible: false},
@@ -36,7 +37,9 @@ export class MenuService {
 
       this.navbarItems.find(x => x.id === 'challenges')!.visible = game.upgrades.some(x => x.id === "ChallengeYourself") || game.gameType === "Challenge";
       
-      this.navbarItems.find(x => x.id === 'market')!.visible = game.upgrades.some(x => x.id === "UnlockMarket") || game.gameType === "Challenge";
+      this.navbarItems.find(x => x.id === 'minigames')!.visible = game.upgrades.some(x => x.id === "UnlockMinigames");
+      
+      this.navbarItems.find(x => x.id === 'market')!.visible = game.upgrades.some(x => x.id === "UnlockMarket");
 
       this.navbarItems.find(x => x.id === 'prestige')!.visible = game.allTimePoints >= 1000000;
 

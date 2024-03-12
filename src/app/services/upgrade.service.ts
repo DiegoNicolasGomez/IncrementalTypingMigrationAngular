@@ -13,6 +13,7 @@ import { GameUtils } from '../utils/utils';
 export class UpgradeService {
   private basicUpgrades: Upgrade[] = [];
   private intermediateUpgrades: Upgrade[] = [];
+  private advancedUpgrades: Upgrade[] = [];
   private passiveUpgrades: Upgrade[] = [];
   private prestigeUpgrades: Upgrade[] = [];
   lengthUpgradeBlocked: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -242,6 +243,18 @@ export class UpgradeService {
       )
     );
 
+    //Advanced Upgrade
+
+    this.createAdvancedUpgrade(
+      new Upgrade(
+        `Unlock Minigames!`,
+        'Good Luck!',
+        100_000_000_000_000_000,
+        'UnlockMinigames'
+      )
+    );
+
+
     //Passive Upgrade
     this.createPassiveUpgrade(
       new Upgrade(
@@ -346,6 +359,10 @@ export class UpgradeService {
     this.intermediateUpgrades.push(upgrade);
   }
 
+  createAdvancedUpgrade(upgrade: Upgrade) {
+    this.advancedUpgrades.push(upgrade);
+  }
+
   createPassiveUpgrade(upgrade: Upgrade) {
     this.passiveUpgrades.push(upgrade);
   }
@@ -360,6 +377,10 @@ export class UpgradeService {
 
   getIntermediateUpgrades(): Upgrade[] {
     return this.intermediateUpgrades;
+  }
+
+  getAdvancedUpgrades(): Upgrade[] {
+    return this.advancedUpgrades;
   }
 
   getPassiveUpgrades(): Upgrade[] {
@@ -449,6 +470,23 @@ export class UpgradeService {
       }
     }
   }
+
+  getAdvancedUpgrade(upgradeType: eIdUpgrade) {
+    const upgrade = this.advancedUpgrades.find(
+      (x) => x.id == upgradeType
+    );
+    if (!upgrade) return;
+    if (
+      !this.gameService.game.value.upgrades.some(
+        (x) => x.id == upgradeType
+      ) &&
+      this.gameService.game.value.points >= upgrade.cost
+    ) {
+      this.gameService.updatePoints(-upgrade.cost);
+      this.gameService.addUpgrade(upgrade);
+    }
+  }
+
 
   getPassiveUpgrade(upgradeType: eIdUpgrade) {
     const upgrade = this.passiveUpgrades.find((x) => x.id == upgradeType);

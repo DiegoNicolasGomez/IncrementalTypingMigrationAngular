@@ -34,6 +34,23 @@
                 </p>
             </div>
         </div>
+        <div id="AdvancedUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !isEveryIntermediateUpgradePurchased()}"> 
+            <h2 id="advancedUpgradeHeading" [ngClass]="{'all-bought': hasAllAdvancedUpgrades()}">Advanced Upgrades</h2>
+            <div id="upgradesTable" class="upgradesTable advancedTable hoverEffectContainer">
+                <button *ngFor="let upgrade of advancedUpgrades; let i=index" class="upgradeSquare hoverEffectChild" (click)="getAdvancedUpgrade(upgrade.id)" (mouseenter)="ChangeAdvancedUpgradesText(upgrade.id)" [style.color]="isUpgradeActive(upgrade.id) ? '#47682C' : '#FFFFFF'">
+                    <span>{{ getNumberToChar(i) }}</span>
+                </button>
+            </div>
+            <div class="upgradeText">
+                <p id="advancedUpgradesTitle" class="upgradesTitle" [innerHTML]="currentAdvancedUpgradeName">
+                </p>
+                <p id="advancedUpgradesDesc" class="upgradesDesc" [innerHTML]="currentAdvancedUpgradeDesc">
+                </p>
+                <p id="advancedUpgradesCost" class="upgradesDesc">
+                    Cost: {{currentAdvancedUpgradeCost | exponentialNumber}}
+                </p>
+            </div>
+        </div>
         <div id="PassiveUpgradesWrapper" class="upgradeTypeWrapper" [ngClass]="{'hidden-grid-upgrade': !isPassiveUpgradePurchased()}">
             <h2 id="passiveUpgradeHeading">Passive Upgrades</h2>
             <div id="passiveUpgradesTable" class="upgradesTable hoverEffectContainer">

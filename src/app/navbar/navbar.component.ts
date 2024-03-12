@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
     {id: 'modules', visible: false},
     {id: 'mastery', visible: false},
     {id: 'challenges', visible: false},
+    {id: 'minigames', visible: false},
     {id: 'market', visible: false},
     {id: 'prestige', visible: false},
     {id: 'achievements', visible: true},

@@ -11,6 +11,10 @@
     grid-template-columns: repeat(5, 1fr);
   }
 
+  .advancedTable{
+    grid-template-columns: repeat(6, 1fr);
+  }
+
   .upgradesTable > Button {
     font-size: var(--small-custom-text);
   }
@@ -42,15 +46,16 @@
     'two'
     'three'
     'four'
-    'five';
+    'five'
+    'six';
     margin: 5rem;
   }
 
   @media (min-width: 50em) {
     .upgradeWrapper {
       grid-template-areas: 
-      'one two three'
-      'six six four';
+      'one two three four'
+      'six six six five';
     }
   }
   
@@ -69,12 +74,15 @@
   .upgradeWrapper > :nth-child(5) {
     grid-area: five;
   }
+  .upgradeWrapper > :nth-child(6) {
+    grid-area: six;
+  }
   
   .upgradeTypeWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 25vw;
+    width: 15vw;
     min-height: 25vh;
   }
   

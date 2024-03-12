@@ -46,6 +46,7 @@ export type eIdUpgrade =
   | 'SecondCardPack'
   | 'MergeModule'
   | 'BullMarket'
+  | 'UnlockMinigames'
 	| 'PassiveEnhancerEnhancerer'
 	| 'PassiveLittleBonus'
 	| 'PassiveDontKnow'
