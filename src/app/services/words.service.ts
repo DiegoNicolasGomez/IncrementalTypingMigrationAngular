@@ -497,7 +497,7 @@ export class WordsService {
     'አንደኛውንዋንው',
   ];
   language: language = 'English';
-     /*
+  /*
   0 - Sums 
   1 - Flat multiplier
   2 - Word Length Multi
@@ -547,11 +547,12 @@ export class WordsService {
             Math.floor(Math.random() * this.hiraganaWordList.length)
           ];
         break;
-        case 'Amharic':
-          generatedWord = this.amharicWordList[
+      case 'Amharic':
+        generatedWord =
+          this.amharicWordList[
             Math.floor(Math.random() * this.amharicWordList.length)
           ];
-          break;
+        break;
     }
 
     if (this.gameUtils.HasCard(12) || this.gameUtils.IsInChallenge('Accuracy'))
@@ -584,8 +585,8 @@ export class WordsService {
     this.wordBonus = '';
     var pointsLetters = word.length;
     let pointsBonus = word.length;
-    let bonusValues = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    let bonusSumsValues = [0, 0, 0, 0]
+    let bonusValues = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    let bonusSumsValues = [0, 0, 0, 0];
     this.wordBonus += '[WordLength] ';
     bonusSumsValues[0] += word.length;
 
@@ -593,7 +594,7 @@ export class WordsService {
       var lettersValue = 0;
       lettersValue = this.activeService.GetPointsLetters(word);
       pointsLetters += lettersValue;
-      pointsBonus += lettersValue
+      pointsBonus += lettersValue;
       this.wordBonus += ` + [LettersValue] (Upgrade 8)`;
       bonusSumsValues[1] += lettersValue;
       if (
@@ -611,9 +612,9 @@ export class WordsService {
         1.25,
         this.activeService.getRepeatedLetters(word)
       );
-      pointsLetters += repeatedLettersBonus
+      pointsLetters += repeatedLettersBonus;
       this.wordBonus += ` + [DifferentRepeatedLetters] (Upgrade 14)`;
-      pointsBonus += repeatedLettersBonus
+      pointsBonus += repeatedLettersBonus;
       bonusSumsValues[2] += repeatedLettersBonus;
     }
 
@@ -622,9 +623,9 @@ export class WordsService {
         1.1,
         this.activeService.getDifferentLetters(word)
       );
-      pointsLetters += differentLettersBonus
+      pointsLetters += differentLettersBonus;
       this.wordBonus += ` + [DifferentLetters] (Upgrade 17)`;
-      pointsBonus += differentLettersBonus
+      pointsBonus += differentLettersBonus;
       bonusSumsValues[3] += differentLettersBonus;
     }
 
@@ -634,15 +635,6 @@ export class WordsService {
 
     bonusValues[0] += pointsBonus;
     bonusSumsValues = bonusSumsValues.concat(result[3]);
-
-    if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
-      const mastery = this.gameService.game.value.masteryLevels.find((x) =>
-        x.letters.includes(word[0].toLowerCase())
-      )!;
-      result[0] *= mastery.value;
-      this.wordBonus += 'x[MasteryBonus]'
-      bonusValues[10] *= mastery.value;
-    }
 
     if (this.critical.value === true) {
       result[0] *= 5;
@@ -695,15 +687,17 @@ export class WordsService {
     }
 
     if (this.gameUtils.IsPurchasedUpgrade('UnlockMastery')) {
-      const initialLetter = word[0];
-      const mastery = this.gameService.game.value.masteryLevels.find((x) =>
-        x.letters.includes(initialLetter.toLowerCase())
-      )!;
-      this.masteryService.updateMasteryValue(mastery.tier);
+      const letters = word.split('');
+      letters.forEach((letter) => {
+        const mastery = this.gameService.game.value.masteryLevels.find((x) =>
+          x.letters.includes(letter.toLowerCase())
+        )!;
+        this.masteryService.updateMasteryValue(mastery.tier);
+      });
     }
     this.gameService.updateBonusValues(bonusValues);
     this.gameService.updateBonusSumsValues(bonusSumsValues);
-    console.log(bonusValues)
+    console.log(bonusValues);
   }
 
   getWordBonus(): string {

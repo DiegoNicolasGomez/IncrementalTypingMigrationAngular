@@ -428,15 +428,9 @@ export class GameService {
 
   //Mastery
 
-  updateMasteryValue(masteryTier: masteryTier) {
+  updateMasteryValue(masteryTier: masteryTier, amount: number) {
     const game = this.game.value;
     const mastery = game.masteryLevels.find((x) => x.tier === masteryTier)!;
     mastery.amount++;
-    if (mastery.amount === mastery.amountToLevel) {
-      mastery.amount = 0;
-      mastery.amountToLevel *= 2;
-      mastery.value *= 2;
-      mastery.level++;
-    }
   }
 }

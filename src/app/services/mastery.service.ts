@@ -20,7 +20,8 @@ private gameSubscription = new Subscription();
    }
 
    updateMasteryValue(masteryTier: masteryTier) {
-    this.gameService.updateMasteryValue(masteryTier);
+    var amount = 1;
+    this.gameService.updateMasteryValue(masteryTier, amount);
    }
 
 }

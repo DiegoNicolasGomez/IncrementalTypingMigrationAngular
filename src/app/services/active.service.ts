@@ -245,7 +245,26 @@ export class ActiveService {
         }
       }
     });
+
+    if(this.gameUtils.IsPurchasedUpgrade("UnlockMastery")) {
+      this.calculateMasteryPoints(letters);
+    }
+
     return points;
+  }
+
+  calculateMasteryPoints(letters: string[]) {
+    letters.forEach(letter => {
+        switch (letter) {
+          case 'a' || 'e' || 'i' || 'o' || 'u' || 'l' || 'n' || 's' || 't' || 'r':
+              var amount = 1;
+              this.gameService.updateMasteryValue('Alpha', amount)
+            break;
+        
+          default:
+            break;
+        }
+    });
   }
 
   getRepeatedLetters(word: string): number {

@@ -247,9 +247,19 @@ export class UpgradeService {
 
     this.createAdvancedUpgrade(
       new Upgrade(
+        `Unlock Cardinal Sins!`,
+        'Why not!',
+        100_000_000_000_000_000,
+        'UnlockMinigames'
+      )
+    );
+
+
+    this.createAdvancedUpgrade(
+      new Upgrade(
         `Unlock Minigames!`,
         'Good Luck!',
-        100_000_000_000_000_000,
+        500_000_000_000_000_000,
         'UnlockMinigames'
       )
     );
@@ -440,6 +450,7 @@ export class UpgradeService {
           ? 2
           : 1
       );
+      this.timerService.logGameTimer(`Obtained Upgrade: ${multiUpgrade.name}"`);
       if (upgradeType === 'MultiUpgradeWords') {
         this.gameService.updateMaxLength();
         let maxAmount = 3;
@@ -462,6 +473,7 @@ export class UpgradeService {
     ) {
       this.gameService.updatePoints(-upgrade.cost);
       this.gameService.addUpgrade(upgrade);
+      this.timerService.logGameTimer(`Obtained Upgrade: ${upgrade.name}"`);
       if(upgradeType === "PrecisionKey") {
         this.layoutService.setComboCounterVisibility(true);
       }
@@ -484,6 +496,7 @@ export class UpgradeService {
     ) {
       this.gameService.updatePoints(-upgrade.cost);
       this.gameService.addUpgrade(upgrade);
+      this.timerService.logGameTimer(`Obtained Upgrade: ${upgrade.name}"`);
     }
   }
 
@@ -499,6 +512,7 @@ export class UpgradeService {
     ) {
       this.gameService.updatePassivePoints(-upgrade.cost);
       this.gameService.addPassiveUpgrade(upgrade);
+      this.timerService.logGameTimer(`Obtained Upgrade: ${upgrade.name}"`);
       if (upgradeType == "PassiveHorizontalScaling") this.gameService.updatePassiveLength(1);
     }
   }
@@ -514,6 +528,7 @@ export class UpgradeService {
     ) {
       this.gameService.updatePrestigePoints(-upgrade.cost);
       this.gameService.addPrestigeUpgrade(upgrade);
+      this.timerService.logGameTimer(`Obtained Upgrade: ${upgrade.name}"`);
       if (upgradeType == "PrestigeGachaGods") this.gameService.updateRollsAmount(2);
     }
   }
